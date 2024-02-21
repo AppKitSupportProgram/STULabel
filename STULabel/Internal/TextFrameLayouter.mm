@@ -18,10 +18,9 @@ static STUParagraphAlignment paragraphAlignment(NSTextAlignment alignment,
 {
   switch (alignment) {
   case NSTextAlignmentLeft:
+    return STUParagraphAlignmentLeft;
   case NSTextAlignmentRight:
-    static_assert((int)NSTextAlignmentLeft == (int)STUParagraphAlignmentLeft);
-    static_assert((int)NSTextAlignmentRight == (int)STUParagraphAlignmentRight);
-    return STUParagraphAlignment(alignment);
+    return STUParagraphAlignmentRight;
   case NSTextAlignmentCenter:
     return STUParagraphAlignmentCenter;
   case NSTextAlignmentNatural:
