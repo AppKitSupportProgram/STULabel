@@ -7,7 +7,7 @@
 #import <pthread.h>
 
 #import <stdatomic.h>
-
+#import "STUScreen.h"
 #if TARGET_OS_IOS
   #define STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT 1
 #else
@@ -27,24 +27,25 @@ static STU_ATOMIC_IF_NOT_CONSTANT(STUDisplayGamut) mainScreenDisplayGamut;
 
 static void updateMainScreenProperties(void) {
   STU_DEBUG_ASSERT(pthread_main_np());
-  UIScreen * const mainScreen = UIScreen.mainScreen;
-  STU_ASSERT(mainScreen || !STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT);
   CGSize portraitSize;
   CGFloat scale;
   STUDisplayGamut displayGamut;
+  STUScreen * const mainScreen = STUScreen.mainScreen;
+  STU_ASSERT(mainScreen || !STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT);
   if (mainScreen) {
-    portraitSize = mainScreen.fixedCoordinateSpace.bounds.size;
-    scale = mainScreen.scale;
-    if (@available(iOS 10, tvOS 10, *)) {
+      portraitSize = mainScreen.fixedCoordinateSpace.bounds.size;
+      scale = mainScreen.scale;
+      if (@available(iOS 10, tvOS 10, *)) {
       displayGamut = (STUDisplayGamut)mainScreen.traitCollection.displayGamut;
-    } else { // We don't try to support wide colors on an old iPad Pro running iOS 9.
+      } else { // We don't try to support wide colors on an old iPad Pro running iOS 9.
       displayGamut = STUDisplayGamutSRGB;
-    }
+      }
   } else {
-    portraitSize = CGSizeZero;
-    scale = 1;
-    displayGamut = STUDisplayGamutSRGB;
+      portraitSize = CGSizeZero;
+      scale = 1;
+      displayGamut = STUDisplayGamutSRGB;
   }
+
 #if STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT
   #define store(var, value) var = value
 #else
@@ -67,7 +68,7 @@ static void updateMainScreenProperties(void) {
   // deadlock when the main thread is waiting for the thread in which stu_mainScreen... is called
   // for the first time.)
   updateMainScreenProperties();
-#if !STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT
+#if !STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT && !TARGET_OS_VISION
   NSNotificationCenter * const notificationCenter = NSNotificationCenter.defaultCenter;
   NSOperationQueue * const mainQueue = NSOperationQueue.mainQueue;
   const __auto_type updateMainScreenPropertiesBlock = ^(NSNotification *note __unused) {

@@ -16,7 +16,7 @@
 #include <atomic>
 
 #include "DefineUIntOnCatalystToWorkAroundGlobalNamespacePollution.h"
-
+#import "STUScreen.h"
 @interface STUTileLayer : STULayerWithNullDefaultActions
 @end
 @implementation STUTileLayer
@@ -163,7 +163,7 @@ public:
     checkNotDisplaying();
     needsLayout_ = false;
 
-    if (UIScreen* const screen = visibleBoundsObserver_.screen()) {
+    if (STUScreen* const screen = visibleBoundsObserver_.screen()) {
       screenScale_ = screen.scale;
     } else if (layoutEvenWithoutScreen) {
       screenScale_ = stu_mainScreenScale();
@@ -457,9 +457,9 @@ private:
   }
 
   STU_NO_INLINE
-  void updateScreenSizeAndTileSize(UIScreen* __unsafe_unretained screen) {
+  void updateScreenSizeAndTileSize(STUScreen* __unsafe_unretained screen) {
     if (!screen) {
-      screen = UIScreen.mainScreen;
+      screen = STUScreen.mainScreen;
     }
     Size<CGFloat> screenSize = screen.bounds.size;
     CGFloat screenScale = screen.scale;

@@ -7,7 +7,7 @@
 #import "stu/Vector.hpp"
 
 #include "DefineUIntOnCatalystToWorkAroundGlobalNamespacePollution.h"
-
+#import "STUScreen.h"
 namespace stu_label {
 
 /// Tracks the bounds of the layer not masked by its superlayers, ignoring any superlayer above
@@ -55,7 +55,7 @@ public:
   /// calculateVisibleBounds is called.
   CGFloat areaScale() const { return areaScale_; }
 
-  UIScreen* screen();
+    STUScreen* screen();
 
   void _private_superlayerIsBeingRemovedOrDestroyed(CALayer* superlayer);
   void _private_superlayerMasksToBoundsChanged(CALayer* superlayer, bool masksToBounds);

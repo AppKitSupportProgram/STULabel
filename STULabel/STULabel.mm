@@ -506,7 +506,7 @@ static CGFloat screenScale(const SpacingConstraint& constraint) {
 
 // MARK: - STULabel
 
-API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos)
+API_AVAILABLE(ios(11.0), visionos(1.0)) API_UNAVAILABLE(tvos)
 @interface STULabelDragInteraction : UIDragInteraction {
 @package
   STULabel* __unsafe_unretained stu_label; // This field is set and cleared by the owning label.
@@ -1227,7 +1227,7 @@ static void clearCurrentLabelTouch(STULabel* self) {
 // MARK: - Default link action sheet
 
 static void openURL(NSURL* url) {
-#if !TARGET_OS_MACCATALYST
+#if !TARGET_OS_MACCATALYST && !TARGET_OS_VISION
   if (@available(iOS 10, *)) {
 #endif
     [UIApplication.sharedApplication openURL:url options:@{} completionHandler:^(BOOL success) {
@@ -1239,7 +1239,7 @@ static void openURL(NSURL* url) {
        #endif
        }
      }];
-#if !TARGET_OS_MACCATALYST
+#if !TARGET_OS_MACCATALYST && !TARGET_OS_VISION
   } else {
     [UIApplication.sharedApplication openURL:url];
   }
@@ -1571,7 +1571,7 @@ afterCancelledDrag:(bool)afterCancelledDrag
 
 // MARK: - UIDragInteraction
 
-static void initializeDragInteraction(STULabel* self) API_AVAILABLE(ios(11.0)) {
+static void initializeDragInteraction(STULabel* self) API_AVAILABLE(ios(11.0), visionos(1.0)) {
   STU_DEBUG_ASSERT(self->_dragInteraction == nil);
   self->_dragInteraction = [[STULabelDragInteraction alloc] initWithDelegate:self];
   if (self->_dragInteraction.enabled != self->_bits.dragInteractionEnabled) {

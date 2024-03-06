@@ -27,7 +27,7 @@
 #import <objc/runtime.h>
 
 #include "Internal/DefineUIntOnCatalystToWorkAroundGlobalNamespacePollution.h"
-
+#import "Internal/STUScreen.h"
 using namespace stu;
 using namespace stu_label;
 
@@ -216,7 +216,7 @@ private:
   }
 
   void updateScreenProperties(UIWindow* __unsafe_unretained window) {
-    if (UIScreen* const screen = window.screen) {
+    if (STUScreen* const screen = window.stu_screen) {
       screenScale_ = screen.scale;
       if (@available(iOS 10, tvOS 10, *)) {
         screenDisplayGamut_ = static_cast<STUDisplayGamut>(screen.traitCollection.displayGamut);
