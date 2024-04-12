@@ -2,7 +2,7 @@
 
 #import "STULabel/STULabel.h"
 
-#import "STULabelTiledLayer.h"
+#import "STULabel/STULabelTiledLayer.h"
 
 typedef void (^ STULabelSubrangeDrawingBlock)(CGContextRef, CGRect,
                                               const STUCancellationFlag * __nullable);

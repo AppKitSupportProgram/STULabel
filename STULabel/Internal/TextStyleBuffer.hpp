@@ -1,7 +1,6 @@
 // Copyright 2017–2018 Stephan Tolksdorf
-
+#include <exception>
 #import "TextStyle.hpp"
-
 #import "STULabel/STUParagraphStyle-Internal.hpp"
 
 #import "Font.hpp"

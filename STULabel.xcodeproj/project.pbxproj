@@ -538,7 +538,7 @@
 		D4D2D9A3205D6EA500BBDBDB /* Kerning.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4D2D9A1205D6EA400BBDBDB /* Kerning.mm */; };
 		D4D34513203C75380092641A /* NSStringRefTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4D34512203C75380092641A /* NSStringRefTests.mm */; };
 		D4D42F21203A1B9700617ADB /* DisplayScaleRounding.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4D42F20203A1B9700617ADB /* DisplayScaleRounding.mm */; };
-		D4D58ED820B0B9630016AA8A /* STULabelTiledLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D4D58ED620B0B9630016AA8A /* STULabelTiledLayer.h */; };
+		D4D58ED820B0B9630016AA8A /* STULabelTiledLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D4D58ED620B0B9630016AA8A /* STULabelTiledLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4D58ED920B0B9630016AA8A /* STULabelTiledLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D4D58ED620B0B9630016AA8A /* STULabelTiledLayer.h */; };
 		D4D58EDD20B1B8FC0016AA8A /* UniquePtr.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D4D58EDC20B1B8FC0016AA8A /* UniquePtr.hpp */; };
 		D4D58EDE20B1B8FC0016AA8A /* UniquePtr.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D4D58EDC20B1B8FC0016AA8A /* UniquePtr.hpp */; };
@@ -1527,6 +1527,8 @@
 				D4E753BC2104A99D00FA59F0 /* STUTruncationScope.h */,
 				D4E753C22104B32600FA59F0 /* STUTruncationScope-Internal.h */,
 				D4E753BD2104A99D00FA59F0 /* STUTruncationScope.mm */,
+				D4D58ED620B0B9630016AA8A /* STULabelTiledLayer.h */,
+				D46B593120C07C2D00D016E2 /* STULabelTiledLayer.mm */,
 			);
 			path = STULabel;
 			sourceTree = "<group>";
@@ -1640,8 +1642,6 @@
 				D49F0AC11FCC6013004B0E5C /* STULabelLinkOverlayLayer.m */,
 				D49F0AD31FCC6017004B0E5C /* STULabelSubrangeView.h */,
 				D49F0ACF1FCC6016004B0E5C /* STULabelSubrangeView.mm */,
-				D4D58ED620B0B9630016AA8A /* STULabelTiledLayer.h */,
-				D46B593120C07C2D00D016E2 /* STULabelTiledLayer.mm */,
 				D49F0AD71FCC6018004B0E5C /* STUMediaTimingFunctionUtils.h */,
 				D49F0ADB1FCC6019004B0E5C /* STUPlaceholderObjects.h */,
 				D4B0AEE71F925AF500B5B2B9 /* STUPlaceholderObjects-no-ARC.m */,
@@ -1844,6 +1844,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D45F217820A0D1FB007E6C36 /* STUTextFrameDrawingOptions.h in Headers */,
+				D4D58ED820B0B9630016AA8A /* STULabelTiledLayer.h in Headers */,
 				D46B09421FAC916200375E76 /* Font.hpp in Headers */,
 				D4D58EDD20B1B8FC0016AA8A /* UniquePtr.hpp in Headers */,
 				D4B0AF161F925AF900B5B2B9 /* STULayerWithNullDefaultActions.h in Headers */,
@@ -1936,7 +1937,6 @@
 				D42384C41F9379B9000B8A63 /* Assert.h in Headers */,
 				D437A41D20A5BBC00032AFE8 /* TextFrameDrawingOptions.hpp in Headers */,
 				D45F218120A1E015007E6C36 /* Unretained.hpp in Headers */,
-				D4D58ED820B0B9630016AA8A /* STULabelTiledLayer.h in Headers */,
 				D45F217E20A1B590007E6C36 /* STUTextFrameRange.h in Headers */,
 				D4B0AF091F925AF900B5B2B9 /* STUTextFrame-Internal.hpp in Headers */,
 				D4B0AFF01F925BC600B5B2B9 /* STUDefines.h in Headers */,
@@ -2898,6 +2898,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D4E8DC1920DA8364009F4735 /* STULabelResources.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = ZF2GY8W6BW;
 			};
 			name = Debug;
 		};
@@ -2905,6 +2906,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D4E8DC1920DA8364009F4735 /* STULabelResources.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = ZF2GY8W6BW;
 			};
 			name = Release;
 		};

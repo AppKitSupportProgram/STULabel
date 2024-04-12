@@ -2,13 +2,13 @@
 
 #import "STULabelTiledLayer.h"
 
-#import "CancellationFlag.hpp"
-#import "CoreAnimationUtils.hpp"
-#import "InputClamping.hpp"
-#import "LayerVisibleBoundsObserver.hpp"
-#import "Once.hpp"
-#import "PurgeableImage.hpp"
-#import "Rect.hpp"
+#import "Internal/CancellationFlag.hpp"
+#import "Internal/CoreAnimationUtils.hpp"
+#import "Internal/InputClamping.hpp"
+#import "Internal/LayerVisibleBoundsObserver.hpp"
+#import "Internal/Once.hpp"
+#import "Internal/PurgeableImage.hpp"
+#import "Internal/Rect.hpp"
 
 #import "stu/Vector.hpp"
 #import "stu/UniquePtr.hpp"

@@ -28,7 +28,8 @@ framework module STULabel {
   header "STUTextRange.h"
   header "STUTextRectArray.h"
   header "STUTruncationScope.h"
-
+  header "STULabelTiledLayer.h"
+  
   export *
 
   explicit module Unsafe {

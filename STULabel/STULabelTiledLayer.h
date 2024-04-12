@@ -1,8 +1,8 @@
 // Copyright 2018 Stephan Tolksdorf
 
-#import "STULabel/STUCancellationFlag.h"
-#import "STULabel/STUImageUtils.h"
-#import "STULabel/STULayerWithNullDefaultActions.h"
+#import "STUCancellationFlag.h"
+#import "STUImageUtils.h"
+#import "STULayerWithNullDefaultActions.h"
 
 STU_ASSUME_NONNULL_AND_STRONG_BEGIN
 

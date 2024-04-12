@@ -21,7 +21,7 @@
 #import "Internal/LabelRendering.hpp"
 #import "Internal/Once.hpp"
 #import "Internal/ShapedString.hpp"
-#import "Internal/STULabelTiledLayer.h"
+#import "STULabelTiledLayer.h"
 #import "Internal/TextFrame.hpp"
 
 #import <objc/runtime.h>
