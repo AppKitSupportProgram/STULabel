@@ -325,7 +325,7 @@ struct EdgeInsets {
 
   template <bool enable = isSafelyConvertible<T, CGFloat>, EnableIf<enable> = 0>
   /* implicit */ STU_CONSTEXPR_T
-  operator UIEdgeInsets() const {
+  operator STUEdgeInsets() const {
     return {.top = top, .left = left, .bottom = bottom, .right = right};
   }
 };
@@ -473,7 +473,7 @@ struct Rect {
 
   template <bool enable = isSafelyConvertible<CGFloat, T>, EnableIf<enable> = 0>
   [[nodiscard]] STU_CONSTEXPR
-  Rect inset(UIEdgeInsets insets) const {
+  Rect inset(STUEdgeInsets insets) const {
     return {Range{x.start + insets.left, x.end - insets.right},
             Range{y.start + insets.top,  y.end - insets.bottom}};
   }

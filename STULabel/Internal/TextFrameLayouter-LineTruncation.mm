@@ -68,7 +68,7 @@ static NSDictionary<NSAttributedStringKey, id>*
                                                     id __unsafe_unretained value, BOOL*)
     {
       for (const Range<Int>& paraRange : paraRanges) {
-        const Range<UInt> range{paraRange};
+        const Range<stu::UInt> range{paraRange};
         NSRange otherRange;
         const id otherValue = [attributedString.attributedString attribute:key atIndex:range.start
                                                      longestEffectiveRange:&otherRange
@@ -100,10 +100,10 @@ static NSDictionary<NSAttributedStringKey, id>*
     }
     if (fontIsDifferent) {
       // The original font will be the one assumed for the TextStyle.
-      [mutableAttributes setObject:(__bridge UIFont*)originalFont
+      [mutableAttributes setObject:(__bridge STUFont*)originalFont
                             forKey:STUOriginalFontAttributeName];
     }
-    [mutableAttributes setObject:(__bridge UIFont*)(font ?: originalFont)
+    [mutableAttributes setObject:(__bridge STUFont*)(font ?: originalFont)
                           forKey:NSFontAttributeName];
   }
   return mutableAttributes ?: attributes;
@@ -234,7 +234,7 @@ void TextFrameLayouter::truncateLine(TextFrameLine& line,
   if (!truncationToken) {
     tokenLength = 1;
   } else {
-    const UInt length = truncationToken.length;
+    const stu::UInt length = truncationToken.length;
     if (0 < length && length < 4096) {
       tokenLength = narrow_cast<Int32>(length);
       if (length == 1) {

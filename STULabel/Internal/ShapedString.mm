@@ -202,7 +202,13 @@ static ScanStatus scanAttributedString(
         // that CoreText assumes the same base writing direction, we fix the paragraph style.
         para.paragraphStyleNeededFix = !isEmpty;
       }
-      const bool isAtLeastIOS10 = NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_9_x_Max;
+#if TARGET_OS_IPHONE
+        const bool isAtLeastIOS10 = NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_9_x_Max;
+#endif
+        
+#if TARGET_OS_OSX
+        const bool isAtLeastIOS10 = true;
+#endif
       baseWritingDirection = detectBaseWritingDirection(attributedString.string, para.stringRange,
                                                         SkipIsolatedText{isAtLeastIOS10});
       if (baseWritingDirection == NSWritingDirectionNatural) {
@@ -393,10 +399,10 @@ static void initializeParagraphMinFontMetrics(const ArrayRef<ShapedString::Parag
         minMetrics.aggregate(metrics.adjustedByBaselineOffset(style->baselineOffset()));
       }
     }
-    para.effectiveMinLineHeightInfo_[UInt{STUTextLayoutModeDefault}] =
+    para.effectiveMinLineHeightInfo_[stu::UInt{STUTextLayoutModeDefault}] =
       TextFrameLayouter::minLineHeightInfo<STUTextLayoutModeDefault>
                                           (para.lineHeightParams, minMetrics);
-    para.effectiveMinLineHeightInfo_[UInt{STUTextLayoutModeTextKit}] =
+    para.effectiveMinLineHeightInfo_[stu::UInt{STUTextLayoutModeTextKit}] =
       TextFrameLayouter::minLineHeightInfo<STUTextLayoutModeTextKit>
                                           (para.lineHeightParams, minMetrics);
   }
@@ -406,7 +412,7 @@ ShapedString* __nullable
   ShapedString::create(NSAttributedString* __unsafe_unretained const originalAttributedString,
                        const STUWritingDirection defaultBaseWritingDirection,
                        const STUCancellationFlag* cancellationFlagPointer,
-                       const FunctionRef<void*(UInt)> alloc)
+                       const FunctionRef<void*(stu::UInt)> alloc)
 {
   // Make sure the string is immutable.
   NSAttributedString* attributedString = [originalAttributedString copy];
@@ -445,7 +451,7 @@ ShapedString* __nullable
   const ArrayRef<const ColorRef> colors = textStyleBuffer.colors();
   const ArrayRef<const ColorHashBucket> colorHashBuckets = textStyleBuffer.colorHashBuckets();
 
-  const UInt size = sizeof(ShapedString)
+  const stu::UInt size = sizeof(ShapedString)
                   + paragraphs.arraySizeInBytes() + sanitizerGap
                   + truncationScopes.arraySizeInBytes() + sanitizerGap
                   + sizeof(FontMetrics)*sign_cast(textStyleBuffer.fonts().count()) + sanitizerGap

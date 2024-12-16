@@ -2,9 +2,10 @@
 
 #import "STUDefines.h"
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-STU_EXTERN_C_BEGIN
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, STUDisplayGamut)  {
 STU_DISABLE_CLANG_WARNING("-Wunguarded-availability")
@@ -13,6 +14,23 @@ STU_DISABLE_CLANG_WARNING("-Wunguarded-availability")
   STUDisplayGamutP3 = UIDisplayGamutP3
 STU_REENABLE_CLANG_WARNING
 };
+
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+
+typedef NS_ENUM(NSInteger, STUDisplayGamut)  {
+STU_DISABLE_CLANG_WARNING("-Wunguarded-availability")
+  STUDisplayGamutUnspecified = 0,
+  STUDisplayGamutSRGB = NSDisplayGamutSRGB,
+  STUDisplayGamutP3 = NSDisplayGamutP3
+STU_REENABLE_CLANG_WARNING
+};
+
+#endif
+
+STU_EXTERN_C_BEGIN
 
 /// Returns the value of @c UIScreen.main.fixedCoordinateSpace.bounds.size.
 /// Thread-safe.

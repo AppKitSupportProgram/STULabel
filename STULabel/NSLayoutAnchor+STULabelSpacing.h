@@ -1,7 +1,15 @@
 
 // Copyright 2018 Stephan Tolksdorf
 
+#import <Foundation/Foundation.h>
+
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
 
 typedef NS_CLOSED_ENUM(uint8_t, STUFirstOrLastBaseline) {
   STUFirstBaseline,

@@ -11,16 +11,27 @@ using namespace stu_label;
 
 - (instancetype)init {
   self = [super init];
-  self.opaque = false;
+#if TARGET_OS_IPHONE
+    self.opaque = false;
+#endif
+    
+
   return self;
 }
 
+#if TARGET_OS_OSX
+- (BOOL)isOpaque {
+    return NO;
+}
+#endif
+
 - (void)drawRect:(CGRect)rect {
   if (_drawingBlock) {
-    _drawingBlock(UIGraphicsGetCurrentContext(), rect, nullptr);
+    _drawingBlock(STUGraphicsGetCurrentContext(), rect, nullptr);
   }
 }
 
+#if TARGET_OS_IPHONE
 - (void)setContentScaleFactor:(CGFloat)contentScaleFactor {
   // When the view of a UITargetedDragPreview instance is inserted into the view hierarchy, its
   // contentScaleFactor is reset to the screen's scale. Since we don't do the insertion ourselves
@@ -28,6 +39,10 @@ using namespace stu_label;
   // we clamp the scale here.
   [super setContentScaleFactor:max(contentScaleFactor, self.superview.contentScaleFactor)];
 }
+#endif
+
+#if TARGET_OS_OSX
+#endif
 
 @end
 

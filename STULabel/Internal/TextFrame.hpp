@@ -128,13 +128,13 @@ struct TruncationTokenIndex {
   NSAttributedString* __unsafe_unretained __nullable truncationToken;
 };
 
-struct IndexInOriginalString : Parameter<IndexInOriginalString, UInt> {
+struct IndexInOriginalString : Parameter<IndexInOriginalString, stu::UInt> {
   using Parameter::Parameter;
 };
-struct IndexInTruncatedString : Parameter<IndexInTruncatedString, UInt> {
+struct IndexInTruncatedString : Parameter<IndexInTruncatedString, stu::UInt> {
   using Parameter::Parameter;
 };
-struct IndexInTruncationToken : Parameter<IndexInTruncationToken, UInt> {
+struct IndexInTruncationToken : Parameter<IndexInTruncationToken, stu::UInt> {
   using Parameter::Parameter;
 };
 
@@ -311,12 +311,12 @@ private:
   static constexpr Int sanitizerGap = STU_USE_ADDRESS_SANITIZER ? 8 : 0;
 
   struct SizeAndOffset {
-    UInt size;
-    UInt offset;
+      stu::UInt size;
+      stu::UInt offset;
   };
   static SizeAndOffset objectSizeAndThisOffset(const TextFrameLayouter& layouter);
 
-  explicit TextFrame(TextFrameLayouter&& layouter, UInt dataSize);
+  explicit TextFrame(TextFrameLayouter&& layouter, stu::UInt dataSize);
 };
 
 
@@ -919,9 +919,9 @@ struct StyledGlyphSpan {
     __builtin_trap();
   }
 
-  UIFont* originalFont() const {
-    const UInt index = sign_cast(stringRange.start - (part == TextLinePart::insertedHyphen));
-    return static_cast<UIFont*>([attributedString attribute:NSFontAttributeName atIndex:index
+  STUFont* originalFont() const {
+    const stu::UInt index = sign_cast(stringRange.start - (part == TextLinePart::insertedHyphen));
+    return static_cast<STUFont*>([attributedString attribute:NSFontAttributeName atIndex:index
                                              effectiveRange:nil]);
   }
 };

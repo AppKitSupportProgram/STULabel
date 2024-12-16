@@ -24,7 +24,7 @@ class LabelPrerenderer final : public LabelTextShapingAndLayoutAndRenderTask,
   bool textFrameOptionsIsPrivate_{};
   bool contentInsetsAreDirectional_{};
   CGSize size_{};
-  UIEdgeInsets contentInsets_{};
+  STUEdgeInsets contentInsets_{};
 
   alignas(void*) Byte objcObjectStorage[];
 
@@ -138,7 +138,7 @@ public:
   STULabelPrerendererSizeOptions sizeOptions() const { return sizeOptions_; }
 
 private:
-  void setSizeAndContentInsets(CGSize size, UIEdgeInsets contentInsets, bool insetsAreDirectional,
+  void setSizeAndContentInsets(CGSize size, STUEdgeInsets contentInsets, bool insetsAreDirectional,
                                STULabelPrerendererSizeOptions options)
   {
     checkNotFrozen();
@@ -157,7 +157,7 @@ private:
   }
 
 public:
-  void setSizeAndContentInsets(CGSize size, UIEdgeInsets contentInsets,
+  void setSizeAndContentInsets(CGSize size, STUEdgeInsets contentInsets,
                                STULabelPrerendererSizeOptions options)
   {
     setSizeAndContentInsets(size, contentInsets, false, options);
@@ -225,12 +225,12 @@ public:
     params_.setOverrideColorsApplyToHighlightedText(value);
   }
 
-  void setOverrideTextColor(UIColor* __unsafe_unretained color) {
+  void setOverrideTextColor(STUColor* __unsafe_unretained color) {
     checkNotFrozen();
     params_.setOverrideTextColor(color);
   }
 
-  void setOverrideLinkColor(UIColor* __unsafe_unretained color) {
+  void setOverrideLinkColor(STUColor* __unsafe_unretained color) {
     checkNotFrozen();
     params_.setOverrideLinkColor(color);
   }

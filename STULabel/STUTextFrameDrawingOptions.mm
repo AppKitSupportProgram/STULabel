@@ -87,17 +87,17 @@ STUTextFrameDrawingOptions*
   impl.setOverrideColorsApplyToHighlightedText(overrideColorsApplyToHighlightedText);
 }
 
-- (UIColor*)overrideTextColor {
+- (STUColor*)overrideTextColor {
   return impl.overrideTextUIColor().unretained;
 }
-- (void)setOverrideTextColor:(UIColor*)overrideTextColor {
+- (void)setOverrideTextColor:(STUColor*)overrideTextColor {
   impl.setOverrideTextColor(overrideTextColor);
 }
 
-- (UIColor*)overrideLinkColor {
+- (STUColor*)overrideLinkColor {
   return impl.overrideLinkUIColor().unretained;
 }
-- (void)setOverrideLinkColor:(UIColor*)overrideLinkColor {
+- (void)setOverrideLinkColor:(STUColor*)overrideLinkColor {
   impl.setOverrideTextColor(overrideLinkColor);
 }
 

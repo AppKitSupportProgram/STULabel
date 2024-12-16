@@ -19,15 +19,15 @@ namespace stu_label {
 
 STU_NO_INLINE
 CTFont* defaultCoreTextFont() {
-  STU_STATIC_CONST_ONCE(UIFont*, value, [UIFont fontWithName:@"Helvetica" size:12]
-                                        ?: [UIFont systemFontOfSize:12]);
+  STU_STATIC_CONST_ONCE(STUFont*, value, [STUFont fontWithName:@"Helvetica" size:12]
+                                        ?: [STUFont systemFontOfSize:12]);
   return (__bridge CTFont*)value;
 }
 
 struct FontInfoCache {
   struct Entry {
     FontRef font;
-    HashCode<UInt> hashCode; // hash(CFHash(font.ctFont()))
+    HashCode<stu::UInt> hashCode; // hash(CFHash(font.ctFont()))
     CachedFontInfo info;
   };
 
@@ -39,7 +39,7 @@ struct FontInfoCache {
   STU_NO_INLINE
   void clear() {
     for (auto& entry : entries.reversed()) {
-      decrementRefCount((__bridge UIFont*)entry.font.ctFont());
+      decrementRefCount((__bridge STUFont*)entry.font.ctFont());
     }
     entries.removeAll();
     indicesByFontPointer.removeAll();
@@ -62,7 +62,7 @@ CachedFontInfo::CachedFontInfo(FontRef font)
     ascent = (ascent - descent)/2;
     descent = -ascent;
   }
-  // We don't allow negative leading values. (Some fonts returned by UIFont.preferredFont currently
+  // We don't allow negative leading values. (Some fonts returned by STUFont.preferredFont currently
   // have a negative leading.)
   const CGFloat leading = max(0.f, font.leading());
   metrics = FontMetrics{ascent, descent, leading};
@@ -142,7 +142,7 @@ CachedFontInfo::CachedFontInfo(FontRef font)
 }
 
 CachedFontInfo CachedFontInfo::get(FontRef font) {
-  const auto pointerHashCode = narrow_cast<HashCode<UInt>>(hashPointer(font.ctFont()));
+  const auto pointerHashCode = narrow_cast<HashCode<stu::UInt>>(hashPointer(font.ctFont()));
   stu_mutex_lock(&fontInfoCacheMutex);
   if (STU_UNLIKELY(!fontInfoCacheIsInitialized)) {
     fontInfoCacheIsInitialized = true;
@@ -158,10 +158,15 @@ CachedFontInfo CachedFontInfo::get(FontRef font) {
       cache.clear();
       stu_mutex_unlock(&fontInfoCacheMutex);
     };
-    [notificationCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
-                                    object:nil queue:mainQueue usingBlock:clearCacheBlock];
-    [notificationCenter addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
-                                    object:nil queue:mainQueue usingBlock:clearCacheBlock];
+#if TARGET_OS_IPHONE
+      [notificationCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
+                                      object:nil queue:mainQueue usingBlock:clearCacheBlock];
+      [notificationCenter addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
+                                      object:nil queue:mainQueue usingBlock:clearCacheBlock];
+#endif
+      
+#if TARGET_OS_OSX
+#endif
   }
   FontInfoCache& cache = reinterpret_cast<FontInfoCache&>(fontInfoCacheStorage);
 
@@ -175,7 +180,7 @@ CachedFontInfo CachedFontInfo::get(FontRef font) {
     return info;
   }
 
-  const auto hashCode = narrow_cast<HashCode<UInt>>(hash(CFHash(font.ctFont())));
+  const auto hashCode = narrow_cast<HashCode<stu::UInt>>(hash(CFHash(font.ctFont())));
   const auto isEqualFont = [&](const UInt16 index) {
     const auto& entry = cache.entries[index];
     return hashCode == entry.hashCode && CFEqual(font.ctFont(), entry.font.ctFont());
@@ -187,7 +192,7 @@ CachedFontInfo CachedFontInfo::get(FontRef font) {
   }
   stu_mutex_unlock(&fontInfoCacheMutex);
   info = CachedFontInfo{font};
-  incrementRefCount((__bridge UIFont*)font.ctFont());
+  incrementRefCount((__bridge STUFont*)font.ctFont());
   stu_mutex_lock(&fontInfoCacheMutex);
   UInt16 index = narrow_cast<UInt16>(cache.entries.count());
   if (STU_UNLIKELY(index == maxValue<UInt16>)) {
@@ -201,7 +206,7 @@ CachedFontInfo CachedFontInfo::get(FontRef font) {
   }
   stu_mutex_unlock(&fontInfoCacheMutex);
   if (!inserted) {
-    decrementRefCount((__bridge UIFont*)font.ctFont());
+    decrementRefCount((__bridge STUFont*)font.ctFont());
   }
   return info;
 };
@@ -249,10 +254,15 @@ static void initGlyphBoundsCache() {
   const auto clearCacheBlock = ^(NSNotification*) {
     FontFaceGlyphBoundsCache::clearGlobalCache();
   };
-  [notificationCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
-                                  object:nil queue:mainQueue usingBlock:clearCacheBlock];
-  [notificationCenter addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
-                                  object:nil queue:mainQueue usingBlock:clearCacheBlock];
+#if TARGET_OS_IPHONE
+    [notificationCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
+                                    object:nil queue:mainQueue usingBlock:clearCacheBlock];
+    [notificationCenter addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
+                                    object:nil queue:mainQueue usingBlock:clearCacheBlock];
+#endif
+    
+#if TARGET_OS_OSX
+#endif
 }
 
 void FontFaceGlyphBoundsCache::clearGlobalCache() {
@@ -263,9 +273,9 @@ void FontFaceGlyphBoundsCache::clearGlobalCache() {
   stu_mutex_unlock(&glyphBoundsCacheMutex);
 }
 
-HashCode<UInt>FontFaceGlyphBoundsCache::FontFace::hash() {
-  return narrow_cast<HashCode<UInt>>(
-           stu_label::hash(bit_cast<UInt>(cgFont.get())
+HashCode<stu::UInt>FontFaceGlyphBoundsCache::FontFace::hash() {
+  return narrow_cast<HashCode<stu::UInt>>(
+           stu_label::hash(bit_cast<stu::UInt>(cgFont.get())
                            ^ hashableBits(fontMatrix.a) ^ hashableBits(fontMatrix.b),
                            hashableBits(appleColorEmojiSize)
                            ^ hashableBits(fontMatrix.c) ^ hashableBits(fontMatrix.d)));
@@ -277,7 +287,7 @@ void FontFaceGlyphBoundsCache::exchange(InOut<UniquePtr> inOutArg, FontRef font,
 {
   UniquePtr& inOutCache = inOutArg;
   STU_PRECONDITION(fontFace.cgFont);
-  const HashCode<UInt> hashCode = fontFace.hash();
+  const HashCode<stu::UInt> hashCode = fontFace.hash();
   stu_mutex_lock(&glyphBoundsCacheMutex);
   if (STU_UNLIKELY(!glyphBoundsCacheIsInitialized)) {
     initGlyphBoundsCache();
@@ -711,7 +721,7 @@ void LocalGlyphBoundsCache::glyphBoundsCacheFor_slowPath(FontRef font) {
   entries_[0].font = font.ctFont();
   entries_[0].fontSize = fontSize;
   FontFaceGlyphBoundsCache::FontFace fontFace{font, fontSize};
-  UInt i = 0;
+    stu::UInt i = 0;
   for (;;) {
     if (caches_[i]) {
       if (caches_[i]->fontFace() == fontFace) break;

@@ -13,8 +13,8 @@ void LabelParametersWithoutSize::ensureDrawingOptionsIsNotFrozen_slowPath() {
   }
 }
 
-LabelParameters::ChangeStatus LabelParameters::setEdgeInsets(UIEdgeInsets edgeInsets) {
-  if (edgeInsets == UIEdgeInsets{}) {
+LabelParameters::ChangeStatus LabelParameters::setEdgeInsets(STUEdgeInsets edgeInsets) {
+  if (edgeInsets == STUEdgeInsets{}) {
     if (!edgeInsetsAreNonZero_) {
       return ChangeStatus::noChange;
     }
@@ -35,16 +35,16 @@ LabelParameters::ChangeStatus LabelParameters::setEdgeInsets(UIEdgeInsets edgeIn
       edgeInsets = roundLabelEdgeInsetsToScale(edgeInsets, displayScale_);
     }
     if (edgeInsets == edgeInsets_) return ChangeStatus::noChange;
-    edgeInsetsAreNonZero_ = edgeInsets != UIEdgeInsets{};
+    edgeInsetsAreNonZero_ = edgeInsets != STUEdgeInsets{};
   }
   edgeInsets_ = edgeInsets;
   return ChangeStatus::edgeInsetsChanged;
 }
 
-CGSize maxTextFrameSizeForLabelSize(CGSize size, const UIEdgeInsets& insets,
+CGSize maxTextFrameSizeForLabelSize(CGSize size, const STUEdgeInsets& insets,
                                     const DisplayScale& scale)
 {
-  const UIEdgeInsets roundedInsets = roundLabelEdgeInsetsToScale(insets, scale);
+  const STUEdgeInsets roundedInsets = roundLabelEdgeInsetsToScale(insets, scale);
   return {max(0.f, size.width - (roundedInsets.left + roundedInsets.right)),
           max(0.f, floorToScale(size.height, scale) - (roundedInsets.top + roundedInsets.bottom))};
 }

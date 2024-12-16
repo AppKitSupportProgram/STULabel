@@ -2,7 +2,15 @@
 
 #import "STUDefines.h"
 
+#import <Foundation/Foundation.h>
+#import "Internal/STUMultiplePlatformAdapter.h"
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
 
 STU_ASSUME_NONNULL_AND_STRONG_BEGIN
 
@@ -68,7 +76,7 @@ STU_EXPORT
 /// @param ascent The typographic ascent of the attachment. Usually this is a positive value.
 /// @param descent
 ///        The typographic descent of the attachment. Usually this is a non-negative value (in
-///        contrast to @c UIFont.descender, which returns the font's descent multiplied by -1).
+///        contrast to @c STUFont.descender, which returns the font's descent multiplied by -1).
 /// @param leading
 ///        The typographic leading (minimum 'line gap') of the attachment. Must be non-negative.
 /// @param imageBounds
@@ -182,7 +190,7 @@ STU_EXPORT
 ///             leading:0
 ///stringRepresentation:stringRepresentation]
 /// @endcode
-- (instancetype)initWithImage:(UIImage *)image
+- (instancetype)initWithImage:(STUImage *)image
                verticalOffset:(CGFloat)verticalOffset
          stringRepresentation:(nullable NSString *)string;
 
@@ -203,10 +211,10 @@ STU_EXPORT
 ///            colorInfo:colorInfoInferredFromImage
 /// stringRepresentation:stringRepresentation];
 /// @endcode
-- (instancetype)initWithImage:(UIImage *)image
+- (instancetype)initWithImage:(STUImage *)image
                     imageSize:(CGSize)imageSize
                verticalOffset:(CGFloat)verticalOffset
-                      padding:(UIEdgeInsets)padding
+                      padding:(STUEdgeInsets)padding
                       leading:(CGFloat)leading
          stringRepresentation:(nullable NSString *)stringRepresentation
   NS_DESIGNATED_INITIALIZER;
@@ -227,7 +235,7 @@ STU_EXPORT
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
   NS_DESIGNATED_INITIALIZER;
 
-@property (readonly) UIImage *image;
+@property (readonly) STUImage *image;
 
 // Unavailable base class initializer.
 - (instancetype)initWithWidth:(CGFloat)width

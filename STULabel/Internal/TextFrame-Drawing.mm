@@ -84,7 +84,7 @@ void TextFrame::draw(CGPoint origin,
 
   const bool needToDrawAttachments = (flags & STUTextFrameHasTextAttachment);
   if (needToDrawAttachments) {
-    UIGraphicsPushContext(cgContext);
+    STUGraphicsPushContext(cgContext);
   }
   // line.drawLLO assumes a lower-left-origin coordinate system
   context.invertYAxis(); // Also inverts context.clipRect (but not the local copy `clipRect`).
@@ -92,7 +92,7 @@ void TextFrame::draw(CGPoint origin,
     context.setShadow(nullptr);
     context.invertYAxis();
     if (needToDrawAttachments) {
-      UIGraphicsPopContext();
+      STUGraphicsPopContext();
     }
   }};
 

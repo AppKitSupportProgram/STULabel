@@ -18,8 +18,9 @@ using namespace stu_label;
 
 - (instancetype)init {
   if (self = [super init]) {
-    self.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.5].CGColor;
-    self.fillColor = UIColor.blackColor.CGColor;
+      
+    self.backgroundColor = [STUColor.blackColor colorWithAlphaComponent:0.5].CGColor;
+    self.fillColor = STUColor.blackColor.CGColor;
   }
   return self;
 }
@@ -59,7 +60,7 @@ using namespace stu_label;
   // the alpha channel.
   const CGAffineTransform translation = CGAffineTransformMakeTranslation(
                                           -_maskedLayerFrame.origin.x, -_maskedLayerFrame.origin.y);
-  const CGPathRef linkPath = [link createPathWithEdgeInsets:UIEdgeInsets{}
+  const CGPathRef linkPath = [link createPathWithEdgeInsets:STUEdgeInsets{}
                                                cornerRadius:0
                     extendTextLinesToCommonHorizontalBounds:false
                                            fillTextLineGaps:true

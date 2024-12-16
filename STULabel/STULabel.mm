@@ -1,3 +1,4 @@
+
 // Copyright 2017–2018 Stephan Tolksdorf
 
 #import "STULabel.h"
@@ -28,6 +29,8 @@
 #import <objc/runtime.h>
 
 #include "Internal/DefineUIntOnCatalystToWorkAroundGlobalNamespacePollution.h"
+
+#if TARGET_OS_IPHONE
 
 using namespace stu;
 using namespace stu_label;
@@ -1959,7 +1962,7 @@ shouldDisplayAsynchronouslyWithProposedValue:(bool)value
     // This is also an event notification, so we do the call even if we don't need the return value.
     value = [_delegate label:self shouldDisplayAsynchronouslyWithProposedValue:value];
   }
-  // Synchronous drawing seems preferable for interactive usage and simplifies keeping the 
+  // Synchronous drawing seems preferable for interactive usage and simplifies keeping the
   // the overlays in sync with the displayed content.
   if (_currentTouch || _ghostingMaskLayer) {
     return false;
@@ -2506,3 +2509,8 @@ static void addLabelLinkPopoverObserver(STULabel* label, STUTextLink* link, UIVi
   objc_setAssociatedObject(ppc, (__bridge void*)observer, observer,
                            OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
+#endif
+
+#if TARGET_OS_OSX
+#endif

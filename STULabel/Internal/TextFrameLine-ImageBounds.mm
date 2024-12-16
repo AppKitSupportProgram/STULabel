@@ -59,7 +59,7 @@ Rect<Float64> lloBackgroundBounds(const TextFrameLine& line, const TextStyle::Ba
   }
   Rect<Float64> bounds = {x, Range{-descent, ascent}};
   if (const Optional<const STUBackgroundAttribute&> bg = info.stuAttribute) {
-    UIEdgeInsets e = bg->_edgeInsets;
+    STUEdgeInsets e = bg->_edgeInsets;
     if (info.borderColorIndex) {
       const auto b = bg->_borderWidth/2;
       e.top -= b;

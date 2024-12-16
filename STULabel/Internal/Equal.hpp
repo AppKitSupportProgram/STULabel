@@ -43,14 +43,14 @@ bool operator!=(const CGAffineTransform& lhs, const CGAffineTransform& rhs) {
 }
 
 STU_CONSTEXPR
-bool operator==(const UIEdgeInsets& lhs, const UIEdgeInsets& rhs) {
+bool operator==(const STUEdgeInsets& lhs, const STUEdgeInsets& rhs) {
   return lhs.top == rhs.top
       && lhs.left == rhs.left
       && lhs.bottom == rhs.bottom
       && lhs.right == rhs.right;
 }
 STU_CONSTEXPR
-bool operator!=(const UIEdgeInsets& lhs, const UIEdgeInsets& rhs) { return !(lhs == rhs); }
+bool operator!=(const STUEdgeInsets& lhs, const STUEdgeInsets& rhs) { return !(lhs == rhs); }
 
 
 template <typename T, typename U,

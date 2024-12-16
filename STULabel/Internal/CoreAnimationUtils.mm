@@ -6,13 +6,13 @@
 
 namespace stu_label {
 
-UIWindow* window(CALayer* __unsafe_unretained layer) {
-  STU_STATIC_CONST_ONCE(Class, uiViewClass, UIView.class);
+STUWindow* window(CALayer* __unsafe_unretained layer) {
+  STU_STATIC_CONST_ONCE(Class, uiViewClass, STUView.class);
   do {
     if (const __unsafe_unretained id delegate = layer.delegate;
         [delegate isKindOfClass:uiViewClass])
     {
-      UIView* __unsafe_unretained const view = static_cast<UIView*>(delegate);
+        STUView* __unsafe_unretained const view = static_cast<STUView*>(delegate);
       if (view.layer == layer) {
         return view.window;
       }

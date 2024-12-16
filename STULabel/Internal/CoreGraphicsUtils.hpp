@@ -119,8 +119,8 @@ STU_CONSTEXPR CGFloat area(CGRect r) {
 }
 
 STU_CONSTEXPR
-UIEdgeInsets operator-(UIEdgeInsets insets) {
-  return UIEdgeInsets{.top    = -insets.top,
+STUEdgeInsets operator-(STUEdgeInsets insets) {
+  return STUEdgeInsets{.top    = -insets.top,
                       .left   = -insets.left,
                       .bottom = -insets.bottom,
                       .right  = -insets.right};

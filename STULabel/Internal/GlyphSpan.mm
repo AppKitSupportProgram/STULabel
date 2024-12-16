@@ -184,9 +184,9 @@ static CTFont* slow_getFont(CTRun* run) {
                               objectForKey:(__bridge NSString*)kCTFontAttributeName];
 }
 
-static UInt expectedCTRunMinMallocSize = 0x78 + sizeof(void*);
+static stu::UInt expectedCTRunMinMallocSize = 0x78 + sizeof(void*);
 
-static UInt ctRunFontFieldOffset;
+static stu::UInt ctRunFontFieldOffset;
 static void initializeCTRunFontFieldOffset() {
   if (@available(iOS 15, *)) {
     ctRunFontFieldOffset = 0x80;
@@ -229,7 +229,7 @@ static bool checkCanUseFastCTRunFontGetter(CTRun* __nonnull run) {
   initializeCTRunFontFieldOffset();
   if (slow_getFont(run) != unsafe_getFont_assumingExpectedObjectLayout(run)) return false;
 
-  UIFont* const font1 = [UIFont systemFontOfSize:16];
+  STUFont* const font1 = [STUFont systemFontOfSize:16];
   {
     auto* const s = [[NSAttributedString alloc] initWithString:@"x"
                                                     attributes:@{NSFontAttributeName: font1}];
@@ -241,7 +241,7 @@ static bool checkCanUseFastCTRunFontGetter(CTRun* __nonnull run) {
     if (!checkCTRunsAreCompatibleWithFastCTRunFontGetter(s)) return false;
   }
 
-  UIFont* const font2 = [UIFont fontWithName:@"HelveticaNeue" size:16];
+  STUFont* const font2 = [STUFont fontWithName:@"HelveticaNeue" size:16];
   {
     auto* const s = [[NSMutableAttributedString alloc] init];
     [s appendAttributedString:[[NSAttributedString alloc]

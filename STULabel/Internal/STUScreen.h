@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
-
 #if TARGET_OS_VISION
 
 NS_ASSUME_NONNULL_BEGIN
@@ -39,3 +39,19 @@ NS_ASSUME_NONNULL_END
 @interface UIWindow (STUScreen)
 @property(nonatomic,readonly, nullable) STUScreen *stu_screen;
 @end
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#define STUScreen NSScreen
+
+@interface NSScreen (STUScreen)
+@property (nonatomic, readonly) CGRect bounds;
+@property (nonatomic, readonly) CGFloat scale;
+@end
+@interface NSWindow (STUScreen)
+@property (nonatomic, readonly, nullable) STUScreen *stu_screen;
+@end
+#endif
+
+

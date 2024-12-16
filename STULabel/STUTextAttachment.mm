@@ -91,6 +91,7 @@ static void initCommon(STUTextAttachment* __unsafe_unretained self) {
   f(stringRepresentation)
 
 - (void)encodeWithCoder:(NSCoder*)coder {
+#if TARGET_OS_IPHONE
 #define ENCODE(name) encode(coder, @STU_STRINGIZE(name), _ ## name);
   FOR_ALL_FIELD_NAMES(ENCODE)
 #undef ENCODE
@@ -122,11 +123,16 @@ static void initCommon(STUTextAttachment* __unsafe_unretained self) {
       encode(coder, @"accessibilityLanguage", string);
     }
   }
+#endif
+    
+#if TARGET_OS_OSX
+#endif
 }
 
 + (BOOL)supportsSecureCoding { return true; }
 
 - (instancetype)initWithCoder:(NSCoder*)coder {
+#if TARGET_OS_IPHONE
 #define DECODE(name) decode(coder, @STU_STRINGIZE(name), Out{_ ## name});
   FOR_ALL_FIELD_NAMES(DECODE)
 #undef DECODE
@@ -173,6 +179,10 @@ static void initCommon(STUTextAttachment* __unsafe_unretained self) {
     }
   #undef DECODE
   }
+#endif
+    
+#if TARGET_OS_OSX
+#endif
   initCommon(self);
   return self;
 }
@@ -232,7 +242,7 @@ void stu_label::drawAttachment(const STUTextAttachment* __unsafe_unretained self
     CGContextScaleCTM(cgContext, 1, -1);
   }};
   // We've already pushed the CGContext on the UIKit context stack in STUTextFrameDraw.
-  STU_DEBUG_ASSERT(UIGraphicsGetCurrentContext() == cgContext);
+  STU_DEBUG_ASSERT(STUGraphicsGetCurrentContext() == cgContext);
   Point origin = context.lineOrigin();
   origin.x += xOffset;
   origin.y += baselineOffset;
@@ -248,17 +258,17 @@ void stu_label::drawAttachment(const STUTextAttachment* __unsafe_unretained self
 @end
 
 @implementation STUImageTextAttachment {
-  UIImage* _image;
+  STUImage* _image;
 }
 
-- (nonnull instancetype)initWithImage:(nonnull UIImage*)image
+- (nonnull instancetype)initWithImage:(nonnull STUImage*)image
                        verticalOffset:(CGFloat)baselineOffset
                  stringRepresentation:(nullable NSString*)stringRepresentation
 {
   return [self initWithImage:image
                    imageSize:image.size
               verticalOffset:baselineOffset
-                     padding:UIEdgeInsetsZero
+                     padding:STUEdgeInsetsZero
                      leading:0
         stringRepresentation:stringRepresentation];
 }
@@ -282,10 +292,10 @@ static STUTextAttachmentColorInfo attachmentColorInfoForColorSpace(CGColorSpaceR
   return STUTextAttachmentColorInfo{};
 }
 
-- (nonnull instancetype)initWithImage:(nonnull UIImage*)image
+- (nonnull instancetype)initWithImage:(nonnull STUImage*)image
                             imageSize:(CGSize)imageSize
                        verticalOffset:(CGFloat)verticalOffset
-                              padding:(UIEdgeInsets)padding
+                              padding:(STUEdgeInsets)padding
                               leading:(CGFloat)leading
                  stringRepresentation:(nullable NSString*)stringRepresentation
 {
@@ -328,41 +338,46 @@ static STUTextAttachmentColorInfo attachmentColorInfoForColorSpace(CGColorSpaceR
 - (nullable instancetype)initWithNSTextAttachment:(NSTextAttachment*)attachment
                              stringRepresentation:(nullable NSString*)stringRepresentation
 {
-  UIImage* const image = attachment.image;
+  STUImage* const image = attachment.image;
   if (!image) return nil;
   CGRect bounds = clampRectInput(attachment.bounds);
   if (bounds == CGRect{}) {
     bounds.size = image.size;
   }
   self = [self initWithImage:image imageSize:bounds.size verticalOffset:-bounds.origin.y
-                     padding:UIEdgeInsetsZero leading:0 stringRepresentation:stringRepresentation];
-  if (attachment.isAccessibilityElement) {
-    self.isAccessibilityElement = true;
-    if (@available(iOS 11, tvOS 11, *)) {
-      if (NSAttributedString* const label = attachment.accessibilityAttributedLabel) {
-        self.accessibilityAttributedLabel = label;
+                     padding:STUEdgeInsetsZero leading:0 stringRepresentation:stringRepresentation];
+#if TARGET_OS_IPHONE
+    if (attachment.isAccessibilityElement) {
+      self.isAccessibilityElement = true;
+      if (@available(iOS 11, tvOS 11, *)) {
+        if (NSAttributedString* const label = attachment.accessibilityAttributedLabel) {
+          self.accessibilityAttributedLabel = label;
+        }
+        if (NSAttributedString* const hint = attachment.accessibilityAttributedHint) {
+          self.accessibilityAttributedHint = hint;
+        }
+        if (NSAttributedString* const value = attachment.accessibilityAttributedValue) {
+          self.accessibilityAttributedValue = value;
+        }
+      } else {
+        if (NSString* const label = attachment.accessibilityLabel) {
+          self.accessibilityLabel = label;
+        }
+        if (NSString* const hint = attachment.accessibilityHint) {
+          self.accessibilityHint = hint;
+        }
+        if (NSString* const value = attachment.accessibilityValue) {
+          self.accessibilityValue = value;
+        }
       }
-      if (NSAttributedString* const hint = attachment.accessibilityAttributedHint) {
-        self.accessibilityAttributedHint = hint;
-      }
-      if (NSAttributedString* const value = attachment.accessibilityAttributedValue) {
-        self.accessibilityAttributedValue = value;
-      }
-    } else {
-      if (NSString* const label = attachment.accessibilityLabel) {
-        self.accessibilityLabel = label;
-      }
-      if (NSString* const hint = attachment.accessibilityHint) {
-        self.accessibilityHint = hint;
-      }
-      if (NSString* const value = attachment.accessibilityValue) {
-        self.accessibilityValue = value;
+      if (NSString* const value = attachment.accessibilityLanguage) {
+        self.accessibilityLanguage = attachment.accessibilityLanguage;
       }
     }
-    if (NSString* const value = attachment.accessibilityLanguage) {
-      self.accessibilityLanguage = attachment.accessibilityLanguage;
-    }
-  }
+#endif
+    
+#if TARGET_OS_OSX
+#endif
   return self;
 }
 
@@ -373,14 +388,14 @@ static STUTextAttachmentColorInfo attachmentColorInfoForColorSpace(CGColorSpaceR
 
 - (nullable instancetype)initWithCoder:(NSCoder*)decoder {
   if ((self = [super initWithCoder:decoder])) {
-    if (!(_image = [decoder decodeObjectOfClass:UIImage.class forKey:@"image"])) {
+    if (!(_image = [decoder decodeObjectOfClass:STUImage.class forKey:@"image"])) {
       return nil;
     }
   }
   return self;
 }
 
-- (UIImage*)image { return _image; }
+- (STUImage*)image { return _image; }
 
 - (void)drawInContext:(CGContextRef __unused)context imageBounds:(CGRect)imageBounds {
   [self->_image drawInRect:imageBounds];
@@ -420,7 +435,7 @@ namespace stu_label {
   struct AttachmentRange : NSRange {
     STUTextAttachment* __unsafe_unretained attachment;
 
-    UInt end() const { return location + length; }
+    stu::UInt end() const { return location + length; }
   };
 
   template <int n>
@@ -448,7 +463,7 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
       newAttributedString = [attributedString mutableCopy];
     }
   };
-  const UInt length = attributedString.length;
+  const stu::UInt length = attributedString.length;
   for (const AttachmentRange& range : ranges) {
     NSRange effectiveRange;
     if (![attributedString attribute:(__bridge NSAttributedStringKey)kCTRunDelegateAttributeName
@@ -468,7 +483,7 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
       [newAttributedString removeAttribute:fixForRDAR36622225AttributeName
                                      range:NSRange{range.location, 1}];
     }
-    for (UInt i = 1; i < range.length; ++i) {
+    for (stu::UInt i = 1; i < range.length; ++i) {
       id value = [attributedString attribute:fixForRDAR36622225AttributeName
                                      atIndex:range.location + i
                        longestEffectiveRange:&effectiveRange
@@ -518,7 +533,7 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
                                          (__bridge NSAttributedStringKey)kCTRunDelegateAttributeName:
                                           [imageAttachment newCTRunDelegate]}
                                  range:range];
-    for (UInt i = 1; i < range.length; ++i) {
+    for (stu::UInt i = 1; i < range.length; ++i) {
       [newAttributedString addAttribute:fixForRDAR36622225AttributeName
                                   value:@(i) range:NSRange{range.location + i, 1}];
     }
@@ -577,10 +592,10 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
 
 - (NSAttributedString*)stu_attributedStringByReplacingSTUAttachmentsWithStringRepresentations {
   const Class stuTextAttachmentClass = stu_label::stuTextAttachmentClass();
-  const UInt length = self.length;
+  const stu::UInt length = self.length;
   __block NSMutableAttributedString* newAttributedString = nil;
   __block NSMutableString* newString = nil;
-  __block UInt indexOffset = 0;
+  __block stu::UInt indexOffset = 0;
   [self enumerateAttribute:STUAttachmentAttributeName inRange:NSRange{0, length}
                    options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                 usingBlock:^(id value, NSRange stringRange, BOOL*)
@@ -594,10 +609,10 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
     }
     // We replace each char in the range individually. We don't bother checking whether each char
     // actually equals 0xFFFC.
-    for (const UInt indexWithoutOffset : Range{stringRange}.iter()) {
-      const UInt index = indexWithoutOffset + indexOffset;
+    for (const stu::UInt indexWithoutOffset : Range{stringRange}.iter()) {
+      const stu::UInt index = indexWithoutOffset + indexOffset;
       NSString* stringRepresention = attachment.stringRepresentation;
-      UInt n;
+        stu::UInt n;
       if (stringRepresention != nil) {
         n = stringRepresention.length;
       } else {
@@ -620,7 +635,7 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
         if (STU_LIKELY(index != 0)) {
           attributes = [newAttributedString attributesAtIndex:index - 1 effectiveRange:nil];
         } else {
-          __block UInt indexAfterAttachments = 0;
+          __block stu::UInt indexAfterAttachments = 0;
           [newAttributedString
              enumerateAttribute:STUAttachmentAttributeName
                         inRange:Range{stringRange.length, length}

@@ -7,7 +7,9 @@
 #import <pthread.h>
 
 #import <stdatomic.h>
+
 #import "STUScreen.h"
+
 #if TARGET_OS_IOS
   #define STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT 1
 #else
@@ -33,6 +35,7 @@ static void updateMainScreenProperties(void) {
   STUScreen * const mainScreen = STUScreen.mainScreen;
   STU_ASSERT(mainScreen || !STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT);
   if (mainScreen) {
+#if TARGET_OS_IPHONE
       portraitSize = mainScreen.fixedCoordinateSpace.bounds.size;
       scale = mainScreen.scale;
       if (@available(iOS 10, tvOS 10, *)) {
@@ -40,6 +43,18 @@ static void updateMainScreenProperties(void) {
       } else { // We don't try to support wide colors on an old iPad Pro running iOS 9.
       displayGamut = STUDisplayGamutSRGB;
       }
+#endif
+      
+#if TARGET_OS_OSX
+      portraitSize = mainScreen.frame.size;
+      scale = mainScreen.backingScaleFactor;
+      if ([mainScreen canRepresentDisplayGamut:NSDisplayGamutP3]) {
+          displayGamut = STUDisplayGamutP3;
+      } else {
+          displayGamut = STUDisplayGamutSRGB;
+      }
+      
+#endif
   } else {
       portraitSize = CGSizeZero;
       scale = 1;
@@ -58,6 +73,7 @@ static void updateMainScreenProperties(void) {
 #undef store
 }
 
+#if TARGET_OS_IPHONE
 @interface UIScreen (STUMainScreenProperties)
 + (void)load;
 @end
@@ -83,6 +99,10 @@ static void updateMainScreenProperties(void) {
 #endif
 }
 @end
+#endif
+
+#if TARGET_OS_OSX
+#endif
 
 #if STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT
   #define load(var) var

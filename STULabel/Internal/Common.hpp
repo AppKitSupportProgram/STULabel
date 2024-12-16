@@ -18,7 +18,15 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreText/CoreText.h>
+#import <Foundation/Foundation.h>
+#import "STUMultiplePlatformAdapter.h"
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
 
 namespace stu_label {
   using namespace stu;

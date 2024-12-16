@@ -70,7 +70,7 @@ private:
   };
 
   class SuperlayerRef {
-    UInt taggedPointer_;
+      stu::UInt taggedPointer_;
   public:
     explicit SuperlayerRef(CALayer* __unsafe_unretained layer,
                            OutIsUIScrollViewLayer outIsUIScrollViewLayer)
@@ -80,15 +80,15 @@ private:
       static Class uiScrollViewClass;
       static dispatch_once_t once;
       dispatch_once_f(&once, nullptr, [](void *) {
-        uiViewClass = UIView.class;
-        uiScrollViewClass = UIScrollView.class;
+        uiViewClass = STUView.class;
+        uiScrollViewClass = STUScrollView.class;
       });
 
-      taggedPointer_ = reinterpret_cast<UInt>((__bridge void*)layer);
+      taggedPointer_ = reinterpret_cast<stu::UInt>((__bridge void*)layer);
       STU_ASSERT(!(taggedPointer_ & 3));
       taggedPointer_ |= [layer masksToBounds] ? 1u : 0;
       if (const __unsafe_unretained id delegate = layer.delegate;
-          [delegate isKindOfClass:uiViewClass] && static_cast<UIView*>(delegate).layer == layer)
+          [delegate isKindOfClass:uiViewClass] && static_cast<STUView*>(delegate).layer == layer)
       {
         taggedPointer_ |= 2;
         outIsUIScrollViewLayer.value = [delegate isKindOfClass:uiScrollViewClass];
@@ -98,13 +98,13 @@ private:
     }
 
     Unretained<CALayer* __nonnull> layer() const {
-      return (__bridge CALayer*)reinterpret_cast<void*>(taggedPointer_ & ~UInt{3});
+      return (__bridge CALayer*)reinterpret_cast<void*>(taggedPointer_ & ~stu::UInt{3});
     }
 
     bool masksToBounds() const { return taggedPointer_ & 1; }
 
     void setMasksToBounds(bool value) {
-      taggedPointer_ = (taggedPointer_ & ~UInt{1}) | value;
+      taggedPointer_ = (taggedPointer_ & ~stu::UInt{1}) | value;
     }
 
     bool isViewLayer() const { return taggedPointer_ & 2; }

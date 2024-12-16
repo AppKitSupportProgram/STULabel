@@ -116,7 +116,7 @@ class LabelLayer : public LabelPropertiesCRTPBase<LabelLayer> {
   LabelLayer* nextLayerThatHasImage_;
 
   CGSize size_;
-  UIEdgeInsets contentInsets_;
+  STUEdgeInsets contentInsets_;
   LabelParameters params_;
   CGFloat screenScale_{0};
   DisplayScale sizeThatFitsDisplayScale_{DisplayScale::one()};
@@ -141,8 +141,8 @@ class LabelLayer : public LabelPropertiesCRTPBase<LabelLayer> {
   NSObject<STULabelLayerDelegate>* __weak labelLayerDelegate_;
 
   NSString* string_;
-  UIFont* font_;
-  UIColor* textColor_;
+  STUFont* font_;
+  STUColor* textColor_;
   NSTextAlignment textAlignment_;
   NSDictionary<NSAttributedStringKey, id>* cachedAttributesDictionary_;
 
@@ -199,7 +199,7 @@ public:
 
   /// MARK: - hasWindow and screen scale
 
-  void didMoveToWindow(UIWindow* window) {
+  void didMoveToWindow(STUWindow* window) {
     hasWindowStatus_ = window ? LayerHasWindowStatus::hasWindow : LayerHasWindowStatus::noWindow;
     if (window && displaysAsynchronously_ && !hasContent_ && inUIViewAnimation()) {
       prefersSynchronousDrawingForNextDisplay_ = true;
@@ -215,7 +215,7 @@ private:
     return window(self) != nil;
   }
 
-  void updateScreenProperties(UIWindow* __unsafe_unretained window) {
+  void updateScreenProperties(STUWindow* __unsafe_unretained window) {
     if (STUScreen* const screen = window.stu_screen) {
       screenScale_ = screen.scale;
       if (@available(iOS 10, tvOS 10, *)) {
@@ -366,7 +366,7 @@ public:
         stringIsEmpty_ ? nil : [attributedString_ attributesAtIndex:0 effectiveRange:nil];
       if (!font_) {
         font_ = [attributes objectForKey:NSFontAttributeName]
-                ?: (__bridge UIFont*)defaultCoreTextFont();
+                ?: (__bridge STUFont*)defaultCoreTextFont();
       }
       if (!textColor_) {
         textColor_ = [attributes objectForKey:NSForegroundColorAttributeName];
@@ -388,28 +388,34 @@ public:
 
 private:
   STU_NO_INLINE
-  static Unretained<UIFont* __nonnull> defaultFont() {
-    STU_STATIC_CONST_ONCE(UIFont*, value, [[UILabel alloc] init].font);
+  static Unretained<STUFont* __nonnull> defaultFont() {
+#if TARGET_OS_IPHONE
+      STU_STATIC_CONST_ONCE(STUFont*, value, [[UILabel alloc] init].font);
+#endif
+      
+#if TARGET_OS_OSX
+      STU_STATIC_CONST_ONCE(STUFont*, value, [[NSTextField alloc] init].font);
+#endif
     STU_ANALYZER_ASSUME(value != nil);
     return value;
   }
 
 public:
-  UIFont* font() {
+  STUFont* font() {
     if (font_) {
       return font_;
     }
     if (stringIsEmpty_ || string_) {
       return defaultFont().unretained;
     }
-    if (UIFont* const font = [[attributedString_ attributesAtIndex:0 effectiveRange:nil]
+    if (STUFont* const font = [[attributedString_ attributesAtIndex:0 effectiveRange:nil]
                                 objectForKey:NSFontAttributeName])
     {
       return font;
     }
-    return (__bridge UIFont*)defaultCoreTextFont();
+    return (__bridge STUFont*)defaultCoreTextFont();
   }
-  void setFont(UIFont* __unsafe_unretained font) {
+  void setFont(STUFont* __unsafe_unretained font) {
     if (!font) {
       font = defaultFont().unretained;
     }
@@ -422,20 +428,20 @@ public:
     invalidateShapedString();
   }
 
-  UIColor* textColor() const {
+  STUColor* textColor() const {
     if (textColor_) {
       return textColor_;
     }
     if (!stringIsEmpty_ && attributedString_ && !string_) {
-      if (UIColor* const color = [[attributedString_ attributesAtIndex:0 effectiveRange:nil]
+      if (STUColor* const color = [[attributedString_ attributesAtIndex:0 effectiveRange:nil]
                                     objectForKey:NSForegroundColorAttributeName])
       {
         return color;
       }
     }
-    return UIColor.blackColor;
+    return STUColor.blackColor;
   }
-  void setTextColor(UIColor* __unsafe_unretained textColor) {
+  void setTextColor(STUColor* __unsafe_unretained textColor) {
     if (textColor == textColor_) return;
     textColor_ = textColor;
     invalidatedStringAttributes_ |= InvalidatedStringAttributes::textColor;
@@ -503,9 +509,9 @@ private:
 
   static STU_NO_INLINE
   Unretained<NSParagraphStyle* __nonnull> defaultParagraphStyle(NSTextAlignment textAlignment) {
-    const UInt n = 5;
+    const stu::UInt n = 5;
     static std::atomic<CFTypeRef> styles[n];
-    const UInt index = static_cast<UInt>(textAlignment);
+    const stu::UInt index = static_cast<stu::UInt>(textAlignment);
     STU_CHECK(index < n);
     if (CFTypeRef const style = styles[index].load(std::memory_order_acquire)) {
       return (__bridge NSMutableParagraphStyle*)style;
@@ -548,7 +554,7 @@ private:
                                                   textAlignment == NSTextAlignmentNatural ? nil
                                                   : defaultParagraphStyle(textAlignment).unretained;
     if (string_) {
-      UIFont* __unsafe_unretained font = font_ ?: defaultFont().unretained;
+      STUFont* __unsafe_unretained font = font_ ?: defaultFont().unretained;
       NSDictionary<NSAttributedStringKey, id>* attributes;
       if (!defaultParaStyle) {
         if (!textColor_) {
@@ -634,10 +640,10 @@ public:
 
   /// MARK: - Size, content insets and vertical alignment
 private:
-  void setContentInsets(bool directional, UIEdgeInsets contentInsets) {
+  void setContentInsets(bool directional, STUEdgeInsets contentInsets) {
     contentInsetsAreDirectional_ = directional;
     contentInsets = clampNonNegativeEdgeInsetsInput(contentInsets);
-    if (!UIEdgeInsetsEqualToEdgeInsets(contentInsets, contentInsets_)) {
+    if (!STUEdgeInsetsEqualToEdgeInsets(contentInsets, contentInsets_)) {
       contentInsets_ = contentInsets;
       const auto changeStatus = params_.setEdgeInsets(contentInsets);
       if (!!changeStatus) {
@@ -647,7 +653,7 @@ private:
   }
 
 public:
-  void setContentInsets(UIEdgeInsets contentInsets) {
+  void setContentInsets(STUEdgeInsets contentInsets) {
     setContentInsets(false, contentInsets);
   }
 
@@ -906,13 +912,13 @@ public:
     }
   }
 
-  void setOverrideTextColor(UIColor* __unsafe_unretained color) {
+  void setOverrideTextColor(STUColor* __unsafe_unretained color) {
     if (params_.setOverrideTextColor(color)) {
       invalidateImage();
     }
   }
 
-  void setOverrideLinkColor(UIColor* __unsafe_unretained color) {
+  void setOverrideLinkColor(STUColor* __unsafe_unretained color) {
     if (params_.setOverrideLinkColor(color)) {
       if (textFrameInfoIsValidForCurrentSize_ && (textFrameInfo_.flags & STUTextFrameHasLink)) {
         invalidateImage();
@@ -1638,7 +1644,7 @@ private:
 
   static LabelLayer* lastLabelLayerThatHasImage;
 
-  static UInt enteredBackground;
+  static stu::UInt enteredBackground;
 
   void registerAsLabelLayerThatHasImage() {
     if (isRegisteredAsLayerThatMayHaveImage_) return;
@@ -1650,25 +1656,30 @@ private:
     if (STU_UNLIKELY(!didRegisterForNotifications)) {
       STU_ASSERT(is_main_thread());
       didRegisterForNotifications = true;
-      NSNotificationCenter* const notificationCenter = NSNotificationCenter.defaultCenter;
-      NSOperationQueue* const mainQueue = NSOperationQueue.mainQueue;
-      [notificationCenter addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
-                                      object:nil queue:mainQueue
-                                  usingBlock:^(NSNotification* notification __unused) {
-        clearContentImagesOfLabelLayersWithoutWindow();
-      }];
-      [notificationCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
-                                      object:nil queue:mainQueue
-                                  usingBlock:^(NSNotification* notification __unused) {
-        enteredBackground += 1;
-        removeContentCGImagesOfLabelLayersWithoutWindow();
-      }];
-      [notificationCenter addObserverForName:UIApplicationWillEnterForegroundNotification
-                                      object:nil queue:mainQueue
-                                  usingBlock:^(NSNotification* notification __unused) {
-        enteredBackground -= 1;
-        restoreContentCGImagesOfLabelLayersWithoutWindowWhereNotPurged();
-      }];
+#if TARGET_OS_IPHONE
+        NSNotificationCenter* const notificationCenter = NSNotificationCenter.defaultCenter;
+        NSOperationQueue* const mainQueue = NSOperationQueue.mainQueue;
+        [notificationCenter addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
+                                        object:nil queue:mainQueue
+                                    usingBlock:^(NSNotification* notification __unused) {
+          clearContentImagesOfLabelLayersWithoutWindow();
+        }];
+        [notificationCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
+                                        object:nil queue:mainQueue
+                                    usingBlock:^(NSNotification* notification __unused) {
+          enteredBackground += 1;
+          removeContentCGImagesOfLabelLayersWithoutWindow();
+        }];
+        [notificationCenter addObserverForName:UIApplicationWillEnterForegroundNotification
+                                        object:nil queue:mainQueue
+                                    usingBlock:^(NSNotification* notification __unused) {
+          enteredBackground -= 1;
+          restoreContentCGImagesOfLabelLayersWithoutWindowWhereNotPurged();
+        }];
+#endif
+        
+#if TARGET_OS_OSX
+#endif
     }
     if (lastLabelLayerThatHasImage) {
       STU_ASSERT(lastLabelLayerThatHasImage->nextLayerThatHasImage_ == nil);
@@ -1761,7 +1772,7 @@ private:
   }
 };
 
-UInt LabelLayer::enteredBackground;
+stu::UInt LabelLayer::enteredBackground;
 LabelLayer* LabelLayer::lastLabelLayerThatHasImage;
 
 void LabelRenderTask::copyLayoutInfoTo(LabelLayer& label) const {
@@ -1898,7 +1909,7 @@ auto LabelPrerenderer::WaitingLabelSetNode::get(LabelLayer& layer) -> WaitingLab
   return layer.waitingSetNode_;
 }
 
-- (void)stu_didMoveToWindow:(UIWindow*)window {
+- (void)stu_didMoveToWindow:(STUWindow*)window {
   impl.didMoveToWindow(window);
 }
 
@@ -2041,17 +2052,17 @@ STU_REENABLE_CLANG_WARNING
   impl.setText(string);
 }
 
-- (UIFont*)font {
+- (STUFont*)font {
   return impl.font();
 }
-- (void)setFont:(nullable UIFont*)font {
+- (void)setFont:(nullable STUFont*)font {
   impl.setFont(font);
 }
 
-- (UIColor*)textColor {
+- (STUColor*)textColor {
   return impl.textColor();
 }
-- (void)setTextColor:(nullable UIColor* __unsafe_unretained)textColor {
+- (void)setTextColor:(nullable STUColor* __unsafe_unretained)textColor {
   impl.setTextColor(textColor);
 }
 
@@ -2069,10 +2080,10 @@ STU_REENABLE_CLANG_WARNING
   impl.setDefaultTextAlignment(defaultTextAlignment);
 }
 
-- (UIUserInterfaceLayoutDirection)userInterfaceLayoutDirection {
+- (STUUserInterfaceLayoutDirection)userInterfaceLayoutDirection {
   return impl.userInterfaceLayoutDirection();
 }
-- (void)setUserInterfaceLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
+- (void)setUserInterfaceLayoutDirection:(STUUserInterfaceLayoutDirection)layoutDirection {
   impl.setUserInterfaceLayoutDirection(layoutDirection);
 }
 
@@ -2090,10 +2101,10 @@ STU_REENABLE_CLANG_WARNING
   impl.setVerticalAlignment(verticalAlignment);
 }
 
-- (UIEdgeInsets)contentInsets {
+- (STUEdgeInsets)contentInsets {
   return impl.contentInsets();
 }
-- (void)setContentInsets:(UIEdgeInsets)contentInsets {
+- (void)setContentInsets:(STUEdgeInsets)contentInsets {
   impl.setContentInsets(contentInsets);
 }
 
@@ -2218,17 +2229,17 @@ STU_REENABLE_CLANG_WARNING
   impl.setOverrideColorsApplyToHighlightedText(overrideColorsApplyToHighlightedText);
 }
 
-- (nullable UIColor*)overrideTextColor {
+- (nullable STUColor*)overrideTextColor {
   return impl.params().overrideTextColor().unretained;
 }
-- (void)setOverrideTextColor:(nullable UIColor* __unsafe_unretained)overrideTextColor {
+- (void)setOverrideTextColor:(nullable STUColor* __unsafe_unretained)overrideTextColor {
   impl.setOverrideTextColor(overrideTextColor);
 }
 
-- (nullable UIColor*)overrideLinkColor {
+- (nullable STUColor*)overrideLinkColor {
   return impl.params().overrideLinkColor().unretained;
 }
-- (void)setOverrideLinkColor:(nullable UIColor* __unsafe_unretained)overrideLinkColor {
+- (void)setOverrideLinkColor:(nullable STUColor* __unsafe_unretained)overrideLinkColor {
   impl.setOverrideLinkColor(overrideLinkColor);
 }
 

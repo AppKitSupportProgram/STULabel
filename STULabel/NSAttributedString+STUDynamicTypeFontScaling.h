@@ -1,7 +1,8 @@
 // Copyright 2017–2018 Stephan Tolksdorf
 
+#import <Foundation/Foundation.h>
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (STUDynamicTypeScaling)
@@ -21,3 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
+

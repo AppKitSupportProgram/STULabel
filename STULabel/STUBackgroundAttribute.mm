@@ -23,12 +23,12 @@ const NSAttributedStringKey STUBackgroundAttributeName = @"STUBackground";
 @end
 
 #define FOR_ALL_FIELDS(f) \
-  f(UIColor *, color) \
+  f(STUColor *, color) \
   f(bool, fillTextLineGaps) \
   f(bool, extendTextLinesToCommonHorizontalBounds) \
   f(CGFloat, cornerRadius) \
-  f(UIEdgeInsets, edgeInsets) \
-  f(UIColor *, borderColor) \
+  f(STUEdgeInsets, edgeInsets) \
+  f(STUColor *, borderColor) \
   f(CGFloat, borderWidth) \
   f(NSInteger, discriminator)
 
@@ -62,7 +62,7 @@ const NSAttributedStringKey STUBackgroundAttributeName = @"STUBackground";
   _cornerRadius = clampFloatInput(cornerRadius);
 }
 
-- (void)setEdgeInsets:(UIEdgeInsets)edgeInsets {
+- (void)setEdgeInsets:(STUEdgeInsets)edgeInsets {
   _edgeInsets = clampEdgeInsetsInput(edgeInsets);
 }
 
@@ -130,7 +130,7 @@ FOR_ALL_FIELDS(DEFINE_GETTER)
 }
 
 - (NSUInteger)hash {
-  const auto h = hash((UInt{_fillTextLineGaps} << 8) | _extendTextLinesToCommonHorizontalBounds,
+  const auto h = hash((stu::UInt{_fillTextLineGaps} << 8) | _extendTextLinesToCommonHorizontalBounds,
                       _discriminator, _cornerRadius, _borderWidth, _color);
                       // Doesn't include borderColor and edgeInsets.
   return narrow_cast<NSUInteger>(h);

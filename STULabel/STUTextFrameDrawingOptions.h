@@ -50,10 +50,10 @@ NS_SWIFT_NAME(STUTextFrame.DrawingOptions) STU_EXPORT
 @property (nonatomic) bool overrideColorsApplyToHighlightedText;
 
 /// Default value: `nil`
-@property (nonatomic, nullable) UIColor *overrideTextColor;
+@property (nonatomic, nullable) STUColor *overrideTextColor;
 
 /// Default value: `nil`
-@property (nonatomic, nullable) UIColor *overrideLinkColor;
+@property (nonatomic, nullable) STUColor *overrideLinkColor;
 
 @end
 

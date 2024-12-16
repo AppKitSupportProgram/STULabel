@@ -13,7 +13,7 @@ namespace stu_label {
 static Rect<CGFloat> renderBoundsForTextFrameImageBounds(Rect<CGFloat> imageBounds,
                                                          const LabelTextFrameInfo& info,
                                                          CGSize sizeIncludingEdgeInsets,
-                                                         UIEdgeInsets edgeInsets,
+                                                         STUEdgeInsets edgeInsets,
                                                          CGFloat tolerance,
                                                          Out<bool> outTextFrameExceedsBounds)
 {
@@ -192,7 +192,13 @@ LabelTextFrameRenderInfo labelTextFrameRenderInfo(const STUTextFrame* __unsafe_u
                                 && (   mode == LabelRenderMode::drawInCAContext
                                     || (mode == LabelRenderMode::image && isGrayscale));
 
-  const bool isIOS9 = NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_9_x_Max;
+#if TARGET_OS_IPHONE
+    const bool isIOS9 = NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_9_x_Max;
+#endif
+    
+#if TARGET_OS_OSX
+    const bool isIOS9 = false;
+#endif
 
   const bool useExtendedColor =
                !isIOS9

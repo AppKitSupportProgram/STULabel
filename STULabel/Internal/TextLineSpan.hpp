@@ -30,7 +30,7 @@ struct HorizontalInsets {
   {}
 
   explicit STU_CONSTEXPR
-  HorizontalInsets(UIEdgeInsets edgeInsets)
+  HorizontalInsets(STUEdgeInsets edgeInsets)
   : left{edgeInsets.left}, right{edgeInsets.right}
   {}
 };
@@ -58,9 +58,9 @@ struct TaggedStringRange {
   Int32 paragraphIndex;
   bool hasSpan : 1;
   UInt32 tagIndex : 31;
-  UInt tag;
+    stu::UInt tag;
 
-  UInt taggedNonOverriddenStylePointer_;
+    stu::UInt taggedNonOverriddenStylePointer_;
 
   STU_INLINE_T
   bool styleWasOverridden() const {
@@ -69,7 +69,7 @@ struct TaggedStringRange {
 
   STU_INLINE_T
   const TextStyle* nonOverriddenStyle() const {
-    return reinterpret_cast<const TextStyle*>(taggedNonOverriddenStylePointer_ & ~UInt{1});
+    return reinterpret_cast<const TextStyle*>(taggedNonOverriddenStylePointer_ & ~stu::UInt{1});
   }
 };
 
@@ -125,8 +125,8 @@ TaggedRangeLineSpans findAndSortTaggedRangeLineSpans(
                        TextFlags tagTextFlagsMask,
                        SeparateParagraphs separateParagraphs,
                        // 0 is interpreted as a missing tag.
-                       FunctionRef<UInt(const TextStyle&)> tagger,
-                       Optional<FunctionRef<bool (UInt, UInt)>> tagEquality);
+                       FunctionRef<stu::UInt(const TextStyle&)> tagger,
+                       Optional<FunctionRef<bool (stu::UInt, stu::UInt)>> tagEquality);
 
 } // stu_label
 

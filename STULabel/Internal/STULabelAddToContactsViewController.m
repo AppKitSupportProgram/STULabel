@@ -4,6 +4,7 @@
 
 #import <ContactsUI/ContactsUI.h>
 
+#if TARGET_OS_IPHONE
 @interface STULabelAddToContactsViewController() <CNContactViewControllerDelegate>
 @end
 @implementation STULabelAddToContactsViewController
@@ -49,3 +50,8 @@
 }
 
 @end
+
+#endif
+
+#if TARGET_OS_OSX
+#endif

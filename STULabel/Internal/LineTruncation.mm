@@ -505,7 +505,7 @@ static ExcisedGlyphRange findRangeToExciseForStartOrEndTruncation(
                                                      NSRange(stringRange))};
       if (range == stringRange) break;
       if (STU_UNLIKELY(!range.contains(stringRange) || !fullStringRange.contains(range))) {
-        truncationRangeAdjusterReturnedInvalidRange(truncationRangeAdjuster, Range<UInt>{range},
+        truncationRangeAdjusterReturnedInvalidRange(truncationRangeAdjuster, Range<stu::UInt>{range},
                                                     line.attributedString.attributedString,
                                                     NSRange(fullStringRange),
                                                     NSRange(stringRange));
@@ -669,7 +669,7 @@ ExcisedGlyphRange findRangeToExciseForMiddleTruncation(
                                                      NSRange(stringRange))};
       if (range == stringRange) break;
       if (STU_UNLIKELY(!range.contains(stringRange) || !truncationRange.contains(range))) {
-        truncationRangeAdjusterReturnedInvalidRange(truncationRangeAdjuster, Range<UInt>{range},
+        truncationRangeAdjusterReturnedInvalidRange(truncationRangeAdjuster, Range<stu::UInt>{range},
                                                     line.attributedString.attributedString,
                                                     NSRange(truncationRange),
                                                     NSRange(stringRange));

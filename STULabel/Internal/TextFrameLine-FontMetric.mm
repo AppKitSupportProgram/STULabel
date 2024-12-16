@@ -8,8 +8,8 @@ template <FontMetric metric>
 STU_INLINE
 CGFloat getRunFontMetric(GlyphRunRef run) {
   const CTFont* font = run.font();
-       if constexpr (metric == FontMetric::xHeight)   return [(__bridge UIFont*)font xHeight];
-  else if constexpr (metric == FontMetric::capHeight) return [(__bridge UIFont*)font capHeight];
+       if constexpr (metric == FontMetric::xHeight)   return [(__bridge STUFont*)font xHeight];
+  else if constexpr (metric == FontMetric::capHeight) return [(__bridge STUFont*)font capHeight];
   else static_assert(false && metric == metric);
 }
 

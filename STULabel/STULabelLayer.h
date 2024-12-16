@@ -4,7 +4,17 @@
 #import "STULayerWithNullDefaultActions.h"
 #import "STUTextFrameAccessibilityElement.h"
 
+#import "Internal/STUMultiplePlatformAdapter.h"
+
+#import <Foundation/Foundation.h>
+
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
 
 @protocol STULabelLayerDelegate;
 
@@ -35,9 +45,9 @@ STU_EXPORT
 
 @property (nonatomic, copy, null_resettable) NSString *text;
 
-@property (nonatomic, null_resettable) UIFont *font;
+@property (nonatomic, null_resettable) STUFont *font;
 
-@property (nonatomic, null_resettable) UIColor *textColor;
+@property (nonatomic, null_resettable) STUColor *textColor;
 
 @property (nonatomic) NSTextAlignment textAlignment;
 
@@ -58,7 +68,7 @@ STU_EXPORT
 /// @c userInterfaceLayoutDirection to the value of the view's
 /// @c effectiveUserInterfaceLayoutDirection and updates the value when the view's
 /// @c semanticContentAttribute or @c traitCollection change.
-@property (nonatomic) UIUserInterfaceLayoutDirection userInterfaceLayoutDirection;
+@property (nonatomic) STUUserInterfaceLayoutDirection userInterfaceLayoutDirection;
 
 /// The @c STUShapedString instance used by the label for layout and rendering purposes.
 ///
@@ -79,7 +89,7 @@ STU_EXPORT
 /// Default value: @c .top
 @property (nonatomic) STULabelVerticalAlignment verticalAlignment;
 
-@property (nonatomic) UIEdgeInsets contentInsets;
+@property (nonatomic) STUEdgeInsets contentInsets;
 
 @property (nonatomic) STUDirectionalEdgeInsets directionalContentInsets;
 
@@ -157,9 +167,9 @@ STU_REENABLE_CLANG_WARNING
 /// Default value: true
 @property (nonatomic) bool overrideColorsApplyToHighlightedText;
 
-@property (nonatomic, nullable) UIColor *overrideTextColor;
+@property (nonatomic, nullable) STUColor *overrideTextColor;
 
-@property (nonatomic, nullable) UIColor *overrideLinkColor;
+@property (nonatomic, nullable) STUColor *overrideLinkColor;
 
 @property (nonatomic, strong, nullable) STULabelDrawingBlock drawingBlock;
 

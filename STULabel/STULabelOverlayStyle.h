@@ -2,7 +2,15 @@
 
 #import "STUDefines.h"
 
+#import <Foundation/Foundation.h>
+#import "Internal/STUMultiplePlatformAdapter.h"
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,9 +33,9 @@ STU_EXPORT
 
 - (instancetype)copyWithUpdates:(void (^ STU_NOESCAPE)(STULabelOverlayStyleBuilder *builder))block;
 
-@property (readonly, nullable) UIColor *color;
+@property (readonly, nullable) STUColor *color;
 
-@property (readonly) UIEdgeInsets edgeInsets;
+@property (readonly) STUEdgeInsets edgeInsets;
 
 @property (readonly) bool extendTextLinesToCommonHorizontalBounds;
 
@@ -35,7 +43,7 @@ STU_EXPORT
 
 @property (readonly) CGFloat borderWidth;
 
-@property (readonly, nullable) UIColor *borderColor;
+@property (readonly, nullable) STUColor *borderColor;
 
 @property (readonly) CFTimeInterval fadeInDuration;
 
@@ -54,9 +62,9 @@ STU_EXPORT
   NS_SWIFT_NAME(init(_:))
   NS_DESIGNATED_INITIALIZER;
 
-@property (nonatomic, nullable) UIColor *color;
+@property (nonatomic, nullable) STUColor *color;
 
-@property (nonatomic) UIEdgeInsets edgeInsets;
+@property (nonatomic) STUEdgeInsets edgeInsets;
 
 @property (nonatomic) bool extendTextLinesToCommonHorizontalBounds;
 
@@ -64,7 +72,7 @@ STU_EXPORT
 
 @property (nonatomic) CGFloat borderWidth;
 
-@property (nonatomic, nullable) UIColor *borderColor;
+@property (nonatomic, nullable) STUColor *borderColor;
 
 @property (nonatomic) CFTimeInterval fadeInDuration;
 

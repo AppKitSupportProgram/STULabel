@@ -27,10 +27,10 @@ using namespace stu_label;
   prerenderer->setDefaultTextAlignment(defaultTextAlignment);
 }
 
-- (UIUserInterfaceLayoutDirection)userInterfaceLayoutDirection {
+- (STUUserInterfaceLayoutDirection)userInterfaceLayoutDirection {
   return prerenderer->userInterfaceLayoutDirection();
 }
-- (void)setUserInterfaceLayoutDirection:(UIUserInterfaceLayoutDirection)userInterfaceLayoutDirection {
+- (void)setUserInterfaceLayoutDirection:(STUUserInterfaceLayoutDirection)userInterfaceLayoutDirection {
   prerenderer->setUserInterfaceLayoutDirection(userInterfaceLayoutDirection);
 }
 
@@ -47,14 +47,14 @@ using namespace stu_label;
 
 - (STULabelPrerendererSizeOptions)sizeOptions { return prerenderer->sizeOptions(); }
 
-- (UIEdgeInsets)contentInsets { return prerenderer->contentInsets(); }
+- (STUEdgeInsets)contentInsets { return prerenderer->contentInsets(); }
 
 - (STUDirectionalEdgeInsets)directionalContentInsets {
   return prerenderer->directionalContentInsets();
 }
 
 - (void)setWidth:(CGFloat)width maxHeight:(CGFloat)maxHeight
-   contentInsets:(UIEdgeInsets)contentInsets
+   contentInsets:(STUEdgeInsets)contentInsets
 {
   prerenderer->setSizeAndContentInsets(CGSize{width, maxHeight}, contentInsets,
                                        STUShrinkLabelHeightToFit);
@@ -67,7 +67,7 @@ using namespace stu_label;
 }
 
 - (void)setMaxWidth:(CGFloat)maxWidth maxHeight:(CGFloat)maxHeight
-      contentInsets:(UIEdgeInsets)contentInsets
+      contentInsets:(STUEdgeInsets)contentInsets
 {
   prerenderer->setSizeAndContentInsets(CGSize{maxWidth, maxHeight}, contentInsets,
                                        STUShrinkLabelWidthToFit | STUShrinkLabelHeightToFit);
@@ -79,7 +79,7 @@ using namespace stu_label;
                                        STUShrinkLabelWidthToFit | STUShrinkLabelHeightToFit);
 }
 
-- (void)setSize:(CGSize)size contentInsets:(UIEdgeInsets)contentInsets
+- (void)setSize:(CGSize)size contentInsets:(STUEdgeInsets)contentInsets
         options:(STULabelPrerendererSizeOptions)options
 {
   prerenderer->setSizeAndContentInsets(size, contentInsets, options);
@@ -211,17 +211,17 @@ using namespace stu_label;
   prerenderer->setOverrideColorsApplyToHighlightedText(overrideColorsApplyToHighlightedText);
 }
 
-- (nullable UIColor*)overrideTextColor  {
+- (nullable STUColor*)overrideTextColor  {
   return prerenderer->params().overrideTextColor().unretained;
 }
-- (void)setOverrideTextColor:(nullable UIColor* __unsafe_unretained)overrideTextColor {
+- (void)setOverrideTextColor:(nullable STUColor* __unsafe_unretained)overrideTextColor {
   prerenderer->setOverrideTextColor(overrideTextColor);
 }
 
-- (nullable UIColor*)overrideLinkColor  {
+- (nullable STUColor*)overrideLinkColor  {
   return prerenderer->params().overrideLinkColor().unretained;
 }
-- (void)setOverrideLinkColor:(nullable UIColor* __unsafe_unretained)overrideLinkColor {
+- (void)setOverrideLinkColor:(nullable STUColor* __unsafe_unretained)overrideLinkColor {
   prerenderer->setOverrideLinkColor(overrideLinkColor);
 }
 

@@ -26,23 +26,23 @@ namespace stu_label {
 
 /// An owning STUTileLayer pointer.
 class SpareTileLayer {
-  UInt taggedPointer_;
+  stu::UInt taggedPointer_;
 public:
   explicit SpareTileLayer(STUTileLayer* layer, bool hasSuperlayer) {
-    taggedPointer_ = reinterpret_cast<UInt>((__bridge_retained void*)layer);
+    taggedPointer_ = reinterpret_cast<stu::UInt>((__bridge_retained void*)layer);
     STU_DEBUG_ASSERT(!(taggedPointer_ & 1) && (taggedPointer_ || !hasSuperlayer));
     taggedPointer_ |= hasSuperlayer;
   }
 
   Unretained<STUTileLayer* __nullable> layer() const {
-    return (__bridge STUTileLayer*)reinterpret_cast<void*>(taggedPointer_ & ~UInt{1});
+    return (__bridge STUTileLayer*)reinterpret_cast<void*>(taggedPointer_ & ~stu::UInt{1});
   }
 
   bool hasSuperlayer() const { return taggedPointer_ & 1; }
 
   void removeFromSuperlayer() {
     [layer().unretained removeFromSuperlayer];
-    taggedPointer_ = taggedPointer_ & ~UInt{1};
+    taggedPointer_ = taggedPointer_ & ~stu::UInt{1};
   }
 
 private:
@@ -308,7 +308,7 @@ public:
          STU_TRACE("Render: (%i, %i)", tile.location().x, tile.location().y);
          tile.render(displayScale_, inverseDisplayScale_, imageFormat_, drawingBlock_);
       } else {
-        dispatch_apply(sign_cast(displayTiles.count()), maximumPriorityQueue(), ^(UInt index) {
+        dispatch_apply(sign_cast(displayTiles.count()), maximumPriorityQueue(), ^(stu::UInt index) {
           Tile& tile = *displayTiles[sign_cast(index)];
           STU_TRACE("Render in parallel: (%i, %i)", tile.location().x, tile.location().y);
           tile.render(displayScale_, inverseDisplayScale_, imageFormat_, drawingBlock_);
@@ -805,12 +805,12 @@ private:
     const auto newTileColumnCount = newTileRect.width();
     const auto newTileCount = newTileColumnCount*newTileRect.height();
     // Find new tiles that we can patch together from existing images.
-    Vector<UInt, 5> newTilesWithImagesBitArray;
-    const int uintBits = IntegerTraits<UInt>::bits;
-    const auto bitArrayWordAndMask = [&](Int index) STU_INLINE_LAMBDA -> Pair<UInt&, UInt> {
+    Vector<stu::UInt, 5> newTilesWithImagesBitArray;
+    const int uintBits = IntegerTraits<stu::UInt>::bits;
+    const auto bitArrayWordAndMask = [&](Int index) STU_INLINE_LAMBDA -> Pair<stu::UInt&, stu::UInt> {
       const Int i = sign_cast(sign_cast(index)/uintBits);
       const Int j = sign_cast(sign_cast(index)%uintBits);
-      return {newTilesWithImagesBitArray[i], UInt{1} << j};
+      return {newTilesWithImagesBitArray[i], stu::UInt{1} << j};
     };
     newTilesWithImagesBitArray.append(repeat(0u, (newTileCount + (uintBits - 1))/uintBits));
     {
@@ -865,7 +865,7 @@ private:
     STU_TRACE("%li new tile images can be patched together from old tile images",
               tempTileVector_.count());
     // Draw the new tile images in parallel.
-    dispatch_apply(sign_cast(tempTileVector_.count()), maximumPriorityQueue(), ^(UInt index) {
+    dispatch_apply(sign_cast(tempTileVector_.count()), maximumPriorityQueue(), ^(stu::UInt index) {
       Tile& newTile = *tempTileVector_[sign_cast(index)];
       // We're using an LLO coordinate system here.
       newTile.image_ = PurgeableImage{SizeInPixels{Size<UInt32>{newTile.frame().size()}}, -1, nil,
@@ -1164,24 +1164,29 @@ private:
     static bool didRegisterForNotifications = false;
     if (STU_UNLIKELY(!didRegisterForNotifications)) {
       didRegisterForNotifications = true;
-      NSNotificationCenter* const notificationCenter = NSNotificationCenter.defaultCenter;
-      NSOperationQueue* const mainQueue = NSOperationQueue.mainQueue;
-      [notificationCenter addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
-                                      object:nil queue:mainQueue
-                                  usingBlock:^(NSNotification* notification __unused) {
-        releaseMemoryOfAllTiledLayers();
-      }];
-      [notificationCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
-                                      object:nil queue:mainQueue
-                                  usingBlock:^(NSNotification* notification __unused) {
-        applicationDidEnterBackground = true;
-        releaseMemoryOfAllTiledLayers();
-      }];
-      [notificationCenter addObserverForName:UIApplicationWillEnterForegroundNotification
-                                      object:nil queue:mainQueue
-                                  usingBlock:^(NSNotification* notification __unused) {
-        applicationDidEnterBackground = false;
-      }];
+#if TARGET_OS_IPHONE
+        NSNotificationCenter* const notificationCenter = NSNotificationCenter.defaultCenter;
+        NSOperationQueue* const mainQueue = NSOperationQueue.mainQueue;
+        [notificationCenter addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
+                                        object:nil queue:mainQueue
+                                    usingBlock:^(NSNotification* notification __unused) {
+          releaseMemoryOfAllTiledLayers();
+        }];
+        [notificationCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
+                                        object:nil queue:mainQueue
+                                    usingBlock:^(NSNotification* notification __unused) {
+          applicationDidEnterBackground = true;
+          releaseMemoryOfAllTiledLayers();
+        }];
+        [notificationCenter addObserverForName:UIApplicationWillEnterForegroundNotification
+                                        object:nil queue:mainQueue
+                                    usingBlock:^(NSNotification* notification __unused) {
+          applicationDidEnterBackground = false;
+        }];
+#endif
+        
+#if TARGET_OS_OSX
+#endif
     }
   }
 

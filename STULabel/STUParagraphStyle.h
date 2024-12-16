@@ -1,7 +1,15 @@
 
 #import "STUDefines.h"
 
+#import <Foundation/Foundation.h>
+#import "Internal/STUMultiplePlatformAdapter.h"
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
 
 STU_ASSUME_NONNULL_AND_STRONG_BEGIN
 

@@ -15,7 +15,7 @@ struct VerticalEdgeInsets {
   STU_INLINE VerticalEdgeInsets() = default;
 
   explicit STU_CONSTEXPR
-  VerticalEdgeInsets(const UIEdgeInsets& edgeInsets)
+  VerticalEdgeInsets(const STUEdgeInsets& edgeInsets)
   : top{narrow_cast<Float32>(edgeInsets.top)},
     bottom{narrow_cast<Float32>(edgeInsets.bottom)}
   {}
@@ -123,7 +123,7 @@ void addLineSpansPath(CGMutablePath&,
                       ShouldFillTextLineGaps = ShouldFillTextLineGaps{false},
                       ShouldExtendTextLinesToCommonHorizontalBounds =
                         ShouldExtendTextLinesToCommonHorizontalBounds{false},
-                      UIEdgeInsets = UIEdgeInsets{}, CornerRadius = CornerRadius{},
+                      STUEdgeInsets = STUEdgeInsets{}, CornerRadius = CornerRadius{},
                       const Rect<CGFloat>* __nullable clipRectBeforeTransform = nullptr,
                       const CGAffineTransform* __nullable = nullptr);
 

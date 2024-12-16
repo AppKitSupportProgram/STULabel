@@ -7,7 +7,7 @@
 typedef void (^ STULabelSubrangeDrawingBlock)(CGContextRef, CGRect,
                                               const STUCancellationFlag * __nullable);
 
-@interface STULabelSubrangeView : UIView
+@interface STULabelSubrangeView : STUView
 @property (nonatomic, nullable) STULabelSubrangeDrawingBlock drawingBlock;
 @end
 

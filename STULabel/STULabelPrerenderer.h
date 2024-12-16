@@ -46,7 +46,7 @@ STU_EXPORT
 
 @property (nonatomic) STULabelDefaultTextAlignment defaultTextAlignment;
 
-@property (nonatomic) UIUserInterfaceLayoutDirection userInterfaceLayoutDirection;
+@property (nonatomic) STUUserInterfaceLayoutDirection userInterfaceLayoutDirection;
 
 /// This property indicates whether the prerenderer currently stores a @c STUShapedString instance
 /// that is accessible through the @c shapedText property.
@@ -63,7 +63,7 @@ STU_EXPORT
 @property (nonatomic, readonly) CGSize size;
 @property (nonatomic, readonly) STULabelPrerendererSizeOptions sizeOptions;
 
-@property (nonatomic, readonly) UIEdgeInsets contentInsets;
+@property (nonatomic, readonly) STUEdgeInsets contentInsets;
 
 @property (nonatomic, readonly) STUDirectionalEdgeInsets directionalContentInsets;
 
@@ -74,7 +74,7 @@ STU_EXPORT
 ///                  options: [.shrinkLabelHeightToFit])
 ///
 - (void)setWidth:(CGFloat)width maxHeight:(CGFloat)maxHeight
-   contentInsets:(UIEdgeInsets)contentInsets;
+   contentInsets:(STUEdgeInsets)contentInsets;
 
 /// Equivalent to
 ///
@@ -91,7 +91,7 @@ directionalContentInsets:(STUDirectionalEdgeInsets)contentInsets;
 ///                  options: [.shrinkLabelWidthToFit, .shrinkLabelHeightToFit])
 ///
 - (void)setMaxWidth:(CGFloat)maxWidth maxHeight:(CGFloat)maxHeight
-      contentInsets:(UIEdgeInsets)contentInsets;
+      contentInsets:(STUEdgeInsets)contentInsets;
 
 /// Equivalent to
 ///
@@ -102,7 +102,7 @@ directionalContentInsets:(STUDirectionalEdgeInsets)contentInsets;
 - (void)setMaxWidth:(CGFloat)maxWidth maxHeight:(CGFloat)maxHeight
 directionalContentInsets:(STUDirectionalEdgeInsets)contentInsets;
 
-- (void)setSize:(CGSize)size contentInsets:(UIEdgeInsets)contentInsets
+- (void)setSize:(CGSize)size contentInsets:(STUEdgeInsets)contentInsets
         options:(STULabelPrerendererSizeOptions)options;
 
 - (void)setSize:(CGSize)size directionalContentInsets:(STUDirectionalEdgeInsets)contentInsets
@@ -164,9 +164,9 @@ directionalContentInsets:(STUDirectionalEdgeInsets)contentInsets;
 /// Default value: true
 @property (nonatomic) bool overrideColorsApplyToHighlightedText;
 
-@property (nonatomic, nullable) UIColor *overrideTextColor;
+@property (nonatomic, nullable) STUColor *overrideTextColor;
 
-@property (nonatomic, nullable) UIColor *overrideLinkColor;
+@property (nonatomic, nullable) STUColor *overrideLinkColor;
 
 @property (nonatomic, nullable) STULabelDrawingBlock drawingBlock;
 

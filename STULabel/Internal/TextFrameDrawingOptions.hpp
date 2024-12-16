@@ -82,9 +82,9 @@ public:
   TextFlags overrideColorsTextFlagsMask() const { return overrideColorsTextFlagsMask_; }
 
   ColorRef overrideTextColor() const { return overrideTextColor_; }
-  Unretained<UIColor* __nullable> overrideTextUIColor() const { return overrideTextUIColor_; }
+  Unretained<STUColor* __nullable> overrideTextUIColor() const { return overrideTextUIColor_; }
 
-  void setOverrideTextColor(UIColor* __unsafe_unretained color) {
+  void setOverrideTextColor(STUColor* __unsafe_unretained color) {
     checkNotFrozen();
     overrideTextUIColor_ = color;
     overrideTextColor_ = Color{color};
@@ -92,9 +92,9 @@ public:
   }
 
   ColorRef overrideLinkColor() const { return overrideLinkColor_; }
-  Unretained<UIColor* __nullable> overrideLinkUIColor() const { return overrideLinkUIColor_; }
+  Unretained<STUColor* __nullable> overrideLinkUIColor() const { return overrideLinkUIColor_; }
 
-  void setOverrideLinkColor(UIColor* __unsafe_unretained color) {
+  void setOverrideLinkColor(STUColor* __unsafe_unretained color) {
     checkNotFrozen();
     overrideLinkUIColor_ = color;
     overrideLinkColor_ = Color{color};
@@ -128,8 +128,8 @@ private:
   Color overrideTextColor_;
   Color overrideLinkColor_;
   STUTextHighlightStyle* highlightStyle_; // arc
-  UIColor* overrideTextUIColor_; // arc
-  UIColor* overrideLinkUIColor_; // arc
+  STUColor* overrideTextUIColor_; // arc
+  STUColor* overrideLinkUIColor_; // arc
 };
 
 } // stu_label

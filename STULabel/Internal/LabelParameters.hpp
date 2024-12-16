@@ -46,7 +46,7 @@ public:
   STULabelDrawingBlock drawingBlock;
 protected:
   DisplayScale displayScale_{DisplayScale::one()};
-  UIEdgeInsets edgeInsets_;
+  STUEdgeInsets edgeInsets_;
 
 public:
   STU_INLINE_T
@@ -62,7 +62,7 @@ public:
   const bool edgeInsetsAreZero() const { return !edgeInsetsAreNonZero_; }
 
   STU_INLINE_T
-  const UIEdgeInsets& edgeInsets() const { return edgeInsets_; }
+  const STUEdgeInsets& edgeInsets() const { return edgeInsets_; }
 
 
   STU_INLINE_T
@@ -167,20 +167,20 @@ public:
     return true;
   }
 
-  Unretained<UIColor* __nullable> overrideTextColor() const {
+  Unretained<STUColor* __nullable> overrideTextColor() const {
     return drawingOptions ? drawingOptions->impl.overrideTextUIColor() : nil;
   }
-  bool setOverrideTextColor(UIColor* __unsafe_unretained __nullable color) {
+  bool setOverrideTextColor(STUColor* __unsafe_unretained __nullable color) {
     if (color == overrideTextColor()) return false;
     ensureDrawingOptionsIsNotFrozen();
     drawingOptions->impl.setOverrideTextColor(color);
     return true;
   }
 
-  Unretained<UIColor* __nullable> overrideLinkColor() const {
+  Unretained<STUColor* __nullable> overrideLinkColor() const {
     return drawingOptions ? drawingOptions->impl.overrideLinkUIColor() : nil;
   }
-  bool setOverrideLinkColor(UIColor* __unsafe_unretained __nullable color) {
+  bool setOverrideLinkColor(STUColor* __unsafe_unretained __nullable color) {
     if (color == overrideLinkColor()) return false;
     ensureDrawingOptionsIsNotFrozen();
     drawingOptions->impl.setOverrideLinkColor(color);
@@ -222,16 +222,16 @@ public:
     std::swap(edgeInsets_.left, edgeInsets_.right);
   }
 
-  ChangeStatus setEdgeInsets(UIEdgeInsets edgeInsets);
+  ChangeStatus setEdgeInsets(STUEdgeInsets edgeInsets);
 
-  ChangeStatus setSizeAndIfChangedUpdateEdgeInsets(CGSize size, UIEdgeInsets edgeInsets) {
+  ChangeStatus setSizeAndIfChangedUpdateEdgeInsets(CGSize size, STUEdgeInsets edgeInsets) {
     size = ceilToScale(size, displayScale_);
     if (size == size_) return ChangeStatus::noChange;
     size_ = size;
     return setEdgeInsets(edgeInsets) | ChangeStatus::sizeChanged;
   }
 
-  ChangeStatus setSizeAndEdgeInsets(CGSize size, UIEdgeInsets edgeInsets) {
+  ChangeStatus setSizeAndEdgeInsets(CGSize size, STUEdgeInsets edgeInsets) {
     size = ceilToScale(size, displayScale_);
     ChangeStatus status = size == size ? ChangeStatus::noChange : ChangeStatus::sizeChanged;
     size_ = size;
@@ -239,7 +239,7 @@ public:
   }
 
   ChangeStatus setDisplayScaleAndIfChangedUpdateSizeAndEdgeInsets(
-                  const DisplayScale& displayScale, CGSize size, UIEdgeInsets edgeInsets)
+                  const DisplayScale& displayScale, CGSize size, STUEdgeInsets edgeInsets)
   {
     if (displayScale_ == displayScale) {
       return ChangeStatus::noChange;
@@ -273,7 +273,7 @@ void invalidateShapedString(STULabelLayer* self);
 
 
 STU_INLINE
-STUDirectionalEdgeInsets directionalEdgeInsets(UIEdgeInsets insets,
+STUDirectionalEdgeInsets directionalEdgeInsets(STUEdgeInsets insets,
                                                 STUWritingDirection layoutDirection)
 {
   return {.top = insets.top, .bottom = insets.bottom,
@@ -284,7 +284,7 @@ STUDirectionalEdgeInsets directionalEdgeInsets(UIEdgeInsets insets,
 }
 
 STU_INLINE
-UIEdgeInsets edgeInsets(STUDirectionalEdgeInsets insets, STUWritingDirection layoutDirection) {
+STUEdgeInsets edgeInsets(STUDirectionalEdgeInsets insets, STUWritingDirection layoutDirection) {
   return {.top = insets.top, .bottom = insets.bottom,
           .left  = layoutDirection == STUWritingDirectionLeftToRight
                  ? insets.leading : insets.trailing,
@@ -331,13 +331,21 @@ public:
     return derived().params_;
   }
 
-  UIUserInterfaceLayoutDirection userInterfaceLayoutDirection() const {
-    static_assert((int)UIUserInterfaceLayoutDirectionLeftToRight == (int)STUWritingDirectionLeftToRight);
-    static_assert((int)UIUserInterfaceLayoutDirectionRightToLeft == (int)STUWritingDirectionRightToLeft);
-    return static_cast<UIUserInterfaceLayoutDirection>(derived().params_.defaultBaseWritingDirection);
+  STUUserInterfaceLayoutDirection userInterfaceLayoutDirection() const {
+#if TARGET_OS_IPHONE
+      static_assert((int)UIUserInterfaceLayoutDirectionLeftToRight == (int)STUWritingDirectionLeftToRight);
+      static_assert((int)UIUserInterfaceLayoutDirectionRightToLeft == (int)STUWritingDirectionRightToLeft);
+      return static_cast<UIUserInterfaceLayoutDirection>(derived().params_.defaultBaseWritingDirection);
+#endif
+      
+#if TARGET_OS_OSX
+      static_assert((int)NSUserInterfaceLayoutDirectionLeftToRight == (int)STUWritingDirectionLeftToRight);
+      static_assert((int)NSUserInterfaceLayoutDirectionRightToLeft == (int)STUWritingDirectionRightToLeft);
+      return static_cast<STUUserInterfaceLayoutDirection>(derived().params_.defaultBaseWritingDirection);
+#endif
   }
 
-  void setUserInterfaceLayoutDirection(UIUserInterfaceLayoutDirection layoutDirection) {
+  void setUserInterfaceLayoutDirection(STUUserInterfaceLayoutDirection layoutDirection) {
     Derived& d = derived();
     d.checkNotFrozen();
     const STUWritingDirection direction = stuWritingDirection(layoutDirection);
@@ -362,7 +370,7 @@ public:
     }
   }
 
-  const UIEdgeInsets& contentInsets() const { return derived().contentInsets_; }
+  const STUEdgeInsets& contentInsets() const { return derived().contentInsets_; }
 
   STUDirectionalEdgeInsets directionalContentInsets() const {
     const Derived& d = derived();
@@ -516,18 +524,18 @@ public:
 };
 
 
-inline UIEdgeInsets roundLabelEdgeInsetsToScale(UIEdgeInsets insets, const DisplayScale& scale) {
+inline STUEdgeInsets roundLabelEdgeInsetsToScale(STUEdgeInsets insets, const DisplayScale& scale) {
   return {.top = roundToScale(insets.top, scale),
           .bottom = roundToScale(insets.bottom, scale),
           .left = insets.left,
           .right = insets.right};
 }
 
-CGSize maxTextFrameSizeForLabelSize(CGSize size, const UIEdgeInsets& insets,
+CGSize maxTextFrameSizeForLabelSize(CGSize size, const STUEdgeInsets& insets,
                                     const DisplayScale& scale);
 
 STU_INLINE
-UIEdgeInsets roundAndClampEdgeInsetsForSize(UIEdgeInsets edgeInsets, CGSize size,
+STUEdgeInsets roundAndClampEdgeInsetsForSize(STUEdgeInsets edgeInsets, CGSize size,
                                             const DisplayScale& scale)
 {
   edgeInsets.top    = roundToScale(edgeInsets.top, scale);

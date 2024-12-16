@@ -12,9 +12,9 @@ namespace stu_label {
 
 STU_INLINE bool is_main_thread() { return pthread_main_np(); }
 
-STU_INLINE bool inUIViewAnimation() { return [UIView inheritedAnimationDuration] > 0; }
+STU_INLINE bool inUIViewAnimation() { return [STUView inheritedAnimationDuration] > 0; }
 
-UIWindow* window(CALayer* layer);
+STUWindow* window(CALayer* layer);
 
 API_AVAILABLE(macos(10.12), ios(10.0), tvos(10.0), watchos(3.0))
 STUPredefinedCGImageFormat contentsImageFormat(NSString* caLayerContentsFormat,

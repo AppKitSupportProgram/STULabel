@@ -334,7 +334,7 @@ private:
 
   CFString* string_;
   BufferKind kind_ : 2;
-  UInt count_ : sizeof(Int)*8 - 2;
+  stu::UInt count_ : sizeof(Int)*8 - 2;
   union BufferOrGetCharactersMethod {
     const void* buffer;
     GetCharactersMethod method;

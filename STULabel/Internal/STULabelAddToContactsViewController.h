@@ -1,5 +1,8 @@
 // Copyright 2018 Stephan Tolksdorf
 
+#import <Foundation/Foundation.h>
+
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
 
 #import <Contacts/Contacts.h>
@@ -17,3 +20,7 @@
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 @end
+#endif
+
+#if TARGET_OS_OSX
+#endif

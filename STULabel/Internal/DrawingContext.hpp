@@ -229,7 +229,7 @@ public:
     colorArrays_{otherColors_, textFrame.colors().begin()}
   {
     STU_STATIC_CONST_ONCE_PRESERVE_MOST(CGColor*, cgBlackColor,
-                                        (CGColor*)CFRetain(UIColor.blackColor.CGColor));
+                                        (CGColor*)CFRetain(STUColor.blackColor.CGColor));
     otherColors_[0] = ColorRef{cgBlackColor, ColorFlags{}};
     const TextFlags directGlyphDrawingFlags = TextFlags::hasAttachment
                                             | TextFlags::hasBackground

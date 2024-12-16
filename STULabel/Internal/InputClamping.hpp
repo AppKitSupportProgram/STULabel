@@ -86,16 +86,16 @@ CGRect clampRectInput(CGRect rect) {
 }
 
 STU_INLINE
-UIEdgeInsets clampEdgeInsetsInput(UIEdgeInsets edgeInsets) {
-  return UIEdgeInsets{.top    = clampFloatInput(edgeInsets.top),
+STUEdgeInsets clampEdgeInsetsInput(STUEdgeInsets edgeInsets) {
+  return STUEdgeInsets{.top    = clampFloatInput(edgeInsets.top),
                       .left   = clampFloatInput(edgeInsets.left),
                       .bottom = clampFloatInput(edgeInsets.bottom),
                       .right  = clampFloatInput(edgeInsets.right)};
 }
 
 STU_INLINE
-UIEdgeInsets clampNonNegativeEdgeInsetsInput(UIEdgeInsets edgeInsets) {
-  return UIEdgeInsets{.top    = clampNonNegativeFloatInput(edgeInsets.top),
+STUEdgeInsets clampNonNegativeEdgeInsetsInput(STUEdgeInsets edgeInsets) {
+  return STUEdgeInsets{.top    = clampNonNegativeFloatInput(edgeInsets.top),
                       .left   = clampNonNegativeFloatInput(edgeInsets.left),
                       .bottom = clampNonNegativeFloatInput(edgeInsets.bottom),
                       .right  = clampNonNegativeFloatInput(edgeInsets.right)};
@@ -122,13 +122,23 @@ STUTextLayoutMode clampTextLayoutMode(STUTextLayoutMode value) {
 
 
 STU_INLINE
-UIUserInterfaceLayoutDirection clampUserInterfaceLayoutDirection(UIUserInterfaceLayoutDirection value) {
-  switch (value) {
-  case UIUserInterfaceLayoutDirectionLeftToRight:
-  case UIUserInterfaceLayoutDirectionRightToLeft:
-    return value;
-  }
-  return UIUserInterfaceLayoutDirectionLeftToRight;
+STUUserInterfaceLayoutDirection clampUserInterfaceLayoutDirection(STUUserInterfaceLayoutDirection value) {
+#if TARGET_OS_IPHONE
+    switch (value) {
+    case UIUserInterfaceLayoutDirectionLeftToRight:
+    case UIUserInterfaceLayoutDirectionRightToLeft:
+      return value;
+    }
+    return UIUserInterfaceLayoutDirectionLeftToRight;
+#endif
+#if TARGET_OS_OSX
+    switch (value) {
+    case NSUserInterfaceLayoutDirectionLeftToRight:
+    case NSUserInterfaceLayoutDirectionRightToLeft:
+      return value;
+    }
+    return NSUserInterfaceLayoutDirectionLeftToRight;
+#endif
 }
 
 STU_INLINE
@@ -258,8 +268,8 @@ STULabelDrawingBlockColorOptions
 
 STU_INLINE
 Range<Int32> clampToInt32IndexRange(NSRange range) {
-  const UInt maxValue = INT32_MAX;
-  UInt end = 0;
+  const stu::UInt maxValue = INT32_MAX;
+    stu::UInt end = 0;
   if (STU_UNLIKELY(__builtin_add_overflow(range.location, range.length, &end))) {
     end = maxValue;
   }

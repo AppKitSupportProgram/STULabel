@@ -2,7 +2,17 @@
 
 #import "STUDefines.h"
 
+#import "Internal/STUMultiplePlatformAdapter.h"
+
+#import <Foundation/Foundation.h>
+
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
 
 STU_ASSUME_NONNULL_AND_STRONG_BEGIN
 
@@ -30,7 +40,7 @@ STU_EXPORT
 
 - (void)encodeWithCoder:(NSCoder *)encoder;
 
-@property (readonly, nullable) UIColor *color;
+@property (readonly, nullable) STUColor *color;
 
 /// Default value: true
 @property (readonly) bool fillTextLineGaps;
@@ -45,9 +55,9 @@ STU_EXPORT
 /// it.
 ///
 /// Default value: @c .zero
-@property (readonly) UIEdgeInsets edgeInsets;
+@property (readonly) STUEdgeInsets edgeInsets;
 
-@property (readonly, nullable) UIColor *borderColor;
+@property (readonly, nullable) STUColor *borderColor;
 
 @property (readonly) CGFloat borderWidth;
 
@@ -64,7 +74,7 @@ STU_EXPORT
   NS_SWIFT_NAME(init(_:))
   NS_DESIGNATED_INITIALIZER;
 
-@property (nonatomic, nullable) UIColor *color;
+@property (nonatomic, nullable) STUColor *color;
 
 /// Default value: true
 @property (nonatomic) bool fillTextLineGaps;
@@ -79,9 +89,9 @@ STU_EXPORT
 /// it.
 ///
 /// Default value: @c .zero
-@property (nonatomic) UIEdgeInsets edgeInsets;
+@property (nonatomic) STUEdgeInsets edgeInsets;
 
-@property (nonatomic, nullable) UIColor *borderColor;
+@property (nonatomic, nullable) STUColor *borderColor;
 
 @property (nonatomic) CGFloat borderWidth;
 

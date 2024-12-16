@@ -104,13 +104,13 @@ void decode(NSCoder* __unsafe_unretained coder, NSString* __unsafe_unretained ke
 
 STU_INLINE
 void encode(NSCoder* __unsafe_unretained coder, NSString* __unsafe_unretained key,
-            UIEdgeInsets value)
+            STUEdgeInsets value)
 {
   [coder encodeUIEdgeInsets:value forKey:key];
 }
 STU_INLINE
 void decode(NSCoder* __unsafe_unretained coder, NSString* __unsafe_unretained key,
-            Out<UIEdgeInsets> outValue)
+            Out<STUEdgeInsets> outValue)
 {
   outValue = [coder decodeUIEdgeInsetsForKey:key];
 }

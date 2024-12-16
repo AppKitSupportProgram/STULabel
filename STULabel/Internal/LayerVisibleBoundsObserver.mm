@@ -145,7 +145,7 @@ STUScreen* LayerVisibleBoundsObserver::screen() {
   }
   for (SuperlayerRef& sl : superlayers_.reversed()) {
     if (!sl.isViewLayer()) continue;
-    return static_cast<UIView*>(sl.layer().unretained.delegate).window.stu_screen;
+    return static_cast<STUView*>(sl.layer().unretained.delegate).window.stu_screen;
   }
   return nil;
 }

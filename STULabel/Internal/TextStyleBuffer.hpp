@@ -16,7 +16,7 @@ extern NSString* const STUOriginalFontAttributeName;
 ///  (and not be mutated) for as long as the style data is in use. Furthermore, the ColorRefs store
 ///  CGColor pointers obtained from the UIColor's CGColor property, without retaining them. So,
 ///  in theory, the CGColor's lifetime may end when the current autorelease pool is emptied
-///  (though in practice all UIColor subclasses cache the returned CGColor objects).
+///  (though in practice all STUColor subclasses cache the returned CGColor objects).
 class TextStyleBuffer {
 public:
   using ColorHashBucket = TempIndexHashSet<UInt16>::Bucket;
@@ -104,7 +104,7 @@ public:
 
 private:
   FontIndex addFont(FontRef);
-  ColorIndex addColor(UIColor*);
+  ColorIndex addColor(STUColor*);
   TextFlags colorFlags(ColorIndex) const;
 
   TempVector<FontRef> fonts_;

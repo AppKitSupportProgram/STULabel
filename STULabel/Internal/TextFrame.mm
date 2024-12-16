@@ -29,8 +29,8 @@ TextFrame::SizeAndOffset TextFrame::objectSizeAndThisOffset(const TextFrameLayou
 
   const Int lineCount = layouter.lines().count();
 
-  const UInt verticalSearchTableSize = IntervalSearchTable::sizeInBytesForCount(lineCount);
-  const UInt lineStringIndicesTableSize = sizeof(StringStartIndices)*sign_cast(lineCount + 1);
+  const stu::UInt verticalSearchTableSize = IntervalSearchTable::sizeInBytesForCount(lineCount);
+  const stu::UInt lineStringIndicesTableSize = sizeof(StringStartIndices)*sign_cast(lineCount + 1);
   const Int stylesTerminatorSize = TextStyle::sizeOfTerminatorWithStringIndex(
                                                 layouter.rangeInOriginalString().end);
   const ArrayRef<const ColorRef> colors = layouter.colors();
@@ -53,7 +53,7 @@ TextFrame::SizeAndOffset TextFrame::objectSizeAndThisOffset(const TextFrameLayou
                 + sanitizerGap};
 }
 
-TextFrame::TextFrame(TextFrameLayouter&& layouter, UInt dataSize)
+TextFrame::TextFrame(TextFrameLayouter&& layouter, stu::UInt dataSize)
 : STUTextFrameData{
     .paragraphCount = narrow_cast<Int32>(layouter.paragraphs().count()),
     .lineCount = narrow_cast<Int32>(layouter.lines().count()),
@@ -74,7 +74,7 @@ TextFrame::TextFrame(TextFrameLayouter&& layouter, UInt dataSize)
   const Range<Int32> stringRange = rangeInOriginalString();
   const Int originalStylesTerminatorSize = TextStyle
                                            ::sizeOfTerminatorWithStringIndex(stringRange.end);
-  const UInt originalStringTextStyleDataSize = sign_cast(layouter.originalStringStyles()
+  const stu::UInt originalStringTextStyleDataSize = sign_cast(layouter.originalStringStyles()
                                                          .dataExcludingTerminator().count()
                                                          + originalStylesTerminatorSize);
   _textStylesData = reinterpret_cast<const uint8_t*>(this)

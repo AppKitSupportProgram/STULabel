@@ -8,7 +8,7 @@
 
 @interface STULabelLayer ()
 
-- (void)stu_didMoveToWindow:(UIWindow*)window;
+- (void)stu_didMoveToWindow:(STUWindow*)window;
 
 @property (nonatomic, setter=stu_setAlwaysUsesContentSublayer:) bool stu_alwaysUsesContentSublayer;
 

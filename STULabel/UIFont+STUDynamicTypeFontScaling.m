@@ -1,5 +1,6 @@
 // Copyright 2017–2018 Stephan Tolksdorf
 
+#if TARGET_OS_IPHONE
 #import "UIFont+STUDynamicTypeFontScaling.h"
 
 #import "stu_mutex.h"
@@ -241,3 +242,8 @@ bool floatForFontKey(UIFont * __unsafe_unretained font, NSString * __unsafe_unre
 }
 
 @end
+
+#endif
+
+#if TARGET_OS_OSX
+#endif

@@ -178,7 +178,7 @@ bool LabelTextFrameInfo::isValidForSizeImpl(CGSize size, const DisplayScale& dis
 }
 
 STU_NO_INLINE
-CGSize LabelTextFrameInfo::sizeThatFits(const UIEdgeInsets& insets,
+CGSize LabelTextFrameInfo::sizeThatFits(const STUEdgeInsets& insets,
                                         const DisplayScale& displayScale) const
 {
   return ceilToScale(layoutBounds.inset(-roundLabelEdgeInsetsToScale(insets, displayScale)),

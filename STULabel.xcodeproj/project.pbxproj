@@ -592,6 +592,14 @@
 		D4F150881F9CFD6500AB1C4B /* GlyphSpan.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D4F150811F9B994700AB1C4B /* GlyphSpan.hpp */; };
 		D4F1508D1F9F69CA00AB1C4B /* TextFrameLine-GlyphSpanIteration.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4F1508C1F9F69CA00AB1C4B /* TextFrameLine-GlyphSpanIteration.mm */; };
 		D4F1508E1F9F69CA00AB1C4B /* TextFrameLine-GlyphSpanIteration.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4F1508C1F9F69CA00AB1C4B /* TextFrameLine-GlyphSpanIteration.mm */; };
+		E9E217532D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E9E217512D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h */; };
+		E9E217542D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E217522D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m */; };
+		E9E217552D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E9E217512D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h */; };
+		E9E217562D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E217522D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m */; };
+		E9E668792D102DA900CC862C /* STUScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = E9E668772D102DA900CC862C /* STUScreen.h */; };
+		E9E6687A2D102DA900CC862C /* STUScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E668782D102DA900CC862C /* STUScreen.m */; };
+		E9E6687B2D102DA900CC862C /* STUScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E668782D102DA900CC862C /* STUScreen.m */; };
+		E9E6687C2D102DA900CC862C /* STUScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = E9E668772D102DA900CC862C /* STUScreen.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1071,6 +1079,10 @@
 		D4F150841F9CE96900AB1C4B /* NSArrayRef.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSArrayRef.hpp; sourceTree = "<group>"; };
 		D4F1508C1F9F69CA00AB1C4B /* TextFrameLine-GlyphSpanIteration.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "TextFrameLine-GlyphSpanIteration.mm"; sourceTree = "<group>"; };
 		D4FFD1DF1FAA200E008530BE /* stu_lldb_formatters.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = stu_lldb_formatters.py; sourceTree = "<group>"; };
+		E9E217512D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STUMultiplePlatformAdapter.h; sourceTree = "<group>"; };
+		E9E217522D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STUMultiplePlatformAdapter.m; sourceTree = "<group>"; };
+		E9E668772D102DA900CC862C /* STUScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STUScreen.h; sourceTree = "<group>"; };
+		E9E668782D102DA900CC862C /* STUScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STUScreen.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1536,6 +1548,10 @@
 		D4B0AF3A1F925B5C00B5B2B9 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				E9E668772D102DA900CC862C /* STUScreen.h */,
+				E9E668782D102DA900CC862C /* STUScreen.m */,
+				E9E217512D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h */,
+				E9E217522D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m */,
 				D42384981F93798D000B8A63 /* stu */,
 				D49890EC23E5883E00A639E0 /* DefineUIntOnCatalystToWorkAroundGlobalNamespacePollution.h */,
 				D49890ED23E5883E00A639E0 /* UndefineUIntOnCatalystToWorkAroundGlobalNamespacePollution.h */,
@@ -1733,6 +1749,7 @@
 				D4F150861F9CFD4500AB1C4B /* NSArrayRef.hpp in Headers */,
 				D43E66D41FD464E200BABD1C /* Equal.hpp in Headers */,
 				D48297091FE5591300D67234 /* ShapedString.hpp in Headers */,
+				E9E217532D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h in Headers */,
 				D423841B1F92AC81000B8A63 /* STUTextLink.h in Headers */,
 				D4E753BF2104A99D00FA59F0 /* STUTruncationScope.h in Headers */,
 				D42384E61F9381D7000B8A63 /* OptionsEnum.hpp in Headers */,
@@ -1812,6 +1829,7 @@
 				D423845F1F92AC81000B8A63 /* NSAttributedString+STUDynamicTypeFontScaling.h in Headers */,
 				D42384601F92AC81000B8A63 /* STUTextAttributes-Internal.hpp in Headers */,
 				D42384631F92AC81000B8A63 /* UIFont+STUDynamicTypeFontScaling.h in Headers */,
+				E9E668792D102DA900CC862C /* STUScreen.h in Headers */,
 				D42384D81F9381D7000B8A63 /* Array.hpp in Headers */,
 				D46B094C1FACF2F900375E76 /* HashTable.hpp in Headers */,
 				D42384641F92AC81000B8A63 /* STUObjCRuntimeWrappers.h in Headers */,
@@ -1881,6 +1899,7 @@
 				D49F0AA81FCC5FC5004B0E5C /* DrawingContext.hpp in Headers */,
 				D42384C61F9379B9000B8A63 /* TypeTraits.hpp in Headers */,
 				D49F0AA61FCC5FC5004B0E5C /* DecorationLines.hpp in Headers */,
+				E9E217552D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h in Headers */,
 				D468096E1FB1E5A8006AA14D /* NSCoderUtils.hpp in Headers */,
 				D49F0ABA1FCC6001004B0E5C /* TextLineSpan.hpp in Headers */,
 				D4552F861FEAF3F20006974A /* NSStringRef.hpp in Headers */,
@@ -1894,6 +1913,7 @@
 				D4E8DC6A20DA9D40009F4735 /* Localized.hpp in Headers */,
 				D453E7891F993BEA003F81AC /* Optional.hpp in Headers */,
 				D4B0AF001F925AF900B5B2B9 /* STUTextFrameOptions.h in Headers */,
+				E9E6687C2D102DA900CC862C /* STUScreen.h in Headers */,
 				D4B0AF1B1F925AF900B5B2B9 /* STUTextLink-Internal.hpp in Headers */,
 				D4B0AF331F925AF900B5B2B9 /* STUTextFrame.h in Headers */,
 				D42384BB1F9379B9000B8A63 /* Allocation.hpp in Headers */,
@@ -2365,6 +2385,7 @@
 				D42383D11F92AC81000B8A63 /* NSAttributedString+STUDynamicTypeFontScaling.m in Sources */,
 				D43E67051FD464E200BABD1C /* LineTruncation.mm in Sources */,
 				D41A37D72030FFDF00ADDE1E /* PurgeableImage.mm in Sources */,
+				E9E217542D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m in Sources */,
 				D4134E251FB20A2300377349 /* STUBackgroundAttribute.mm in Sources */,
 				D40AE3281FA6068F00E0F056 /* GlyphSpan.mm in Sources */,
 				D42383D51F92AC81000B8A63 /* STUTextRectArray.mm in Sources */,
@@ -2409,6 +2430,7 @@
 				D49577BB1FB0BF6D00DBDBDC /* Color-no-ARC.mm in Sources */,
 				D4E8DC6920DA9D40009F4735 /* Localized.mm in Sources */,
 				D42029291FE026F800B1F5FC /* TextFrameLayouter-LineBreaking.mm in Sources */,
+				E9E6687A2D102DA900CC862C /* STUScreen.m in Sources */,
 				D43E66FF1FD464E200BABD1C /* STULabelSubrangeView.mm in Sources */,
 				D42384DC1F9381D7000B8A63 /* Assert.m in Sources */,
 				D42383F51F92AC81000B8A63 /* STUImageUtils.m in Sources */,
@@ -2577,6 +2599,7 @@
 				D4552F911FEC42B30006974A /* NSStringRef.mm in Sources */,
 				D4B0AFF51F925BCE00B5B2B9 /* NSAttributedString+STUDynamicTypeFontScaling.m in Sources */,
 				D41A37D62030FFDF00ADDE1E /* PurgeableImage.mm in Sources */,
+				E9E217562D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m in Sources */,
 				D4134E241FB20A2300377349 /* STUBackgroundAttribute.mm in Sources */,
 				D40AE3271FA6068F00E0F056 /* GlyphSpan.mm in Sources */,
 				D49F0AF91FCC601A004B0E5C /* TextLineSpansPath.mm in Sources */,
@@ -2621,6 +2644,7 @@
 				D4ED60961FF6CC1B00418E2A /* LabelRenderTask.mm in Sources */,
 				D4E8DC6820DA9D40009F4735 /* Localized.mm in Sources */,
 				D46B09451FAC96CA00375E76 /* Font.mm in Sources */,
+				E9E6687B2D102DA900CC862C /* STUScreen.m in Sources */,
 				D49F0AE71FCC601A004B0E5C /* LineTruncation.mm in Sources */,
 				D42029281FE026F800B1F5FC /* TextFrameLayouter-LineBreaking.mm in Sources */,
 				D4B0AF2C1F925AF900B5B2B9 /* STUTextFrame.mm in Sources */,
@@ -2884,6 +2908,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310921F9416A500F39C3A /* STULabel.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				REGISTER_APP_GROUPS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -2891,6 +2921,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310921F9416A500F39C3A /* STULabel.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				REGISTER_APP_GROUPS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

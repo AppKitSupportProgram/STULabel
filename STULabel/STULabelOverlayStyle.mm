@@ -15,13 +15,13 @@ using namespace stu_label;
 
 #define FOR_ALL_FIELDS(f) \
   f(bool, extendTextLinesToCommonHorizontalBounds) \
-  f(UIEdgeInsets, edgeInsets) \
+  f(STUEdgeInsets, edgeInsets) \
   f(CGFloat, cornerRadius) \
   f(CGFloat, borderWidth) \
   f(CFTimeInterval, fadeInDuration) \
   f(CFTimeInterval, fadeOutDuration) \
-  f(UIColor*, color) \
-  f(UIColor*, borderColor) \
+  f(STUColor*, color) \
+  f(STUColor*, borderColor) \
   f(CAMediaTimingFunction*, fadeInTimingFunction) \
   f(CAMediaTimingFunction*, fadeOutTimingFunction)
 
@@ -55,7 +55,7 @@ using namespace stu_label;
   _extendTextLinesToCommonHorizontalBounds = extendTextLinesToCommonHorizontalBounds;
 }
 
-- (void)setEdgeInsets:(UIEdgeInsets)edgeInsets {
+- (void)setEdgeInsets:(STUEdgeInsets)edgeInsets {
   _edgeInsets = clampEdgeInsetsInput(edgeInsets);
 }
 
@@ -91,7 +91,7 @@ FOR_ALL_FIELDS(DEFINE_GETTER)
   return equal(_color, other->_color)
       && _cornerRadius == other->_cornerRadius
       && _extendTextLinesToCommonHorizontalBounds == other->_extendTextLinesToCommonHorizontalBounds
-      && UIEdgeInsetsEqualToEdgeInsets(_edgeInsets, other->_edgeInsets)
+      && STUEdgeInsetsEqualToEdgeInsets(_edgeInsets, other->_edgeInsets)
       && _borderWidth == other->_borderWidth
       && equal(_borderColor, other->_borderColor)
       && _fadeInDuration == other->_fadeInDuration
@@ -143,10 +143,10 @@ FOR_ALL_FIELDS(DEFINE_GETTER)
                         ([[STULabelOverlayStyle alloc]
                            initWithBlock:^(STULabelOverlayStyleBuilder* b)
                          {
-                           b.edgeInsets = UIEdgeInsets{-2, -2, -2, -2};
+                           b.edgeInsets = STUEdgeInsets{-2, -2, -2, -2};
                            b.cornerRadius = 4;
                            const CGFloat c = ((CGFloat)26)/255;
-                           b.color = [UIColor colorWithRed:c green:c blue:c alpha:(CGFloat)0.3];
+                           b.color = [STUColor colorWithRed:c green:c blue:c alpha:(CGFloat)0.3];
                            b.fadeInDuration = 0.1;
                            b.fadeOutDuration = 0.15;
                          }]));

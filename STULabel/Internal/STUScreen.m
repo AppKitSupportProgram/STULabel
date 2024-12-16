@@ -7,6 +7,7 @@
 //
 
 #import "STUScreen.h"
+#if TARGET_OS_IPHONE
 #if TARGET_OS_VISION
 @interface STUScreen ()
 @property (nonatomic, weak, nullable) UIWindowScene *windowScene;
@@ -75,3 +76,25 @@
 #endif
 }
 @end
+#endif
+
+#if TARGET_OS_OSX
+@implementation NSScreen (STUScreen)
+
+- (CGRect)bounds {
+    return self.frame;
+}
+
+- (CGFloat)scale {
+    return self.backingScaleFactor;
+}
+
+@end
+
+@implementation NSWindow (STUScreen)
+- (STUScreen *)stu_screen {
+    return self.screen;
+}
+@end
+
+#endif

@@ -27,7 +27,7 @@ STU_EXPORT
 
 - (NSUInteger)hash;
 
-@property (readonly, nullable) UIColor *textColor;
+@property (readonly, nullable) STUColor *textColor;
 
 /// The stroke width. A non-negative number.
 ///
@@ -35,16 +35,16 @@ STU_EXPORT
 ///       this value will @b not be multiplied by 0.01 the point size of the font and it is never
 ///       negative.
 @property (readonly) CGFloat strokeWidth;
-@property (readonly, nullable) UIColor *strokeColor;
+@property (readonly, nullable) STUColor *strokeColor;
 @property (readonly) bool strokeButDoNotFill;
 
 @property (readonly) NSUnderlineStyle underlineStyle;
-@property (readonly, nullable) UIColor *underlineColor;
+@property (readonly, nullable) STUColor *underlineColor;
 
 @property (readonly) NSUnderlineStyle strikethroughStyle;
-@property (readonly, nullable) UIColor *strikethroughColor;
+@property (readonly, nullable) STUColor *strikethroughColor;
 
-@property (readonly, nullable) UIColor *shadowColor;
+@property (readonly, nullable) STUColor *shadowColor;
 // CGSize is the type that UIKit and CoreAnimation use for shadow offsets, curiously.
 @property (readonly) CGSize shadowOffset;
 @property (readonly) CGFloat shadowBlurRadius;
@@ -62,7 +62,7 @@ STU_EXPORT
   NS_DESIGNATED_INITIALIZER;
 
 /// A null text color has no effect on the highlighted text.
-@property (nonatomic, nullable) UIColor *textColor;
+@property (nonatomic, nullable) STUColor *textColor;
 
 /// Sets the stroke width and color.
 ///
@@ -76,7 +76,7 @@ STU_EXPORT
 /// @param color       The stroke color.
 /// @param doNotFill   Indicates whether the text should be @i only stroked, not filled.
 - (void)setStrokeWidth:(CGFloat)strokeWidth
-                 color:(nullable UIColor *)color
+                 color:(nullable STUColor *)color
              doNotFill:(bool)doNotFill
   NS_SWIFT_NAME(setStroke(width:color:doNotFill:));
 
@@ -87,7 +87,7 @@ STU_EXPORT
 ///        and it is never negative.
 @property (nonatomic, readonly) CGFloat strokeWidth;
 
-@property (nonatomic, readonly, nullable) UIColor *strokeColor;
+@property (nonatomic, readonly, nullable) STUColor *strokeColor;
 
 @property (nonatomic, readonly) bool strokeButDoNotFill;
 
@@ -99,10 +99,10 @@ STU_EXPORT
 /// any underline in the highlighted text is removed.
 ///
 /// If the style is 0 and the color null, there is no effect on the highlighted text.
-- (void)setUnderlineStyle:(NSUnderlineStyle)style color:(nullable UIColor *)color;
+- (void)setUnderlineStyle:(NSUnderlineStyle)style color:(nullable STUColor *)color;
 
 @property (nonatomic, readonly) NSUnderlineStyle underlineStyle;
-@property (nonatomic, readonly, nullable) UIColor *underlineColor;
+@property (nonatomic, readonly, nullable) STUColor *underlineColor;
 
 /// Sets the strikethrough style and color.
 ///
@@ -113,10 +113,10 @@ STU_EXPORT
 /// any strikethrough in the highlighted text is removed.
 ///
 /// If the style is 0 and the color null, there is no effect on the highlighted text.
-- (void)setStrikethroughStyle:(NSUnderlineStyle)style color:(nullable UIColor *)color;
+- (void)setStrikethroughStyle:(NSUnderlineStyle)style color:(nullable STUColor *)color;
 
 @property (nonatomic, readonly) NSUnderlineStyle strikethroughStyle;
-@property (nonatomic, readonly, nullable) UIColor *strikethroughColor;
+@property (nonatomic, readonly, nullable) STUColor *strikethroughColor;
 
 /// Sets the shadow offset, blur radius and color.
 ///
@@ -129,13 +129,13 @@ STU_EXPORT
 /// text.
 - (void)setShadowOffset:(CGSize)offset
              blurRadius:(CGFloat)blurRadius
-                  color:(nullable UIColor *)color
+                  color:(nullable STUColor *)color
   NS_SWIFT_NAME(setShadow(offset:blurRadius:color:));
 
 // CGSize is the type that UIKit and CoreAnimation use for shadow offsets, curiously.
 @property (nonatomic, readonly) CGSize shadowOffset;
 @property (nonatomic, readonly) CGFloat shadowBlurRadius;
-@property (nonatomic, readonly, nullable) UIColor *shadowColor;
+@property (nonatomic, readonly, nullable) STUColor *shadowColor;
 
 /// If the background is non-null but has a null or 0-alpha color and no border, any background in
 /// the highlighted text is removed.

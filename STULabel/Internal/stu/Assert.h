@@ -47,7 +47,7 @@ void stu_assertion_failed(const char *fileName, int line, const char *functionNa
                           const char *condition)
        __attribute__((noreturn));
 
-#if STU_ASSERT_MAY_THROW
-#include <stdbool.h>
-extern _Atomic(bool) stu_assertion_test;
-#endif
+//#if STU_ASSERT_MAY_THROW
+//#include <stdbool.h>
+//extern _Atomic(bool) stu_assertion_test;
+//#endif

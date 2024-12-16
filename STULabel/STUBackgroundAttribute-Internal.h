@@ -4,12 +4,12 @@
 
 @interface STUBackgroundAttribute () {
 @package
-  UIColor *_color;
+  STUColor *_color;
   bool _fillTextLineGaps;
   bool _extendTextLinesToCommonHorizontalBounds;
   CGFloat _cornerRadius;
-  UIEdgeInsets _edgeInsets;
-  UIColor *_borderColor;
+  STUEdgeInsets _edgeInsets;
+  STUColor *_borderColor;
   CGFloat _borderWidth;
 }
 @end

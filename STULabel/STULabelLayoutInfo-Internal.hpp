@@ -33,7 +33,7 @@ struct LabelTextFrameInfo {
     return isValid && isValidForSizeImpl(size, displayScale);
   }
 
-  CGSize sizeThatFits(const UIEdgeInsets&, const DisplayScale&) const;
+  CGSize sizeThatFits(const STUEdgeInsets&, const DisplayScale&) const;
 
   static const LabelTextFrameInfo empty;
 

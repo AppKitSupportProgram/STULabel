@@ -2,7 +2,15 @@
 
 #import "STUDefines.h"
 
+#import <Foundation/Foundation.h>
+#import "Internal/STUMultiplePlatformAdapter.h"
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
 
 STU_ASSUME_NONNULL_AND_STRONG_BEGIN
 
@@ -85,7 +93,7 @@ STU_EXPORT
 /// @param transform
 ///  A pointer to an affine transformation matrix, or null if no transformation is needed.
 ///  If non-null, this transformation is applied to the path before it is returned.
--   (CGPathRef)createPathWithEdgeInsets:(UIEdgeInsets)edgeInsets
+-   (CGPathRef)createPathWithEdgeInsets:(STUEdgeInsets)edgeInsets
                            cornerRadius:(CGFloat)cornerRadius
 extendTextLinesToCommonHorizontalBounds:(bool)extendTextLinesToCommonHorizontalBounds
                        fillTextLineGaps:(bool)fillTextLineGaps

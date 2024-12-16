@@ -139,7 +139,7 @@ void hashableBits(Sink sink, CGRect r) {
 
 template <typename Sink>
 STU_CONSTEXPR
-void hashableBits(Sink sink, UIEdgeInsets e) {
+void hashableBits(Sink sink, STUEdgeInsets e) {
   return hashableBits(sink, e.top, e.left, e.bottom, e.right);
 }
 

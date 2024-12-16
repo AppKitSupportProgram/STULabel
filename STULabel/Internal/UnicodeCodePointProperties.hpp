@@ -68,8 +68,8 @@ struct CodePointProperties {
   STU_INLINE
   explicit CodePointProperties(Char32 codePoint) {
     if (STU_LIKELY(codePoint < 0xD800)) {
-      const UInt i0 = codePoint >> 4;
-      const UInt i1 = (codePoint & 15) + (static_cast<UInt>(indices[i0]) << 4);
+      const stu::UInt i0 = codePoint >> 4;
+      const stu::UInt i1 = (codePoint & 15) + (static_cast<stu::UInt>(indices[i0]) << 4);
       bits = data1[i1];
     } else {
       bits = lookupCodePointGreaterThanD7FF(codePoint);

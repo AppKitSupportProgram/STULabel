@@ -20,16 +20,16 @@ namespace stu_label {
 NSString* const STUOriginalFontAttributeName = @"STUOriginalFont";
 
 static Class uiColorClass;
-static UIColor* uiColorBlack;
+static STUColor* uiColorBlack;
 static Class uiFontClass;
 
 STU_INLINE
 void ensureConstantsAreInitialized() {
   static dispatch_once_t once;
   dispatch_once_f(&once, nullptr, [](void *) {
-    uiColorClass = UIColor.class;
-    uiColorBlack = UIColor.blackColor;
-    uiFontClass = UIFont.class;
+    uiColorClass = STUColor.class;
+    uiColorBlack = STUColor.blackColor;
+    uiFontClass = STUFont.class;
   });
 }
 
@@ -58,18 +58,18 @@ struct AttributeScanContext {
   Flags flags;
   TextStyleBuffer::ParagraphAttributes* paraAttributes;
 
-  UIFont*  __unsafe_unretained                font;
-  UIColor* __unsafe_unretained                foregroundColor;
-  UIColor* __unsafe_unretained                backgroundColor;
+  STUFont*  __unsafe_unretained                font;
+  STUColor* __unsafe_unretained                foregroundColor;
+  STUColor* __unsafe_unretained                backgroundColor;
   STUBackgroundAttribute* __unsafe_unretained background;
   Float32                                     baselineOffset;
   NSShadow* __unsafe_unretained               shadow;
   NSUnderlineStyle                            underlineStyle;
-  UIColor* __unsafe_unretained                underlineColor;
+  STUColor* __unsafe_unretained                underlineColor;
   NSUnderlineStyle                            strikethroughStyle;
-  UIColor* __unsafe_unretained                strikethroughColor;
+  STUColor* __unsafe_unretained                strikethroughColor;
   CGFloat                                     strokeWidth;
-  UIColor* __unsafe_unretained                strokeColor;
+  STUColor* __unsafe_unretained                strokeColor;
   STUTextAttachment* __unsafe_unretained      textAttachment;
   CTRunDelegateRef                            runDelegate;
   NSTextAttachment* __unsafe_unretained       nsTextAttachment;
@@ -146,7 +146,7 @@ void AttributeScanContext::scanAttribute(const void* keyPointer, const void* val
                     "Invalid attribute value for NSFontAttributeName in NSAttributedString.");
       if (!(context.flags & Context::hasFont)) { // STUOriginalFont takes precedence.
         context.flags |= Context::hasFont;
-        context.font = (__bridge UIFont*)value;
+        context.font = (__bridge STUFont*)value;
       }
       return;
     }
@@ -161,7 +161,7 @@ void AttributeScanContext::scanAttribute(const void* keyPointer, const void* val
       STU_CHECK_MSG([(__bridge id)value isKindOfClass:uiColorClass],
                     "Invalid attribute value for NSForegroundColorAttributeName in NSAttributedString.");
       context.flags |= Context::hasForegroundColor;
-      context.foregroundColor = (__bridge UIColor*)value;
+      context.foregroundColor = (__bridge STUColor*)value;
       return;
     }
     break;
@@ -229,7 +229,7 @@ void AttributeScanContext::scanAttribute(const void* keyPointer, const void* val
       STU_CHECK_MSG([(__bridge id)value isKindOfClass:uiColorClass],
                     "Invalid attribute value for NSStrokeColorAttributeName in NSAttributedString.");
       context.flags |= Context::hasStrokeColor;
-      context.strokeColor = (__bridge UIColor*)value;
+      context.strokeColor = (__bridge STUColor*)value;
       return;
     }
     break;
@@ -239,7 +239,7 @@ void AttributeScanContext::scanAttribute(const void* keyPointer, const void* val
       // This attribute is only internally generated, so we shouldn't need a type check here.
       STU_DEBUG_ASSERT([(__bridge id)value isKindOfClass:uiFontClass]);
       context.flags |= Context::hasFont;
-      context.font = (__bridge UIFont*)value;
+      context.font = (__bridge STUFont*)value;
       return;
     }
     if (equal(key, NSStrikethroughStyleAttributeName)) {
@@ -267,7 +267,7 @@ void AttributeScanContext::scanAttribute(const void* keyPointer, const void* val
       STU_CHECK_MSG([(__bridge id)value isKindOfClass:uiColorClass],
                     "Invalid attribute value for NSUnderlineColorAttributeName in NSAttributedString.");
       context.flags |= Context::hasUnderlineColor;
-      context.underlineColor = (__bridge UIColor*)value;
+      context.underlineColor = (__bridge STUColor*)value;
       return;
     }
     if (equal(key, NSBaselineOffsetAttributeName)) {
@@ -282,7 +282,7 @@ void AttributeScanContext::scanAttribute(const void* keyPointer, const void* val
       STU_CHECK_MSG([(__bridge id)value isKindOfClass:uiColorClass],
                     "Invalid object for NSBackgroundColorAttributeName in NSAttributedString.");
       context.flags |= Context::hasBackgroundColor;
-      context.backgroundColor = (__bridge UIColor*)value;
+      context.backgroundColor = (__bridge STUColor*)value;
       return;
     }
     if (equal(key, STUAttachmentAttributeName)) {
@@ -317,7 +317,7 @@ void AttributeScanContext::scanAttribute(const void* keyPointer, const void* val
       STU_CHECK_MSG([(__bridge id)value isKindOfClass:uiColorClass],
                     "Invalid strikethrough color object in NSAttributedString.");
       context.flags |= Context::hasStrikethroughColor;
-      context.strikethroughColor = (__bridge UIColor*)value;
+      context.strikethroughColor = (__bridge STUColor*)value;
       return;
     }
     break;
@@ -382,12 +382,12 @@ FontIndex TextStyleBuffer::addFont(FontRef font) {
 }
 
 STU_NO_INLINE
-ColorIndex TextStyleBuffer::addColor(UIColor* __unsafe_unretained uiColor) {
-  if (uiColor == uiColorBlack) { // UIKit caches UIColor.blackColor
+ColorIndex TextStyleBuffer::addColor(STUColor* __unsafe_unretained STUColor) {
+  if (STUColor == uiColorBlack) { // UIKit caches STUColor.blackColor
     return ColorIndex::black;
   }
   const UInt16 offset = ColorIndex::fixedColorIndexRange.end;
-  CGColor* const cgColor = stu_label::cgColor(uiColor);
+  CGColor* const cgColor = stu_label::cgColor(STUColor);
   if (colors_.count() <= 16) {
     UInt16 i1 = offset;
     for (const ColorRef& c : colors()) { // May iterate over oldColors_.
@@ -396,7 +396,7 @@ ColorIndex TextStyleBuffer::addColor(UIColor* __unsafe_unretained uiColor) {
       ++i1;
     }
   }
-  Optional<RGBA> rgba = RGBA::of(uiColor);
+  Optional<RGBA> rgba = RGBA::of(STUColor);
   const ColorFlags colorFlags = rgba ? stu_label::colorFlags(*rgba) : ColorFlags::isNotGray;
   if (colorFlags & ColorFlags::isBlack) {
     return ColorIndex::black;
@@ -472,8 +472,8 @@ TextFlags TextStyleBuffer::encodeStringRangeStyle(
   lastStyle_ = reinterpret_cast<const TextStyle*>(reinterpret_cast<const Byte*>(next)
                                                   - lastStyleSize_);
 
-  UIFont* __unsafe_unretained font = STU_LIKELY(context.flags & Context::hasFont)
-                                   ? context.font : (__bridge UIFont*)defaultCoreTextFont();
+  STUFont* __unsafe_unretained font = STU_LIKELY(context.flags & Context::hasFont)
+                                   ? context.font : (__bridge STUFont*)defaultCoreTextFont();
   const FontIndex fontIndex = addFont(font);
   const ColorIndex textColorIndex = !(context.flags & Context::hasForegroundColor)
                                   ? ColorIndex::black
@@ -541,7 +541,7 @@ TextFlags TextStyleBuffer::encodeStringRangeStyle(
     static_assert(TextFlags::hasShadow > TextFlags::hasBackground);
 
     if (context.flags & Context::hasShadow) {
-      UIColor* const color = context.shadow.shadowColor;
+      STUColor* const color = context.shadow.shadowColor;
       if (color) {
         flags |= TextFlags::hasShadow;
         const CGSize offset = context.shadow.shadowOffset;
@@ -685,8 +685,8 @@ TextFlags TextStyleBuffer::encodeStringRangeStyle(
   }
   data_.removeLast(TextStyle::maxSize - size);
 
-  const UInt offsetToNextDiv4 = sign_cast(size)/4;
-  const UInt offsetFromPreviousDiv4 = lastStyleSize_/4;
+  const stu::UInt offsetToNextDiv4 = sign_cast(size)/4;
+  const stu::UInt offsetFromPreviousDiv4 = lastStyleSize_/4;
 
   style->bits = isBig
               | (static_cast<UInt64>(flags) << TextStyle::BitIndex::flags)
@@ -752,7 +752,7 @@ void TextStyleBuffer
         [attributedString addAttribute:runDelegateKey value:[attachment newCTRunDelegate]
                                  range:Range{stringRange.location, Count{1u}}];
       }
-      for (UInt i = 1; i < stringRange.length; ++i) {
+      for (stu::UInt i = 1; i < stringRange.length; ++i) {
         [attributedString addAttributes:@{runDelegateKey: [attachment newCTRunDelegate],
                                           fixForRDAR36622225AttributeName: @(i)}
                                   range:Range{stringRange.location + i, Count{1u}}];

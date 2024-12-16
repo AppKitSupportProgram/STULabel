@@ -11,13 +11,14 @@
 
 #include "Internal/DefineUIntOnCatalystToWorkAroundGlobalNamespacePollution.h"
 
+#if TARGET_OS_IPHONE
 using namespace stu_label;
 
 @class STUTextFrameAccessibilitySubelement;
 
 @interface STUTextFrameAccessibilityElement() {
 @package // fileprivatef
-  UIView* __weak _accessibilityContainer;
+  STUView* __weak _accessibilityContainer;
   CGRect _frame;
   __nullable STUTextLinkRangePredicate _linkActivationHandler;
 @private
@@ -46,11 +47,11 @@ namespace stu_label {
   };
 }
 
-@interface STUTextFrameAccessibilitySubelement : UIAccessibilityElement
+@interface STUTextFrameAccessibilitySubelement : STUAccessibilityElement
 - (instancetype)initWithParams:(const InitParams&)params
                    stringRange:(NSRange)stringRange
     mutableAttributedSubstring:(nullable NSMutableAttributedString*)mutableAttributedSubstring
-                     linkCount:(UInt)linkCount
+                     linkCount:(stu::UInt)linkCount
                  fullRangeLink:(nullable id)linkValue
            fullRangeAttachment:(nullable STUTextAttachment*)attachment
   NS_DESIGNATED_INITIALIZER;
@@ -115,7 +116,7 @@ namespace stu_label {
 - (CGRect)accessibilityFrame {
   if (!_textFrameElement) return _boundsInTextFrame;
   const CGRect frame = _boundsInTextFrame + _textFrameElement->_frame.origin;
-  UIView* const view = _textFrameElement->_accessibilityContainer;
+  STUView* const view = _textFrameElement->_accessibilityContainer;
   const CGRect result = !view ? frame : UIAccessibilityConvertFrameToScreenCoordinates(frame, view);
   return result;
 }
@@ -137,7 +138,7 @@ namespace stu_label {
     bezierPath = [UIBezierPath bezierPathWithCGPath:translatedPath];
     CFRelease(translatedPath);
   }
-  UIView* const view = !_textFrameElement ? nil : _textFrameElement->_accessibilityContainer;
+  STUView* const view = !_textFrameElement ? nil : _textFrameElement->_accessibilityContainer;
   return !view ? bezierPath : UIAccessibilityConvertPathToScreenCoordinates(bezierPath, view);
 }
 - (void)setAccessibilityPath:(UIBezierPath* __unused)path {
@@ -148,7 +149,7 @@ namespace stu_label {
 - (CGPoint)accessibilityActivationPoint {
   if (!_textFrameElement) return _activationPoint;
   const CGPoint point = _activationPoint + _textFrameElement->_frame.origin;
-  UIView* const view = _textFrameElement.accessibilityContainer;
+  STUView* const view = _textFrameElement.accessibilityContainer;
   const CGPoint result = !view ? point
                         : UIAccessibilityConvertFrameToScreenCoordinates(CGRect{point, {}}, view)
                           .origin;
@@ -233,7 +234,7 @@ static ActivationPoint findActivationPoint(const ArrayRef<const TextLineSpan> sp
                    stringRange:(NSRange)stringRange
     mutableAttributedSubstring:(nullable NSMutableAttributedString* __unsafe_unretained)
                                  mutableAttributedSubstring
-                     linkCount:(UInt)linkCount
+                     linkCount:(stu::UInt)linkCount
                  fullRangeLink:(nullable __unsafe_unretained id)fullRangeLinkValue
            fullRangeAttachment:(nullable STUTextAttachment* __unsafe_unretained)attachment
 {
@@ -490,7 +491,7 @@ static UIAccessibilityCustomRotor* createLinkRotorForAccessibilityContainer(
   __builtin_trap();
 }
 
-- (instancetype)initWithAccessibilityContainer:(UIView*)view
+- (instancetype)initWithAccessibilityContainer:(STUView*)view
                                      textFrame:(NS_VALID_UNTIL_END_OF_SCOPE STUTextFrame*)textFrame
                         originInContainerSpace:(CGPoint)originInContainerSpace
                                   displayScale:(CGFloat)displayScale
@@ -579,12 +580,12 @@ static UIAccessibilityCustomRotor* createLinkRotorForAccessibilityContainer(
   }
 }
 
-- (UIView*)accessibilityContainer {
+- (STUView*)accessibilityContainer {
   return _accessibilityContainer;
 }
 - (void)setAccessibilityContainer:(nullable id)accessibilityContainer {
-  STU_CHECK_MSG(accessibilityContainer == nil || [accessibilityContainer isKindOfClass:UIView.class],
-                "The accessibilityContainer of a STUTextFrameAccessibilityElement must be a UIView");
+  STU_CHECK_MSG(accessibilityContainer == nil || [accessibilityContainer isKindOfClass:STUView.class],
+                "The accessibilityContainer of a STUTextFrameAccessibilityElement must be a STUView");
   _accessibilityContainer = accessibilityContainer;
   [super setAccessibilityContainer:accessibilityContainer];
 }
@@ -615,7 +616,7 @@ static UIAccessibilityCustomRotor* createLinkRotorForAccessibilityContainer(
 }
 
 - (CGRect)accessibilityFrame {
-  UIView* const view = _accessibilityContainer;
+  STUView* const view = _accessibilityContainer;
   return !view ? _frame : UIAccessibilityConvertFrameToScreenCoordinates(_frame, view);
 }
 - (void)setAccessibilityFrame:(CGRect __unused)frame {
@@ -808,3 +809,8 @@ static void addAccessibilityElementsForRange(
 
 @end
 
+
+#endif
+
+#if TARGET_OS_OSX
+#endif

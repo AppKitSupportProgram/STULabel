@@ -70,18 +70,18 @@ TaggedRangeLineSpans TempBackgroundSegments::findBackgroundLineSpans(
 {
  return findAndSortTaggedRangeLineSpans(lines, styleOverride,
           TextFlags::hasBackground, SeparateParagraphs{false},
-          [](const TextStyle& style) -> UInt {
+          [](const TextStyle& style) -> stu::UInt {
             const TextStyle::BackgroundInfo* const info = style.backgroundInfo();
             if (info->stuAttribute) {
-              const UInt p = reinterpret_cast<UInt>(info->stuAttribute);
+              const stu::UInt p = reinterpret_cast<stu::UInt>(info->stuAttribute);
               STU_DEBUG_ASSERT((p & 1) == 0);
               return p;
             } else {
-              const UInt colorIndex = info->colorIndex.value_or(ColorIndex::reserved).value;
+              const stu::UInt colorIndex = info->colorIndex.value_or(ColorIndex::reserved).value;
               return (colorIndex << 1) | 1;
             }
           },
-          [](UInt tag1, UInt tag2) -> bool {
+          [](stu::UInt tag1, stu::UInt tag2) -> bool {
             if ((tag1 | tag2) & 1) return false;
             return [(__bridge STUBackgroundAttribute*)reinterpret_cast<void*>(tag1)
                       isEqual:(__bridge STUBackgroundAttribute*)reinterpret_cast<void*>(tag2)];
@@ -256,7 +256,7 @@ void BackgroundSegment::draw(ArrayRef<const TextFrameLine> lines, DrawingContext
   addLineSpansPath(*path, ArrayRef{spans, sign_cast(spanCount)}, verticalPositions,
                    ShouldFillTextLineGaps{shouldFillLineGaps},
                    // We already extended the spans if necessary.
-                   ShouldExtendTextLinesToCommonHorizontalBounds{false}, UIEdgeInsets{},
+                   ShouldExtendTextLinesToCommonHorizontalBounds{false}, STUEdgeInsets{},
                    CornerRadius{attribute ? attribute->_cornerRadius : 0},
                    &clipRect, &translation);
   CGContextAddPath(context.cgContext(), path.get());

@@ -29,7 +29,7 @@ typedef struct STURunGlyphIndex {
 ///       instance is owned by a @c STUTextFrame. Never pass a pointer to a copied or manually
 ///       created @c STUTextFrameLine struct instance.
 ///
-/// The line's typographic metrics are aggregated from the @c UIFont metrics and baseline offsets
+/// The line's typographic metrics are aggregated from the @c STUFont metrics and baseline offsets
 /// of the line's styled text ranges as follows:
 ///
 /// @code

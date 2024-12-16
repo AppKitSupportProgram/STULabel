@@ -14,7 +14,7 @@ ColorFlags colorFlags(const RGBA& rgba) {
        | (r == 0 && g == 0 && b == 0 && a >= 1 ? ColorFlags::isBlack : ColorFlags{});
 }
 
-ColorFlags colorFlags(UIColor* __unsafe_unretained __nullable color) {
+ColorFlags colorFlags(STUColor* __unsafe_unretained __nullable color) {
   if (STU_UNLIKELY(!color)) {
     return ColorFlags::isClear;
   }
@@ -28,8 +28,8 @@ ColorFlags colorFlags(CGColor* __nullable color) {
   if (STU_UNLIKELY(!color)) {
     return ColorFlags::isClear;
   }
-  // Allocating a temporary UIColor object here is inefficient, but convenient.
-  return colorFlags([UIColor colorWithCGColor:color]);
+  // Allocating a temporary STUColor object here is inefficient, but convenient.
+  return colorFlags([STUColor colorWithCGColor:color]);
 }
 
 }

@@ -14,12 +14,17 @@ struct RGBA {
   explicit STU_INLINE
   RGBA(Uninitialized) {}
 
-  static Optional<RGBA> of(UIColor* __nullable color) {
+  static Optional<RGBA> of(STUColor* __nullable color) {
     Optional<RGBA> result{inPlace, uninitialized};
     RGBA& rgba = *result;
-    if (![color getRed:&rgba.red green:&rgba.green blue:&rgba.blue alpha:&rgba.alpha]) {
-      result = none;
-    }
+#if TARGET_OS_IPHONE
+      if (![color getRed:&rgba.red green:&rgba.green blue:&rgba.blue alpha:&rgba.alpha]) {
+        result = none;
+      }
+#endif
+#if TARGET_OS_OSX
+      [color getRed:&rgba.red green:&rgba.green blue:&rgba.blue alpha:&rgba.alpha];
+#endif
     return result;
   }
 };
@@ -35,7 +40,7 @@ constexpr int ColorFlagsBitSize = 5;
 
 ColorFlags colorFlags(const RGBA& color);
   
-ColorFlags colorFlags(UIColor* __nullable color);
+ColorFlags colorFlags(STUColor* __nullable color);
 
 ColorFlags colorFlags(CGColor* __nullable color);
 
@@ -47,7 +52,7 @@ namespace stu_label {
 
 /// color.CGColor without the mandatory autorelease of the color object in ARC code (triggered by
 /// the NS_RETURNS_INNER_POINTER annotation of the CGColor getter).
-CGColor* cgColor(UIColor* color);
+CGColor* cgColor(STUColor* color);
 
 // For our purposes it's quite convenient to use nullable color types.
 
@@ -55,17 +60,17 @@ class ColorRef;
 
 class ColorBase {
 protected:
-  UInt taggedPointer_{};
+  stu::UInt taggedPointer_{};
 
   ColorBase() = default;
 
   STU_INLINE
   ColorBase(CGColor* color, ColorFlags flags)
-  : taggedPointer_{reinterpret_cast<UInt>(color) | (static_cast<UInt>(flags) & 3)}
+  : taggedPointer_{reinterpret_cast<stu::UInt>(color) | (static_cast<stu::UInt>(flags) & 3)}
   {
     static_assert(static_cast<Int>(ColorFlags::isNotGray) == 1);
     static_assert(static_cast<Int>(ColorFlags::isExtended) == 2);
-    STU_DEBUG_ASSERT((reinterpret_cast<UInt>(color) & 3) == 0);
+    STU_DEBUG_ASSERT((reinterpret_cast<stu::UInt>(color) & 3) == 0);
   }
 
 public:
@@ -81,7 +86,7 @@ public:
   const TextFlags textFlags() const {
     static_assert(static_cast<Int>(TextFlags::mayNotBeGrayscale) == (1 << 8));
     static_assert(static_cast<Int>(TextFlags::usesExtendedColor) == (1 << 9));
-    return static_cast<TextFlags>(static_cast<UInt>(colorFlags()) << 8);
+    return static_cast<TextFlags>(static_cast<stu::UInt>(colorFlags()) << 8);
   }
 
   STU_INLINE bool isNotGray() const { return taggedPointer_ & 1; }
@@ -89,7 +94,7 @@ public:
 
   STU_INLINE
   CGColor* cgColor() const {
-    return reinterpret_cast<CGColor*>(taggedPointer_ & ~UInt(3));
+    return reinterpret_cast<CGColor*>(taggedPointer_ & ~stu::UInt(3));
   }
 
   STU_INLINE
@@ -155,14 +160,14 @@ public:
   }
 
   explicit STU_INLINE
-  Color(UIColor* __unsafe_unretained color) {
+  Color(STUColor* __unsafe_unretained color) {
     if (color) {
       *this = Color{color, stu_label::colorFlags(color)};
     }
   }
 
   STU_INLINE
-  Color(UIColor* __unsafe_unretained color, ColorFlags flags)
+  Color(STUColor* __unsafe_unretained color, ColorFlags flags)
   : Color{stu_label::cgColor(color), flags}
   {}
 

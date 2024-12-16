@@ -10,11 +10,11 @@ STU_NO_INLINE
 UInt8 CodePointProperties::lookupCodePointGreaterThanD7FF(Char32 cp) noexcept {
   if (STU_LIKELY(cp <= 0x1FFFF)) {
     cp -= 0xD800;
-    const UInt i0 = cp >> 7;
-    const UInt i1 = ((cp >> 3) & 15)
-                  + ((UInt)indices1[i0] << 4);
-    const UInt i2 = (cp & 7)
-                  + ((UInt)indices2[i1] << 3);
+    const stu::UInt i0 = cp >> 7;
+    const stu::UInt i1 = ((cp >> 3) & 15)
+                  + ((stu::UInt)indices1[i0] << 4);
+    const stu::UInt i2 = (cp & 7)
+                  + ((stu::UInt)indices2[i1] << 3);
     return data2[i2];
   }
   if (cp <= 0x10FFFF) {

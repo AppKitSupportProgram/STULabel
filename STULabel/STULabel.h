@@ -4,6 +4,7 @@
 #import "STULabelLayer.h"
 #import "STULabelOverlayStyle.h"
 
+#if TARGET_OS_IPHONE
 @protocol STULabelDelegate;
 
 STU_ASSUME_NONNULL_AND_STRONG_BEGIN
@@ -382,3 +383,8 @@ typedef void (^ STULabelLinkObserverBlock)(STULabel* __nullable label,
 @end
 
 STU_ASSUME_NONNULL_AND_STRONG_END
+
+#endif
+
+#if TARGET_OS_OSX
+#endif

@@ -2,6 +2,8 @@
 
 #import "STUTextFrame.h"
 
+#if TARGET_OS_IPHONE
+
 STU_ASSUME_NONNULL_AND_STRONG_BEGIN
 
 typedef bool (^ STUTextLinkRangePredicate)(STUTextRange range, id linkValue, CGPoint point);
@@ -10,9 +12,9 @@ typedef bool (^ STUTextLinkRangePredicate)(STUTextRange range, id linkValue, CGP
 
 /// Must only by used on the main thread.
 STU_EXPORT
-@interface STUTextFrameAccessibilityElement : UIAccessibilityElement
+@interface STUTextFrameAccessibilityElement : STUAccessibilityElement
 
-- (instancetype)initWithAccessibilityContainer:(UIView *)view
+- (instancetype)initWithAccessibilityContainer:(STUView *)view
                                      textFrame:(STUTextFrame *)textFrame
                         originInContainerSpace:(CGPoint)originInContainerSpace
                                   displayScale:(CGFloat)displayScale
@@ -26,7 +28,7 @@ STU_EXPORT
   NS_DESIGNATED_INITIALIZER;
 
 STU_DISABLE_CLANG_WARNING("-Wproperty-attribute-mismatch")
-@property (nullable, weak) UIView *accessibilityContainer;
+@property (nullable, weak) STUView *accessibilityContainer;
 STU_REENABLE_CLANG_WARNING
 
 /// Gets & sets accessibilityFrameInContainerSpace.origin.
@@ -48,3 +50,8 @@ STU_REENABLE_CLANG_WARNING
 @end
 
 STU_ASSUME_NONNULL_AND_STRONG_END
+
+#endif
+
+#if TARGET_OS_OSX
+#endif

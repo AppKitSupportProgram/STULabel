@@ -2,7 +2,15 @@
 
 #import "STUCancellationFlag.h"
 
+#import <Foundation/Foundation.h>
+#import "Internal/STUMultiplePlatformAdapter.h"
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
+
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#endif
 
 STU_EXTERN_C_BEGIN
 STU_ASSUME_NONNULL_AND_STRONG_BEGIN
@@ -13,10 +21,16 @@ typedef NS_ENUM(uint8_t, STUWritingDirection) {
 };
 
 STU_INLINE NS_SWIFT_NAME(STUWritingDirection.init(_:))
-STUWritingDirection stuWritingDirection(UIUserInterfaceLayoutDirection direction) {
+STUWritingDirection stuWritingDirection(STUUserInterfaceLayoutDirection direction) {
   _Static_assert(STUWritingDirectionLeftToRight == (STUWritingDirection)false, "");
   _Static_assert(STUWritingDirectionRightToLeft == (STUWritingDirection)true, "");
-  return (STUWritingDirection)(direction == UIUserInterfaceLayoutDirectionRightToLeft);
+#if TARGET_OS_IPHONE
+    return (STUWritingDirection)(direction == UIUserInterfaceLayoutDirectionRightToLeft);
+#endif
+    
+#if TARGET_OS_OSX
+    return (STUWritingDirection)(direction == NSUserInterfaceLayoutDirectionRightToLeft);
+#endif
 }
 
 /// Returns `NSParagraphStyle.defaultWritingDirection(forLanguage: nil)`,

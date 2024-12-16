@@ -20,11 +20,11 @@ using namespace stu_label;
 
 #define FOR_ALL_FIELDS(f) \
   f(STUBackgroundAttribute*, background) \
-  f(UIColor*, textColor) \
-  f(UIColor*, shadowColor) \
-  f(UIColor*, strokeColor) \
-  f(UIColor*, underlineColor) \
-  f(UIColor*, strikethroughColor) \
+  f(STUColor*, textColor) \
+  f(STUColor*, shadowColor) \
+  f(STUColor*, strokeColor) \
+  f(STUColor*, underlineColor) \
+  f(STUColor*, strikethroughColor) \
   f(CGSize, shadowOffset) \
   f(CGFloat, shadowBlurRadius) \
   f(CGFloat, strokeWidth) \
@@ -60,7 +60,7 @@ using namespace stu_label;
 }
 
 - (void)setStrokeWidth:(CGFloat)width
-                 color:(nullable UIColor*)color
+                 color:(nullable STUColor*)color
              doNotFill:(bool)doNotFill
 {
   _strokeWidth = clampNonNegativeFloatInput(width);
@@ -69,14 +69,14 @@ using namespace stu_label;
 }
 
 - (void)setUnderlineStyle:(NSUnderlineStyle)style
-                    color:(nullable UIColor*)color
+                    color:(nullable STUColor*)color
 {
   _underlineStyle = style;
   _underlineColor = color;
 }
 
 - (void)setStrikethroughStyle:(NSUnderlineStyle)style
-                        color:(nullable UIColor*)color
+                        color:(nullable STUColor*)color
 {
   _strikethroughStyle = style;
   _strikethroughColor = color;
@@ -84,7 +84,7 @@ using namespace stu_label;
 
 - (void)setShadowOffset:(CGSize)offset
              blurRadius:(CGFloat)blurRadius
-                  color:(nullable UIColor*)color
+                  color:(nullable STUColor*)color
 {
   _shadowOffset.width = clampFloatInput(offset.width);
   _shadowOffset.height = clampFloatInput(offset.height);
@@ -153,7 +153,7 @@ static_assert(strokeColorIndex + 1 == ColorIndex::highlightColorCount);
 template <typename OutColorIndex>
 STU_INLINE
 bool setColor(TextHighlightStyle::ColorArray& colors, bool checkIfClear,
-              UIColor* __unsafe_unretained __nullable color, IndexInColorArray index,
+              STUColor* __unsafe_unretained __nullable color, IndexInColorArray index,
               OutColorIndex outColorIndex)
 {
   const ColorFlags flags = !color ? ColorFlags::isClear : colorFlags(color);
@@ -238,15 +238,15 @@ bool setColor(TextHighlightStyle::ColorArray& colors, bool checkIfClear,
     _shadowColor = builder->_shadowColor;
     _shadowBlurRadius = builder->_shadowBlurRadius;
     _shadowOffset = builder->_shadowOffset;
-    UIColor* __unsafe_unretained shadowColor = _shadowColor;
+    STUColor* __unsafe_unretained shadowColor = _shadowColor;
     if (!shadowColor) {
-      static UIColor* defaultColor;
+      static STUColor* defaultColor;
       static dispatch_once_t once;
       dispatch_once_f(&once, nullptr, [](void *) {
         defaultColor = [[NSShadow alloc] init].shadowColor;
         STU_DEBUG_ASSERT(defaultColor);
-        if (defaultColor && ![defaultColor isKindOfClass:UIColor.class]) { // Needed for Catalyst.
-          defaultColor = [UIColor colorWithCGColor:defaultColor.CGColor];
+        if (defaultColor && ![defaultColor isKindOfClass:STUColor.class]) { // Needed for Catalyst.
+          defaultColor = [STUColor colorWithCGColor:defaultColor.CGColor];
         }
       });
       shadowColor = defaultColor;

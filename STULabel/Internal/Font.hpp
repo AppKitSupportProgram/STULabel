@@ -22,7 +22,7 @@ class FontRef {
   friend class CachedFontInfo;
 public:
   /* implicit */ STU_INLINE_T
-  FontRef(UIFont* __unsafe_unretained font)
+  FontRef(STUFont* __unsafe_unretained font)
   : FontRef((__bridge CTFont*)font)
   {}
 
@@ -43,12 +43,12 @@ public:
   STU_INLINE
   CGFloat size() const { return CTFontGetSize(font_); }
 
-  // We use the UIFont metrics here, which can differ from the CTFont ones.
-  CGFloat ascent()  const { return  ((__bridge UIFont*)font_).ascender; }
-  CGFloat descent() const { return -((__bridge UIFont*)font_).descender; }
-  CGFloat leading() const { return  ((__bridge UIFont*)font_).leading; }
-  CGFloat xHeight()   const { return ((__bridge UIFont*)font_).xHeight; }
-  CGFloat capHeight() const { return ((__bridge UIFont*)font_).capHeight; }
+  // We use the STUFont metrics here, which can differ from the CTFont ones.
+  CGFloat ascent()  const { return  ((__bridge STUFont*)font_).ascender; }
+  CGFloat descent() const { return -((__bridge STUFont*)font_).descender; }
+  CGFloat leading() const { return  ((__bridge STUFont*)font_).leading; }
+  CGFloat xHeight()   const { return ((__bridge STUFont*)font_).xHeight; }
+  CGFloat capHeight() const { return ((__bridge STUFont*)font_).capHeight; }
 };
 
 } // namespace stu_label
@@ -214,7 +214,7 @@ public:
   STU_INLINE
   const CachedFontInfo& operator[](CTFont* __nonnull font) {
     // TODO: Replace this with a simple LRU cache like in LocalGlyphBoundsCache::glyphBoundsCache.
-    UInt index = (  (font == fonts_[0] ? 1 : 0)
+      stu::UInt index = (  (font == fonts_[0] ? 1 : 0)
                   | (font == fonts_[1] ? 2 : 0))
                | (  (font == fonts_[2] ? 3 : 0)
                   | (font == fonts_[3] ? 4 : 0));
@@ -230,7 +230,7 @@ public:
 
 private:
   CTFont* fonts_[4] = {};
-  UInt counter_{};
+    stu::UInt counter_{};
   CachedFontInfo infos_[4] = {uninitialized, uninitialized, uninitialized, uninitialized};
 };
 
@@ -297,7 +297,7 @@ public:
       appleColorEmojiSize = isAppleColorEmoji ? fontSize : 0;
     }
 
-    HashCode<UInt> hash();
+    HashCode<stu::UInt> hash();
 
     friend bool operator==(const FontFace& lhs, const FontFace& rhs) {
       return lhs.cgFont == rhs.cgFont
@@ -450,7 +450,7 @@ private:
   struct Entry {
     CTFont* font;
     CGFloat fontSize;
-    UInt cacheIndex;
+      stu::UInt cacheIndex;
 
     explicit operator bool() const { return font != nullptr; }
   };
