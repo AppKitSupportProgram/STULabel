@@ -3,7 +3,7 @@
 #import "STUDefines.h"
 
 #import <Foundation/Foundation.h>
-#import "Internal/STUMultiplePlatformAdapter.h"
+#import <STULabel/STUMultiplePlatformDefines.h>
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
 #endif

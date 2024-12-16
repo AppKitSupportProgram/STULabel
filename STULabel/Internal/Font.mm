@@ -151,6 +151,7 @@ CachedFontInfo CachedFontInfo::get(FontRef font) {
     cache.indicesByHashIdentity.initializeWithBucketCount(16);
     cache.entries.ensureFreeCapacity(8);
 
+#if TARGET_OS_IPHONE
     NSNotificationCenter* const notificationCenter = NSNotificationCenter.defaultCenter;
     NSOperationQueue* const mainQueue = NSOperationQueue.mainQueue;
     const auto clearCacheBlock = ^(NSNotification*) {
@@ -158,7 +159,6 @@ CachedFontInfo CachedFontInfo::get(FontRef font) {
       cache.clear();
       stu_mutex_unlock(&fontInfoCacheMutex);
     };
-#if TARGET_OS_IPHONE
       [notificationCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
                                       object:nil queue:mainQueue usingBlock:clearCacheBlock];
       [notificationCenter addObserverForName:UIApplicationDidReceiveMemoryWarningNotification
@@ -249,12 +249,12 @@ static void initGlyphBoundsCache() {
   GlyphBoundsCache& glyphBoundsCache = *new (glyphBoundsCacheStorage) GlyphBoundsCache{};
   glyphBoundsCache.poolsByFontFace.initializeWithBucketCount(8);
 
+#if TARGET_OS_IPHONE
   NSNotificationCenter* const notificationCenter = NSNotificationCenter.defaultCenter;
   NSOperationQueue* const mainQueue = NSOperationQueue.mainQueue;
   const auto clearCacheBlock = ^(NSNotification*) {
     FontFaceGlyphBoundsCache::clearGlobalCache();
   };
-#if TARGET_OS_IPHONE
     [notificationCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
                                     object:nil queue:mainQueue usingBlock:clearCacheBlock];
     [notificationCenter addObserverForName:UIApplicationDidReceiveMemoryWarningNotification

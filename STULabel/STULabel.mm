@@ -2511,6 +2511,3 @@ static void addLabelLinkPopoverObserver(STULabel* label, STUTextLink* link, UIVi
 }
 
 #endif
-
-#if TARGET_OS_OSX
-#endif

@@ -1,34 +1,39 @@
-// Copyright 2016–2018 Stephan Tolksdorf
-
-#import "STULabelPrerenderer.h"
-#import "STULayerWithNullDefaultActions.h"
-#import "STUTextFrameAccessibilityElement.h"
-
-#import <STULabel/STUMultiplePlatformDefines.h>
+//
+//  STULabel+AppKit.h
+//  STULabel
+//
+//  Created by JH on 12/16/24.
+//  Copyright © 2024 STULabel. All rights reserved.
+//
 
 #import <Foundation/Foundation.h>
-
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#endif
+#import "NSLayoutAnchor+STULabelSpacing.h"
+#import "STULabelLayer.h"
+#import "STULabelOverlayStyle.h"
 
 #if TARGET_OS_OSX
 #import <AppKit/AppKit.h>
-#endif
 
-@protocol STULabelLayerDelegate;
+@protocol STULabelDelegate;
 
-/// @note This class must only be used on the main thread.
+STU_ASSUME_NONNULL_AND_STRONG_BEGIN
+
+/// A label view with a @c STULabelLayer layer.
+///
 /// @note
 /// @c encodeWithCoder: (@c encode(with:)) only calls the superclass method and doesn't encode
-/// any of the @c STULabelLayer properties itself.
+/// any of the @c STULabel properties itself. If you need to persist more state, you could e.g.
+/// subclass @c STULabel and overwrite @c encodeWithCoder: and @c initWithCoder:.
 STU_EXPORT
-@interface STULabelLayer : STULayerWithNullDefaultActions
+@interface STULabel : NSView <STULabelLayerDelegate>
 
-@property (nonatomic, weak, nullable) NSObject<STULabelLayerDelegate> *labelLayerDelegate;
+//@property (nullable, strong) STULabelLayer *layer;
+
+@property (nonatomic, weak, nullable) id<STULabelDelegate> delegate;
 
 /// Default value: false
 @property (nonatomic) bool displaysAsynchronously;
+
 
 - (void)configureWithPrerenderer:(nonnull STULabelPrerenderer *)prerenderer;
 
@@ -45,9 +50,9 @@ STU_EXPORT
 
 @property (nonatomic, copy, null_resettable) NSString *text;
 
-@property (nonatomic, null_resettable) STUFont *font;
+@property (nonatomic, null_resettable) NSFont *font;
 
-@property (nonatomic, null_resettable) STUColor *textColor;
+@property (nonatomic, null_resettable) NSColor *textColor;
 
 @property (nonatomic) NSTextAlignment textAlignment;
 
@@ -57,23 +62,11 @@ STU_EXPORT
 /// Default value: @c .leading
 @property (nonatomic) STULabelDefaultTextAlignment defaultTextAlignment;
 
-/// This value is used for interpreting the @c defaultTextAlignment modes @c .leading and
-/// @c .trailing.
-/// It is also used as the @c defaultBaseWritingDirection when the @c STULabelLayer constructs a
-/// @c STUShapedString.
-///
-/// The initial value of this property is @c UIApplication.shared.userInterfaceLayoutDirection.
-///
-/// If the @c STULabelLayer is owned by a @c STULabel, the label view automatically sets the layer's
-/// @c userInterfaceLayoutDirection to the value of the view's
-/// @c effectiveUserInterfaceLayoutDirection and updates the value when the view's
-/// @c semanticContentAttribute or @c traitCollection change.
-@property (nonatomic) STUUserInterfaceLayoutDirection userInterfaceLayoutDirection;
-
 /// The @c STUShapedString instance used by the label for layout and rendering purposes.
 ///
 /// If necessary, the label lazily constructs the @c STUShapedString from @c self.attributedText
-/// (with the default base writing direction corresponding to @c self.userInterfaceLayoutDirection).
+/// (with the default base writing direction corresponding to
+/// @c self.effectiveUserInterfaceLayoutDirection).
 ///
 /// If the attributed text is null, the getter returns an empty shaped string.
 ///
@@ -82,25 +75,23 @@ STU_EXPORT
 /// setting the label's @c shapedText instead of the @c attributedText can be an effective
 /// optimization. (If you know the layout width of the label in advance, you could alternatively
 /// use a @c STULabelPrerenderer to reduce the work on the main-thread even further.)
-///
-/// If the attributed text is null, the getter returns an empty shaped string.
 @property (nonatomic, null_resettable) STUShapedString *shapedText;
 
 /// Default value: @c .top
 @property (nonatomic) STULabelVerticalAlignment verticalAlignment;
 
-@property (nonatomic) STUEdgeInsets contentInsets;
+/// Default value: @c .zero
+@property (nonatomic) NSEdgeInsets contentInsets;
 
+/// Default value: @c .zero
 @property (nonatomic) STUDirectionalEdgeInsets directionalContentInsets;
 
 /// Default value: false
 @property (nonatomic) bool clipsContentToBounds;
 
-/// Sets @c maximumNumberOfLines, @c lastLineTruncationMode, @c truncationToken,
-/// @c minimumTextScaleFactor, @c textScaleFactorStepSize, @c textScalingBaselineAdjustment and
-/// @c lastHyphenationLocationInRangeCallback.
-///
-/// @c options.defaultTextAlignment is ignored.
+/// Tracks the view frame without the content insets.
+@property (readonly, nonnull) NSLayoutGuide *contentLayoutGuide;
+
 - (void)setTextFrameOptions:(nullable STUTextFrameOptions *)options;
 
 @property (nonatomic) STUTextLayoutMode textLayoutMode;
@@ -142,42 +133,34 @@ STU_EXPORT
 @property (nonatomic, nullable) STULastHyphenationLocationInRangeFinder
                                   lastHyphenationLocationInRangeFinder;
 
-/// The actually displayed background color of the @c STULabeLayer.
-@property (nonatomic, nullable) CGColorRef displayedBackgroundColor;
 
-/// The @c CALayer background color, which may be null even though the background color of the
-/// displayed content is @c displayedBackgroundColor.
-///
-/// The @c STULabelLayer will automatically set and clear this property to optimize rendering
-/// performance.
-STU_DISABLE_CLANG_WARNING("-Wproperty-attribute-mismatch")
-@property (nonatomic, nullable) CGColorRef backgroundColor
-    DEPRECATED_MSG_ATTRIBUTE("Use displayedBackgroundColor instead.");
-STU_REENABLE_CLANG_WARNING
+/// Default value: true
+@property (nonatomic) bool usesTintColorAsLinkColor;
 
-@property (nonatomic, getter=isHighlighted) bool highlighted;
 
-@property (nonatomic, strong, nullable) STUTextHighlightStyle *highlightStyle;
+@property (nonatomic, getter=isHighlighted) BOOL highlighted;
+
+@property (nonatomic, nullable) STUTextHighlightStyle *highlightStyle;
 
 @property (nonatomic) STUTextRange highlightRange;
 
-- (void)setHighlightRange:(NSRange)range type:(STUTextRangeType)rangeType
-  NS_SWIFT_NAME(setHighlightRange(_:type:));
+- (void)setHighlightRange:(NSRange)range type:(STUTextRangeType)rangeType;
 
-/// Default value: true
-@property (nonatomic) bool overrideColorsApplyToHighlightedText;
 
-@property (nonatomic, nullable) STUColor *overrideTextColor;
+@property (nonatomic, getter=isEnabled) BOOL enabled;
 
-@property (nonatomic, nullable) STUColor *overrideLinkColor;
+/// Default value: `UIColor(white: 0.56, alpha: 1)`
+@property (nonatomic, nullable) NSColor *disabledTextColor;
 
-@property (nonatomic, strong, nullable) STULabelDrawingBlock drawingBlock;
+/// Default value: @c nil
+@property (nonatomic, nullable) NSColor *disabledLinkColor;
+
+@property (nonatomic, nullable) STULabelDrawingBlock drawingBlock;
 
 @property (nonatomic) STULabelDrawingBlockColorOptions drawingBlockColorOptions;
 
 /// Default value: @c .textLayoutBoundsPlusInsets
 @property (nonatomic) STULabelDrawingBounds drawingBlockImageBounds;
-
 
 /// Default value: false
 @property (nonatomic) bool neverUsesGrayscaleBitmapFormat;
@@ -195,57 +178,68 @@ STU_REENABLE_CLANG_WARNING
 
 @property (nonatomic, readonly) STULabelLayoutInfo layoutInfo;
 
-/// An array with @c STUTextLink objects for every link contained in the label's truncated text.
-@property (nonatomic, readonly, nonnull) STUTextLinkArray *links;
+@property (nonatomic, readonly) CGSize intrinsicContentSize;
 
-@property (nonatomic, readonly, nonnull) STUTextFrame *textFrame NS_REFINED_FOR_SWIFT;
+/// Indicates whether the label has an intrinsic content width.
+///
+/// The default value is true.
+///
+/// When this property is false, the label returns @c UIViewNoIntrinsicMetric as the
+/// @c width value of the @c intrinsicContentSize.
+///
+/// You can set this property to false when the view's width is entirely determined by external
+/// constraints, e.g. when the label's sides are pinned to the edges of a
+/// @c UITableViewCell.contentView. This will improve the performance of @c intrinsicContentSize
+/// for multi-line labels.
+@property (nonatomic) bool hasIntrinsicContentWidth;
+
+@property (nonatomic, readonly) NSLayoutYAxisAnchor *firstBaselineAnchor;
+
+@property (nonatomic, readonly) NSLayoutYAxisAnchor *lastBaselineAnchor;
+
+
+@property (nonatomic, readonly) STUTextFrame *textFrame NS_REFINED_FOR_SWIFT;
 // var textFrame: STUTextFrameWithOrigin
 
 @property (nonatomic, readonly) CGPoint textFrameOrigin NS_REFINED_FOR_SWIFT;
 
-@property (copy, nonnull) NSString *contentsGravity
-  STU_UNAVAILABLE("Use verticalAlignment and textAlignment or  NSParagraphStyle.textAlignment instead.");
-
-@property BOOL drawsAsynchronously
-  STU_UNAVAILABLE("Use displaysAsynchronously instead.");
-
 @end
 
-@protocol STULabelLayerDelegate <NSObject>
+STU_ASSUME_NONNULL_AND_STRONG_END
+
+@protocol STULabelDelegate <NSObject>
 @optional
 
-/// The proposed value is usually the current value of @c labelLayer.displaysAsynchronously,
-/// but it may be @c false even when @c labelLayer.displaysAsynchronously is @c true if the
+/// Asks the delegate whether the label should be displayed asynchronously.
+///
+/// The proposed value is usually the current value of @c label.displaysAsynchronously,
+/// but it may be @c false even when @c label.displaysAsynchronously is @c true if the
 /// label implementation has determined that synchronous drawing may on this occasion be preferable
 /// to avoid visible flickering.
-- (bool)labelLayer:(nonnull STULabelLayer *)labelLayer
-        shouldDisplayAsynchronouslyWithProposedValue:(bool)proposedValue;
+- (bool)label:(STULabel *)label shouldDisplayAsynchronouslyWithProposedValue:(bool)proposedValued;
 
-/// Tells the delegate that the label layer displayed text in the specified bounds.
-/// @param labelLayer The label layer.
+/// Tell the delegate that the label displayed text in the specified bounds.
+/// @param label The label view.
 /// @param flags Flags indicating various properties of the displayed text.
 /// @param contentBounds
-///  The bounds of the displayed text in the local coordinate system of the label layer.
-- (void)labelLayer:(nonnull STULabelLayer *)labelLayer
-didDisplayTextWithFlags:(STUTextFrameFlags)flags
-            inRect:(CGRect)contentBounds;
+///  The bounds of the displayed text in the local coordinate system of the label view.
+- (void)label:(STULabel *)label didDisplayTextWithFlags:(STUTextFrameFlags)flags
+       inRect:(CGRect)contentBounds
+  NS_SWIFT_NAME(label(_:didDisplayTextWithFlags:in:));
 
 /// Tells the delegate that the displayed text moved to the specified bounds.
 ///
 /// This delegate method is only called when the label's bounds change in a way that doesn't
 /// invalidate the text layout except for the relative position of the text within the label
 /// and only when the label was already displaying the text before the change.
-///
-/// @param labelLayer The label layer.
+/// @param label The label view.
 /// @param contentBounds
-///  The new bounds of the displayed text in the local coordinate system of the label layer.
-- (void)labelLayer:(nonnull STULabelLayer *)labelLayer
-didMoveDisplayedTextToRect:(CGRect)contentBounds;
+///  The new bounds of the displayed text in the local coordinate system of the label view.
+- (void)label:(STULabel *)label didMoveDisplayedTextToRect:(CGRect)contentBounds;
 
-- (void)labelLayerTextLayoutWasInvalidated:(nonnull STULabelLayer *)labelLayer;
-
-- (void)labelLayer:(nonnull STULabelLayer *)labelLayer
-needsVisibleBoundsUpdates:(bool)needsVisibleBoundsUpdates;
+/// Tells the delegate that the text layout was invalidated.
+- (void)labelTextLayoutWasInvalidated:(STULabel *)label;
 
 @end
 
+#endif

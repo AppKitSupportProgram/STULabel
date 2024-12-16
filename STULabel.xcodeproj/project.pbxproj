@@ -592,6 +592,18 @@
 		D4F150881F9CFD6500AB1C4B /* GlyphSpan.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D4F150811F9B994700AB1C4B /* GlyphSpan.hpp */; };
 		D4F1508D1F9F69CA00AB1C4B /* TextFrameLine-GlyphSpanIteration.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4F1508C1F9F69CA00AB1C4B /* TextFrameLine-GlyphSpanIteration.mm */; };
 		D4F1508E1F9F69CA00AB1C4B /* TextFrameLine-GlyphSpanIteration.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4F1508C1F9F69CA00AB1C4B /* TextFrameLine-GlyphSpanIteration.mm */; };
+		E9096B5D2D1055C80031A5E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9096B562D1055C80031A5E5 /* AppDelegate.swift */; };
+		E9096B5E2D1055C80031A5E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9096B5B2D1055C80031A5E5 /* ViewController.swift */; };
+		E9096B5F2D1055C80031A5E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9096B572D1055C80031A5E5 /* Assets.xcassets */; };
+		E9096B602D1055C80031A5E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9096B5A2D1055C80031A5E5 /* Main.storyboard */; };
+		E9096B612D1055D60031A5E5 /* STULabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B0AEBC1F9259E600B5B2B9 /* STULabel.framework */; };
+		E9096B622D1055D60031A5E5 /* STULabel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D4B0AEBC1F9259E600B5B2B9 /* STULabel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E9096B672D1056910031A5E5 /* STUMultiplePlatformDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = E9096B662D1056910031A5E5 /* STUMultiplePlatformDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E9096B682D1056910031A5E5 /* STUMultiplePlatformDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = E9096B662D1056910031A5E5 /* STUMultiplePlatformDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E9096B6E2D105AC50031A5E5 /* STULabel+AppKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9096B6D2D105AC50031A5E5 /* STULabel+AppKit.mm */; };
+		E9096B6F2D105AC50031A5E5 /* STULabel+AppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E9096B6C2D105AC50031A5E5 /* STULabel+AppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E9096B702D105AC50031A5E5 /* STULabel+AppKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9096B6D2D105AC50031A5E5 /* STULabel+AppKit.mm */; };
+		E9096B712D105AC50031A5E5 /* STULabel+AppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E9096B6C2D105AC50031A5E5 /* STULabel+AppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E9E217532D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E9E217512D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h */; };
 		E9E217542D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E217522D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m */; };
 		E9E217552D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E9E217512D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h */; };
@@ -673,6 +685,13 @@
 			remoteGlobalIDString = D4E8DBE120DA6F29009F4735;
 			remoteInfo = STULabelResources;
 		};
+		E9096B632D1055D60031A5E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B0AEB31F9259E600B5B2B9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4B0AEBB1F9259E600B5B2B9;
+			remoteInfo = STULabel;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -684,6 +703,17 @@
 			files = (
 				D40702922014FFDF004E5C07 /* STULabelSwift.framework in Embed Frameworks */,
 				D407028E2014FFDF004E5C07 /* STULabel.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E9096B652D1055D70031A5E5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E9096B622D1055D60031A5E5 /* STULabel.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1079,6 +1109,15 @@
 		D4F150841F9CE96900AB1C4B /* NSArrayRef.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSArrayRef.hpp; sourceTree = "<group>"; };
 		D4F1508C1F9F69CA00AB1C4B /* TextFrameLine-GlyphSpanIteration.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "TextFrameLine-GlyphSpanIteration.mm"; sourceTree = "<group>"; };
 		D4FFD1DF1FAA200E008530BE /* stu_lldb_formatters.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = stu_lldb_formatters.py; sourceTree = "<group>"; };
+		E9096B472D10559C0031A5E5 /* Demo-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Demo-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9096B562D1055C80031A5E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E9096B572D1055C80031A5E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E9096B582D1055C80031A5E5 /* Demo_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Demo_macOS.entitlements; sourceTree = "<group>"; };
+		E9096B592D1055C80031A5E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E9096B5B2D1055C80031A5E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E9096B662D1056910031A5E5 /* STUMultiplePlatformDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STUMultiplePlatformDefines.h; sourceTree = "<group>"; };
+		E9096B6C2D105AC50031A5E5 /* STULabel+AppKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "STULabel+AppKit.h"; sourceTree = "<group>"; };
+		E9096B6D2D105AC50031A5E5 /* STULabel+AppKit.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "STULabel+AppKit.mm"; sourceTree = "<group>"; };
 		E9E217512D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STUMultiplePlatformAdapter.h; sourceTree = "<group>"; };
 		E9E217522D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STUMultiplePlatformAdapter.m; sourceTree = "<group>"; };
 		E9E668772D102DA900CC862C /* STUScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STUScreen.h; sourceTree = "<group>"; };
@@ -1147,6 +1186,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E9096B442D10559C0031A5E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9096B612D1055D60031A5E5 /* STULabel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1436,6 +1483,7 @@
 				D42382991F926F2C000B8A63 /* STULabelSwift */,
 				D42383B91F92A80B000B8A63 /* Tests */,
 				D467A0781F9261E70043C7F0 /* Demo */,
+				E9096B5C2D1055C80031A5E5 /* Demo-macOS */,
 				D4B0AEBD1F9259E600B5B2B9 /* Products */,
 				D423839E1F92A340000B8A63 /* Frameworks */,
 			);
@@ -1452,6 +1500,7 @@
 				D43E66BD1FD45DB300BABD1C /* AllTests.xctest */,
 				D41C92B82083CBC3002AFFF3 /* STULabelSwift.framework */,
 				D4E8DBE220DA6F29009F4735 /* STULabelResources.bundle */,
+				E9096B472D10559C0031A5E5 /* Demo-macOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1477,6 +1526,8 @@
 				D4B0AFEF1F925BC600B5B2B9 /* STUDefines.h */,
 				D4B0AEBF1F9259E600B5B2B9 /* STULabel.h */,
 				D4B0AFEA1F925B9C00B5B2B9 /* STULabel.mm */,
+				E9096B6C2D105AC50031A5E5 /* STULabel+AppKit.h */,
+				E9096B6D2D105AC50031A5E5 /* STULabel+AppKit.mm */,
 				D48694612038FDED0014A034 /* STULabelAlignment.h */,
 				D4B0AECF1F925AF200B5B2B9 /* STULabelDrawingBlock.h */,
 				D4B0AEF81F925AF800B5B2B9 /* STULabelDrawingBlock-Internal.hpp */,
@@ -1541,6 +1592,7 @@
 				D4E753BD2104A99D00FA59F0 /* STUTruncationScope.mm */,
 				D4D58ED620B0B9630016AA8A /* STULabelTiledLayer.h */,
 				D46B593120C07C2D00D016E2 /* STULabelTiledLayer.mm */,
+				E9096B662D1056910031A5E5 /* STUMultiplePlatformDefines.h */,
 			);
 			path = STULabel;
 			sourceTree = "<group>";
@@ -1696,6 +1748,18 @@
 			path = stu;
 			sourceTree = "<group>";
 		};
+		E9096B5C2D1055C80031A5E5 /* Demo-macOS */ = {
+			isa = PBXGroup;
+			children = (
+				E9096B562D1055C80031A5E5 /* AppDelegate.swift */,
+				E9096B572D1055C80031A5E5 /* Assets.xcassets */,
+				E9096B582D1055C80031A5E5 /* Demo_macOS.entitlements */,
+				E9096B5A2D1055C80031A5E5 /* Main.storyboard */,
+				E9096B5B2D1055C80031A5E5 /* ViewController.swift */,
+			);
+			path = "Demo-macOS";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1724,6 +1788,7 @@
 				D43E66D51FD464E200BABD1C /* DecorationLines.hpp in Headers */,
 				D4C6735F1FAE0D950047A173 /* Hash.hpp in Headers */,
 				D4552F941FED31D10006974A /* Rect.hpp in Headers */,
+				E9096B672D1056910031A5E5 /* STUMultiplePlatformDefines.h in Headers */,
 				D42384EC1F9381D7000B8A63 /* TypeTraits.hpp in Headers */,
 				D42384D91F9381D7000B8A63 /* ArrayRef.hpp in Headers */,
 				D42384EB1F9381D7000B8A63 /* ScopeGuard.hpp in Headers */,
@@ -1804,6 +1869,7 @@
 				D43E66D31FD464E200BABD1C /* CoreGraphicsUtils.hpp in Headers */,
 				D423844B1F92AC81000B8A63 /* STUDefines.h in Headers */,
 				D423844C1F92AC81000B8A63 /* STUTextAttributes.h in Headers */,
+				E9096B712D105AC50031A5E5 /* STULabel+AppKit.h in Headers */,
 				D43E66FE1FD464E200BABD1C /* STULabelSubrangeView.h in Headers */,
 				D46B593620C14A3600D016E2 /* CoreAnimationUtils.hpp in Headers */,
 				D423844D1F92AC81000B8A63 /* STULabelPrerenderer.h in Headers */,
@@ -1925,6 +1991,7 @@
 				D49F0B041FCC601A004B0E5C /* LineTruncation.hpp in Headers */,
 				D42384CB1F9379B9000B8A63 /* InOut.hpp in Headers */,
 				D4F150871F9CFD6400AB1C4B /* GlyphSpan.hpp in Headers */,
+				E9096B6F2D105AC50031A5E5 /* STULabel+AppKit.h in Headers */,
 				D4B0AF151F925AF900B5B2B9 /* STUShapedString.h in Headers */,
 				D49F0AB41FCC5FF1004B0E5C /* TextStyle.hpp in Headers */,
 				D4134E2E1FB32C2100377349 /* BinarySearch.hpp in Headers */,
@@ -1994,6 +2061,7 @@
 				D4552F8F1FEC06710006974A /* NSAttributedStringRef.hpp in Headers */,
 				D4E753B92104A50100FA59F0 /* STUParagraphStyle.h in Headers */,
 				D4B0AF041F925AF900B5B2B9 /* STULabelLayoutInfo-Internal.hpp in Headers */,
+				E9096B682D1056910031A5E5 /* STUMultiplePlatformDefines.h in Headers */,
 				D42384C21F9379B9000B8A63 /* ArrayUtils.hpp in Headers */,
 				D4B0AF321F925AF900B5B2B9 /* STUTextFrameAccessibilityElement.h in Headers */,
 				D4B0AF0B1F925AF900B5B2B9 /* STUTextAttachment.h in Headers */,
@@ -2157,6 +2225,27 @@
 			productReference = D4E8DBE220DA6F29009F4735 /* STULabelResources.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
+		E9096B462D10559C0031A5E5 /* Demo-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E9096B532D10559D0031A5E5 /* Build configuration list for PBXNativeTarget "Demo-macOS" */;
+			buildPhases = (
+				E9096B432D10559C0031A5E5 /* Sources */,
+				E9096B442D10559C0031A5E5 /* Frameworks */,
+				E9096B452D10559C0031A5E5 /* Resources */,
+				E9096B652D1055D70031A5E5 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E9096B642D1055D60031A5E5 /* PBXTargetDependency */,
+			);
+			name = "Demo-macOS";
+			packageProductDependencies = (
+			);
+			productName = "Demo-macOS";
+			productReference = E9096B472D10559C0031A5E5 /* Demo-macOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2164,7 +2253,7 @@
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Latest;
-				LastSwiftUpdateCheck = 0910;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = STULabel;
 				TargetAttributes = {
@@ -2199,6 +2288,10 @@
 					D4E8DBE120DA6F29009F4735 = {
 						CreatedOnToolsVersion = 10.0;
 						LastSwiftMigration = 1000;
+						ProvisioningStyle = Automatic;
+					};
+					E9096B462D10559C0031A5E5 = {
+						CreatedOnToolsVersion = 16.2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -2264,6 +2357,7 @@
 				D42382971F926F2C000B8A63 /* STULabelSwift */,
 				D41C92A62083CBC3002AFFF3 /* STULabelSwift static */,
 				D467A0761F9261E70043C7F0 /* Demo */,
+				E9096B462D10559C0031A5E5 /* Demo-macOS */,
 				D43E66BC1FD45DB300BABD1C /* AllTests */,
 				D423847E1F92AE37000B8A63 /* DynamicFrameworkTests */,
 			);
@@ -2335,6 +2429,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E9096B452D10559C0031A5E5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9096B5F2D1055C80031A5E5 /* Assets.xcassets in Resources */,
+				E9096B602D1055C80031A5E5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2402,6 +2505,7 @@
 				D4ED28631FA20F2F00DD135A /* TextFrameLine-FontMetric.mm in Sources */,
 				D44A5EAD1F9A2672007325B4 /* Optional.cpp in Sources */,
 				D43E66EC1FD464E200BABD1C /* CoreGraphicsUtils.mm in Sources */,
+				E9096B702D105AC50031A5E5 /* STULabel+AppKit.mm in Sources */,
 				D4154B591FD5F43D00A065BC /* TextFrameLayouter-LineTruncation.mm in Sources */,
 				D43E66F61FD464E200BABD1C /* STULabelGhostingMaskLayer.mm in Sources */,
 				D42383E21F92AC81000B8A63 /* STUTextAttributes.mm in Sources */,
@@ -2616,6 +2720,7 @@
 				D44C191D1F97C434001DFD52 /* StyledStringRangeIteration.mm in Sources */,
 				D49F0AB91FCC6001004B0E5C /* TextLineSpan.mm in Sources */,
 				D4B0AF2E1F925AF900B5B2B9 /* STULabelOverlayStyle.mm in Sources */,
+				E9096B6E2D105AC50031A5E5 /* STULabel+AppKit.mm in Sources */,
 				D44A5EAC1F9A2672007325B4 /* Optional.cpp in Sources */,
 				D4ED28621FA20F2F00DD135A /* TextFrameLine-FontMetric.mm in Sources */,
 				D4154B581FD5F43D00A065BC /* TextFrameLayouter-LineTruncation.mm in Sources */,
@@ -2693,6 +2798,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E9096B432D10559C0031A5E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9096B5D2D1055C80031A5E5 /* AppDelegate.swift in Sources */,
+				E9096B5E2D1055C80031A5E5 /* ViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2745,6 +2859,11 @@
 			isa = PBXTargetDependency;
 			target = D4E8DBE120DA6F29009F4735 /* STULabelResources */;
 			targetProxy = D4E8DC4620DA8855009F4735 /* PBXContainerItemProxy */;
+		};
+		E9096B642D1055D60031A5E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4B0AEBB1F9259E600B5B2B9 /* STULabel */;
+			targetProxy = E9096B632D1055D60031A5E5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2801,6 +2920,14 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		E9096B5A2D1055C80031A5E5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E9096B592D1055C80031A5E5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -2822,6 +2949,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310D21F94237400F39C3A /* STULabelSwift.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				REGISTER_APP_GROUPS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -2829,6 +2962,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310D21F94237400F39C3A /* STULabelSwift.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				REGISTER_APP_GROUPS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -2934,7 +3073,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D4E8DC1920DA8364009F4735 /* STULabelResources.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = ZF2GY8W6BW;
+				DEVELOPMENT_TEAM = D5Q73692VW;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Debug;
 		};
@@ -2943,6 +3083,157 @@
 			baseConfigurationReference = D4E8DC1920DA8364009F4735 /* STULabelResources.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = ZF2GY8W6BW;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Release;
+		};
+		E9096B542D10559D0031A5E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Demo-macOS/Demo_macOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 STULabel. All rights reserved.";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.JH.Demo-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E9096B552D10559D0031A5E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Demo-macOS/Demo_macOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 STULabel. All rights reserved.";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.JH.Demo-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -3026,6 +3317,15 @@
 			buildConfigurations = (
 				D4E8DBE620DA6F29009F4735 /* Debug */,
 				D4E8DBE720DA6F29009F4735 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E9096B532D10559D0031A5E5 /* Build configuration list for PBXNativeTarget "Demo-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9096B542D10559D0031A5E5 /* Debug */,
+				E9096B552D10559D0031A5E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

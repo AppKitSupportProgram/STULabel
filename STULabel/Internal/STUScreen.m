@@ -89,6 +89,16 @@
     return self.backingScaleFactor;
 }
 
+- (NSDisplayGamut)displayGamut {
+    if ([self canRepresentDisplayGamut:NSDisplayGamutP3]) {
+        return NSDisplayGamutP3;
+    } else if ([self canRepresentDisplayGamut:NSDisplayGamutSRGB]) {
+        return NSDisplayGamutSRGB;
+    } else {
+        return 0;
+    }
+}
+
 @end
 
 @implementation NSWindow (STUScreen)

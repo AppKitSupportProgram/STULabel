@@ -1,10 +1,11 @@
 // Copyright 2017–2018 Stephan Tolksdorf
 
-#if TARGET_OS_IPHONE
 
 #import "NSAttributedString+STUDynamicTypeFontScaling.h"
 
-#import "STUFont+STUDynamicTypeFontScaling.h"
+#import "UIFont+STUDynamicTypeFontScaling.h"
+
+#if TARGET_OS_IPHONE
 
 @implementation NSAttributedString (STUDynamicTypeScaling)
 

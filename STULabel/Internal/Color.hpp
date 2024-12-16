@@ -23,7 +23,11 @@ struct RGBA {
       }
 #endif
 #if TARGET_OS_OSX
-      [color getRed:&rgba.red green:&rgba.green blue:&rgba.blue alpha:&rgba.alpha];
+      if (NSColor *resolvedColor = [color colorUsingColorSpaceName:NSDeviceRGBColorSpace]) {
+          [resolvedColor getRed:&rgba.red green:&rgba.green blue:&rgba.blue alpha:&rgba.alpha];
+      } else {
+          result = none;
+      }
 #endif
     return result;
   }

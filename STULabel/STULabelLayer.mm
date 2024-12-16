@@ -218,9 +218,15 @@ private:
   void updateScreenProperties(STUWindow* __unsafe_unretained window) {
     if (STUScreen* const screen = window.stu_screen) {
       screenScale_ = screen.scale;
-      if (@available(iOS 10, tvOS 10, *)) {
-        screenDisplayGamut_ = static_cast<STUDisplayGamut>(screen.traitCollection.displayGamut);
-      }
+#if TARGET_OS_IPHONE
+        if (@available(iOS 10, tvOS 10, *)) {
+          screenDisplayGamut_ = static_cast<STUDisplayGamut>(screen.traitCollection.displayGamut);
+        }
+#endif
+#if TARGET_OS_OSX
+        screenDisplayGamut_ = static_cast<STUDisplayGamut>(screen.displayGamut);
+#endif
+        
     } else {
       screenScale_ = 0;
       screenDisplayGamut_ = STUDisplayGamutUnspecified;

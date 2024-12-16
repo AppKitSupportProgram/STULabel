@@ -154,8 +154,15 @@ extension STUTextFrame {
                    options: DrawingOptions? = nil,
                    cancellationFlag: UnsafePointer<STUCancellationFlag>? = nil)
   {
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
+      let context = NSGraphicsContext.current?.cgContext
+#endif
+      
+#if canImport(UIKit)
+      let context = UIGraphicsGetCurrentContext()
+#endif
     __draw(range: __STUTextFrameRange(range ?? self.indices),
-           at: frameOrigin, in: UIGraphicsGetCurrentContext(), contextBaseCTM_d: 0,
+           at: frameOrigin, in: context, contextBaseCTM_d: 0,
            pixelAlignBaselines: true, options: options, cancellationFlag: cancellationFlag)
   }
 
@@ -1084,7 +1091,7 @@ extension STUTextFrame.Index {
   }
 }
 
-extension STUTextFrame.Index : Comparable {
+extension STUTextFrame.Index : @retroactive Comparable {
   @inlinable
   public static func ==(lhs: STUTextFrame.Index, rhs: STUTextFrame.Index) -> Bool {
     return __STUTextFrameIndexEqualToIndex(lhs, rhs)

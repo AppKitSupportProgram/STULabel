@@ -7,76 +7,43 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <STULabel/STUMultiplePlatformDefines.h>
 
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
-// typedef UIColor                         STUColor;
-// typedef UIImage                         STUImage;
-// typedef UIFont                             STUFont;
-// typedef UIView                             STUView;
-// typedef UIEdgeInsets                     STUEdgeInsets;
-// typedef UIUserInterfaceLayoutDirection     STUUserInterfaceLayoutDirection;
-// typedef UIWindow                         STUWindow;
-// typedef UILayoutGuide                     STULayoutGuide;
-
-#define STUColor UIColor
-#define STUImage UIImage
-#define STUFont UIFont
-#define STUView UIView
-#define STUEdgeInsets UIEdgeInsets
-#define STUUserInterfaceLayoutDirection UIUserInterfaceLayoutDirection
-#define STUWindow UIWindow
-#define STULayoutGuide UILayoutGuide
-#define STUAccessibilityElement UIAccessibilityElement
-#define STUEdgeInsetsZero UIEdgeInsetsZero
-#define STUScrollView UIScrollView
 #endif
 
 #if TARGET_OS_OSX
 #import <AppKit/AppKit.h>
-
-// typedef NSColor                         STUColor;
-// typedef NSImage                         STUImage;
-// typedef NSFont                          STUFont;
-// typedef NSView                          STUView;
-// typedef NSEdgeInsets                    STUEdgeInsets;
-// typedef NSUserInterfaceLayoutDirection  STUUserInterfaceLayoutDirection;
-// typedef NSLayoutGuide                   STULayoutGuide;
-
-#define STUColor NSColor
-#define STUImage NSImage
-#define STUFont NSFont
-#define STUView NSView
-#define STUEdgeInsets NSEdgeInsets
-#define STUUserInterfaceLayoutDirection NSUserInterfaceLayoutDirection
-#define STULayoutGuide NSLayoutGuide
-#define STUWindow NSWindow
-#define STUAccessibilityElement NSAccessibilityElement
-#define STUEdgeInsetsZero NSEdgeInsetsZero
-#define STUScrollView NSScrollView
-
-@interface NSImage (STUMultiplePlatformAdapter)
-@property (nonatomic, readonly, nullable) CGImageRef CGImage;
-@property (nonatomic, readonly, nullable) CIImage *CIImage;
-@end
-@interface NSView (STUMultiplePlatformAdapter)
-@property (nonatomic, readonly) CGFloat inheritedAnimationDuration;
-@end
 #endif
 
 
-NS_ASSUME_NONNULL_BEGIN
+#if TARGET_OS_OSX
+@interface NSImage (STUMultiplePlatformAdapter_AppKit)
+@property (nonatomic, readonly, nullable) CGImageRef CGImage;
+@property (nonatomic, readonly, nullable) CIImage *CIImage;
+@end
+@interface NSView (STUMultiplePlatformAdapter_AppKit)
+@property (nonatomic, readonly, class) CGFloat inheritedAnimationDuration;
+@end
 
+@interface NSCoder (STUMultiplePlatformAdapter_AppKit)
+- (void)encodeCGPoint:(CGPoint)point forKey:(NSString *)key;
+- (void)encodeCGSize:(CGSize)size forKey:(NSString *)key;
+- (void)encodeCGRect:(CGRect)rect forKey:(NSString *)key;
+- (CGPoint)decodeCGPointForKey:(NSString *)key;
+- (CGSize)decodeCGSizeForKey:(NSString *)key;
+- (CGRect)decodeCGRectForKey:(NSString *)key;
+@end
+#endif
 
 FOUNDATION_EXTERN BOOL STUEdgeInsetsEqualToEdgeInsets(STUEdgeInsets a, STUEdgeInsets b);
 FOUNDATION_EXTERN CGContextRef _Nullable STUGraphicsGetCurrentContext(void);
 FOUNDATION_EXTERN void STUGraphicsPushContext(CGContextRef context);
 FOUNDATION_EXTERN void STUGraphicsPopContext(void);
 
-@interface STUMultiplePlatformAdapter : NSObject
 
+@interface NSCoder (STUMultiplePlatformAdapter)
+- (void)encodeSTUEdgeInsets:(STUEdgeInsets)edgeInsets forKey:(NSString *)key;
+- (STUEdgeInsets)decodeSTUEdgeInsetsForKey:(NSString *)key;
 @end
-
-
-
-NS_ASSUME_NONNULL_END

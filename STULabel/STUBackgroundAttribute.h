@@ -2,7 +2,7 @@
 
 #import "STUDefines.h"
 
-#import "Internal/STUMultiplePlatformAdapter.h"
+#import <STULabel/STUMultiplePlatformDefines.h>
 
 #import <Foundation/Foundation.h>
 

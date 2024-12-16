@@ -14,7 +14,7 @@ NSDictionary<NSString*, NSString*>* localizedStrings_system;
 static void initializeIfNecessary() {
   static dispatch_once_t once;
   dispatch_once_f(&once, nullptr, [](void *) {
-    NSString* const bundlePath = [[NSBundle bundleForClass:STULabel.class]
+    NSString* const bundlePath = [[NSBundle bundleForClass:STULabelLayer.class]
                                     pathForResource:@"STULabelResources" ofType:@"bundle"];
     NSBundle* const bundle = bundlePath ? [NSBundle bundleWithPath:bundlePath] : nil;
     STU_CHECK_MSG(bundle != nil, "Failed to load STULabelResources.bundle");

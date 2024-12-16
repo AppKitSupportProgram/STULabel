@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_END
 @interface NSScreen (STUScreen)
 @property (nonatomic, readonly) CGRect bounds;
 @property (nonatomic, readonly) CGFloat scale;
+@property (nonatomic, readonly) NSDisplayGamut displayGamut;
 @end
 @interface NSWindow (STUScreen)
 @property (nonatomic, readonly, nullable) STUScreen *stu_screen;

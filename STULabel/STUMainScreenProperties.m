@@ -73,11 +73,11 @@ static void updateMainScreenProperties(void) {
 #undef store
 }
 
-#if TARGET_OS_IPHONE
-@interface UIScreen (STUMainScreenProperties)
+//#if TARGET_OS_IPHONE
+@interface STUScreen (STUMainScreenProperties)
 + (void)load;
 @end
-@implementation UIScreen (STUMainScreenProperties)
+@implementation STUScreen (STUMainScreenProperties)
 + (void)load {
   // We can't do this initialization lazily, because UIScreen must only be accessed on the
   // main thread. (Using `dispatch_sync(dispatch_get_main_queue(), ...)` would lead to a
@@ -90,16 +90,24 @@ static void updateMainScreenProperties(void) {
   const __auto_type updateMainScreenPropertiesBlock = ^(NSNotification *note __unused) {
                                                          updateMainScreenProperties();
                                                        };
-  [notificationCenter addObserverForName:UIScreenDidConnectNotification
-                                  object:nil queue:mainQueue
-                              usingBlock:updateMainScreenPropertiesBlock];
-  [notificationCenter addObserverForName:UIScreenDidDisconnectNotification
-                                  object:nil queue:mainQueue
-                              usingBlock:updateMainScreenPropertiesBlock];
+    
+#if TARGET_OS_IPHONE
+    [notificationCenter addObserverForName:UIScreenDidConnectNotification
+                                    object:nil queue:mainQueue
+                                usingBlock:updateMainScreenPropertiesBlock];
+    [notificationCenter addObserverForName:UIScreenDidDisconnectNotification
+                                    object:nil queue:mainQueue
+                                usingBlock:updateMainScreenPropertiesBlock];
+#endif
+#if TARGET_OS_OSX
+    [notificationCenter addObserverForName:NSScreenColorSpaceDidChangeNotification
+                                    object:nil queue:mainQueue
+                                usingBlock:updateMainScreenPropertiesBlock];
+#endif
 #endif
 }
 @end
-#endif
+//#endif
 
 #if TARGET_OS_OSX
 #endif
