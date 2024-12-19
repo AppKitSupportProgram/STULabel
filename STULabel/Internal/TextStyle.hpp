@@ -291,7 +291,7 @@ public:
 
   struct IsOverrideIsLinkIndex {
     /// A value in [0, 3]
-      stu::UInt index;
+      UInt index;
 
     bool isOverride() const { return index & 1; }
     bool isLink() const { return index & 2; }
@@ -300,7 +300,7 @@ public:
   STU_INLINE
   IsOverrideIsLinkIndex isOverride_isLink() const {
     static_assert(BitIndex::flags == 1 && int(TextFlags::hasLink) == 1);
-    return {narrow_cast<stu::UInt>(  ((bits >> BitIndex::isOverride) & 1)
+    return {narrow_cast<UInt>(  ((bits >> BitIndex::isOverride) & 1)
                               | (bits & (1 << BitIndex::flags)))};
   }
 
@@ -322,7 +322,7 @@ public:
   /// Returns *this if this is the first style or an overrideStyle.
   STU_INLINE
   const TextStyle& previous() const {
-    const stu::UInt offsetDiv4 = narrow_cast<stu::UInt>((bits >> BitIndex::offsetFromPreviousDiv4)
+    const UInt offsetDiv4 = narrow_cast<UInt>((bits >> BitIndex::offsetFromPreviousDiv4)
                                               & ((1 << BitSize::offsetFromPreviousDiv4) - 1));
     return *reinterpret_cast<const TextStyle*>(reinterpret_cast<const Byte*>(this) - 4*offsetDiv4);
   }
@@ -330,7 +330,7 @@ public:
   /// Returns *this if this is the last style or an overrideStyle.
   STU_INLINE
   const TextStyle& next() const {
-    const stu::UInt offsetDiv4 = narrow_cast<stu::UInt>((bits >> BitIndex::offsetToNextDiv4)
+    const UInt offsetDiv4 = narrow_cast<UInt>((bits >> BitIndex::offsetToNextDiv4)
                                               & ((1 << BitSize::offsetToNextDiv4) - 1));
     return *reinterpret_cast<const TextStyle*>(reinterpret_cast<const Byte*>(this) + 4*offsetDiv4);
   }
@@ -443,7 +443,7 @@ private:
     static_assert(BitIndex::flags + TextFlagsBitSize <= 32);
     static_assert(BitIndex::flags == 1);
     const UInt32 flagBit = implicit_cast<UInt32>(static_cast<UInt16>(component)) << BitIndex::flags;
-    const stu::UInt index = narrow_cast<stu::UInt>(bits & (flagBit - 1));
+    const UInt index = narrow_cast<UInt>(bits & (flagBit - 1));
     STU_DEBUG_ASSERT(index < arrayLength(infoOffsets));
     const void* const p = reinterpret_cast<const Byte*>(this) + infoOffsets[index];
     STU_ASSUME(p != nullptr);
@@ -494,7 +494,7 @@ void TextStyle::writeTerminatorWithStringIndex(Int32 stringIndex, const Byte* pr
   STU_ASSERT(0 <= offsetFromPrevious
              && offsetFromPrevious <= ((1 << BitSize::offsetFromPreviousDiv4) - 1)*4);
   STU_ASSERT(offsetFromPrevious%4 == 0);
-  const stu::UInt offsetFromPreviousDiv4 = sign_cast(offsetFromPrevious)/4;
+  const UInt offsetFromPreviousDiv4 = sign_cast(offsetFromPrevious)/4;
   const UInt64 bits = isBig
                     | (UInt64{offsetFromPreviousDiv4}
                        << TextStyle::BitIndex::offsetFromPreviousDiv4)
@@ -566,7 +566,7 @@ STU_INLINE
 Optional<const TextStyleOverride&> TextStyle::styleOverride() const {
   if (!isOverrideStyle()) return none;
   STU_DISABLE_CLANG_WARNING("-Winvalid-offsetof")
-  const stu::UInt offset = offsetof(TextStyleOverride, style_);
+  const UInt offset = offsetof(TextStyleOverride, style_);
   STU_REENABLE_CLANG_WARNING
   return *reinterpret_cast<const TextStyleOverride*>(reinterpret_cast<const Byte*>(this) - offset);
 }
@@ -599,7 +599,7 @@ struct TextStyleSpan {
   };
 
   STU_INLINE
-    stu::UInt lastStyleSizeInBytes() const {
+    UInt lastStyleSizeInBytes() const {
     return sign_cast(reinterpret_cast<const Byte*>(terminatorStyle)
                      - reinterpret_cast<const Byte*>(&terminatorStyle->previous()));
   }

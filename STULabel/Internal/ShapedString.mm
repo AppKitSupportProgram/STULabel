@@ -399,10 +399,10 @@ static void initializeParagraphMinFontMetrics(const ArrayRef<ShapedString::Parag
         minMetrics.aggregate(metrics.adjustedByBaselineOffset(style->baselineOffset()));
       }
     }
-    para.effectiveMinLineHeightInfo_[stu::UInt{STUTextLayoutModeDefault}] =
+    para.effectiveMinLineHeightInfo_[UInt{STUTextLayoutModeDefault}] =
       TextFrameLayouter::minLineHeightInfo<STUTextLayoutModeDefault>
                                           (para.lineHeightParams, minMetrics);
-    para.effectiveMinLineHeightInfo_[stu::UInt{STUTextLayoutModeTextKit}] =
+    para.effectiveMinLineHeightInfo_[UInt{STUTextLayoutModeTextKit}] =
       TextFrameLayouter::minLineHeightInfo<STUTextLayoutModeTextKit>
                                           (para.lineHeightParams, minMetrics);
   }
@@ -412,7 +412,7 @@ ShapedString* __nullable
   ShapedString::create(NSAttributedString* __unsafe_unretained const originalAttributedString,
                        const STUWritingDirection defaultBaseWritingDirection,
                        const STUCancellationFlag* cancellationFlagPointer,
-                       const FunctionRef<void*(stu::UInt)> alloc)
+                       const FunctionRef<void*(UInt)> alloc)
 {
   // Make sure the string is immutable.
   NSAttributedString* attributedString = [originalAttributedString copy];
@@ -451,7 +451,7 @@ ShapedString* __nullable
   const ArrayRef<const ColorRef> colors = textStyleBuffer.colors();
   const ArrayRef<const ColorHashBucket> colorHashBuckets = textStyleBuffer.colorHashBuckets();
 
-  const stu::UInt size = sizeof(ShapedString)
+  const UInt size = sizeof(ShapedString)
                   + paragraphs.arraySizeInBytes() + sanitizerGap
                   + truncationScopes.arraySizeInBytes() + sanitizerGap
                   + sizeof(FontMetrics)*sign_cast(textStyleBuffer.fonts().count()) + sanitizerGap

@@ -232,16 +232,16 @@ namespace stu_label {
 namespace stu_label {
     
     class SpacingConstraintRef {
-        stu::UInt taggedPointer_;
+        UInt taggedPointer_;
     public:
         SpacingConstraintRef(SpacingConstraint& constraint, SpacingConstraint::Item item)
-        : taggedPointer_{reinterpret_cast<stu::UInt>(&constraint) | static_cast<stu::UInt>(item)}
+        : taggedPointer_{reinterpret_cast<UInt>(&constraint) | static_cast<UInt>(item)}
         {
             static_assert(alignof(SpacingConstraint) >= 2);
         }
         
         SpacingConstraint& constraint() const {
-            return *reinterpret_cast<SpacingConstraint*>(taggedPointer_ & ~stu::UInt{1});
+            return *reinterpret_cast<SpacingConstraint*>(taggedPointer_ & ~UInt{1});
         }
         
         SpacingConstraint::Item item() const {

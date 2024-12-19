@@ -27,7 +27,7 @@ CTFont* defaultCoreTextFont() {
 struct FontInfoCache {
   struct Entry {
     FontRef font;
-    HashCode<stu::UInt> hashCode; // hash(CFHash(font.ctFont()))
+    HashCode<UInt> hashCode; // hash(CFHash(font.ctFont()))
     CachedFontInfo info;
   };
 
@@ -142,7 +142,7 @@ CachedFontInfo::CachedFontInfo(FontRef font)
 }
 
 CachedFontInfo CachedFontInfo::get(FontRef font) {
-  const auto pointerHashCode = narrow_cast<HashCode<stu::UInt>>(hashPointer(font.ctFont()));
+  const auto pointerHashCode = narrow_cast<HashCode<UInt>>(hashPointer(font.ctFont()));
   stu_mutex_lock(&fontInfoCacheMutex);
   if (STU_UNLIKELY(!fontInfoCacheIsInitialized)) {
     fontInfoCacheIsInitialized = true;
@@ -180,7 +180,7 @@ CachedFontInfo CachedFontInfo::get(FontRef font) {
     return info;
   }
 
-  const auto hashCode = narrow_cast<HashCode<stu::UInt>>(hash(CFHash(font.ctFont())));
+  const auto hashCode = narrow_cast<HashCode<UInt>>(hash(CFHash(font.ctFont())));
   const auto isEqualFont = [&](const UInt16 index) {
     const auto& entry = cache.entries[index];
     return hashCode == entry.hashCode && CFEqual(font.ctFont(), entry.font.ctFont());
@@ -273,9 +273,9 @@ void FontFaceGlyphBoundsCache::clearGlobalCache() {
   stu_mutex_unlock(&glyphBoundsCacheMutex);
 }
 
-HashCode<stu::UInt>FontFaceGlyphBoundsCache::FontFace::hash() {
-  return narrow_cast<HashCode<stu::UInt>>(
-           stu_label::hash(bit_cast<stu::UInt>(cgFont.get())
+HashCode<UInt>FontFaceGlyphBoundsCache::FontFace::hash() {
+  return narrow_cast<HashCode<UInt>>(
+           stu_label::hash(bit_cast<UInt>(cgFont.get())
                            ^ hashableBits(fontMatrix.a) ^ hashableBits(fontMatrix.b),
                            hashableBits(appleColorEmojiSize)
                            ^ hashableBits(fontMatrix.c) ^ hashableBits(fontMatrix.d)));
@@ -287,7 +287,7 @@ void FontFaceGlyphBoundsCache::exchange(InOut<UniquePtr> inOutArg, FontRef font,
 {
   UniquePtr& inOutCache = inOutArg;
   STU_PRECONDITION(fontFace.cgFont);
-  const HashCode<stu::UInt> hashCode = fontFace.hash();
+  const HashCode<UInt> hashCode = fontFace.hash();
   stu_mutex_lock(&glyphBoundsCacheMutex);
   if (STU_UNLIKELY(!glyphBoundsCacheIsInitialized)) {
     initGlyphBoundsCache();
@@ -721,7 +721,7 @@ void LocalGlyphBoundsCache::glyphBoundsCacheFor_slowPath(FontRef font) {
   entries_[0].font = font.ctFont();
   entries_[0].fontSize = fontSize;
   FontFaceGlyphBoundsCache::FontFace fontFace{font, fontSize};
-    stu::UInt i = 0;
+    UInt i = 0;
   for (;;) {
     if (caches_[i]) {
       if (caches_[i]->fontFace() == fontFace) break;

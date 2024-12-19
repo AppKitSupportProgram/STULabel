@@ -69,10 +69,10 @@ struct Vertex {
   bool isTopOfTextLine : 1;
   bool isFirstInVertexLine : 1;
   bool isVisited : 1;
-    stu::UInt indexOfVertexConnectedByVerticalEdge : sizeof(stu::UInt)*8 - 4;
+    UInt indexOfVertexConnectedByVerticalEdge : sizeof(UInt)*8 - 4;
   CGFloat x;
 
-  static_assert(sizeof(stu::UInt) == sizeof(CGFloat));
+  static_assert(sizeof(UInt) == sizeof(CGFloat));
 };
 static_assert(sizeof(Vertex) == 2*sizeof(CGFloat));
 

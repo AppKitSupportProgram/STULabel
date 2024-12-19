@@ -86,7 +86,7 @@ Range<TextFrameIndex> TextFrame::range(RangeInOriginalString<NSRange> rangeInOri
   if (__builtin_add_overflow(range.location, range.length, &rangeEnd)) {
     rangeEnd = NSUIntegerMax;
   }
-  if (Range<stu::UInt>(range.location, rangeEnd).contains(this->rangeInOriginalString())) {
+  if (Range<UInt>(range.location, rangeEnd).contains(this->rangeInOriginalString())) {
     return STUTextFrameRange{TextFrameIndex{}, endIndex()};
   }
   const auto start = index(IndexInOriginalString{range.location}, IndexInTruncationToken{});

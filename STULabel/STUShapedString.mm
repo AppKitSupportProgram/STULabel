@@ -138,12 +138,12 @@ STUShapedString* __nullable
   ThreadLocalArenaAllocator::InitialBuffer<2048> buffer;
   ThreadLocalArenaAllocator alloc{Ref{buffer}};
 
-  const stu::UInt instanceSize = roundUpToMultipleOf<alignof(ShapedString)>(class_getInstanceSize(cls));
+  const UInt instanceSize = roundUpToMultipleOf<alignof(ShapedString)>(class_getInstanceSize(cls));
 
   Byte* p;
   ShapedString* const shapedString = ShapedString::create(
                                        attributedString, baseWritingDirection, cancellationFlag,
-                                       [&](stu::UInt size) -> void* {
+                                       [&](UInt size) -> void* {
                                          p = static_cast<Byte*>(malloc(instanceSize + size));
                                          if (!p) __builtin_trap();
                                          return p + instanceSize;

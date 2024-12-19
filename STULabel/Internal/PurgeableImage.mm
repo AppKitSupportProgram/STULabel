@@ -26,14 +26,14 @@ PurgeableImage::PurgeableImage(SizeInPixels<UInt32> size, CGFloat scale,
 
   const STUCGImageFormat imageFormat = stuCGImageFormat(format, formatOptions);
 
-    stu::UInt bytesPerRow;
-    stu::UInt allocationSize;
+    UInt bytesPerRow;
+    UInt allocationSize;
   NSPurgeableData* data;
   void* bytes;
   CGContextRef context;
 
   if (__builtin_mul_overflow(size.width, imageFormat.bitsPerPixel/8, &bytesPerRow)) goto Failure;
-  if (bytesPerRow > stu::maxValue<stu::UInt> - 31) goto Failure;
+  if (bytesPerRow > stu::maxValue<UInt> - 31) goto Failure;
   bytesPerRow = roundUpToMultipleOf<32>(bytesPerRow);
   if (bytesPerRow/32 > stu::maxValue<UInt32>) goto Failure;
 
@@ -107,7 +107,7 @@ RC<CGImage> PurgeableImage::createCGImage() {
   const STUCGImageFormat format = stuCGImageFormat(format_, formatOptions_);
   RC<CGImage> image = {CGImageCreate(size_.width, size_.height, format.bitsPerComponent,
                                      format.bitsPerPixel,
-                                     static_cast<stu::UInt>(bytesPerRowDiv32_)*32,
+                                     static_cast<UInt>(bytesPerRowDiv32_)*32,
                                      format.colorSpace, format.bitmapInfo, dp,
                                      nullptr, true, kCGRenderingIntentPerceptual),
                        ShouldIncrementRefCount{false}};

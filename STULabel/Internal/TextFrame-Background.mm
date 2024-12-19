@@ -70,18 +70,18 @@ TaggedRangeLineSpans TempBackgroundSegments::findBackgroundLineSpans(
 {
  return findAndSortTaggedRangeLineSpans(lines, styleOverride,
           TextFlags::hasBackground, SeparateParagraphs{false},
-          [](const TextStyle& style) -> stu::UInt {
+          [](const TextStyle& style) -> UInt {
             const TextStyle::BackgroundInfo* const info = style.backgroundInfo();
             if (info->stuAttribute) {
-              const stu::UInt p = reinterpret_cast<stu::UInt>(info->stuAttribute);
+              const UInt p = reinterpret_cast<UInt>(info->stuAttribute);
               STU_DEBUG_ASSERT((p & 1) == 0);
               return p;
             } else {
-              const stu::UInt colorIndex = info->colorIndex.value_or(ColorIndex::reserved).value;
+              const UInt colorIndex = info->colorIndex.value_or(ColorIndex::reserved).value;
               return (colorIndex << 1) | 1;
             }
           },
-          [](stu::UInt tag1, stu::UInt tag2) -> bool {
+          [](UInt tag1, UInt tag2) -> bool {
             if ((tag1 | tag2) & 1) return false;
             return [(__bridge STUBackgroundAttribute*)reinterpret_cast<void*>(tag1)
                       isEqual:(__bridge STUBackgroundAttribute*)reinterpret_cast<void*>(tag2)];

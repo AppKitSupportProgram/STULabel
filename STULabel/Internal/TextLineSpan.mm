@@ -126,8 +126,8 @@ static TempArray<TaggedStringRange> findTaggedStringRanges(
                                       Optional<TextStyleOverride&> styleOverride,
                                       TextFlags tagTextFlagsMask,
                                       SeparateParagraphs separateParagraphs,
-                                      FunctionRef<stu::UInt(const TextStyle& style)> tagger,
-                                      Optional<FunctionRef<bool(stu::UInt, stu::UInt)>> tagEquality)
+                                      FunctionRef<UInt(const TextStyle& style)> tagger,
+                                      Optional<FunctionRef<bool(UInt, UInt)>> tagEquality)
 {
   if (!tagTextFlagsMask) {
     tagTextFlagsMask = everyRunFlag;
@@ -144,7 +144,7 @@ static TempArray<TaggedStringRange> findTaggedStringRanges(
       if (!(tagTextFlagsMask & (style.flags() | everyRunFlag))) return;
       const Range<Int32> rangeInTruncatedString = range.stringRange + range.offsetInTruncatedString;
       if (!rangeInTruncatedString.overlaps(fullRangeInTruncatedString)) return;
-      const stu::UInt tag = tagger(style);
+      const UInt tag = tagger(style);
       if (!tag) return;
       if (!buffer.isEmpty()) {
         const TaggedStringRange& last = buffer[$ - 1];
@@ -163,8 +163,8 @@ static TempArray<TaggedStringRange> findTaggedStringRanges(
                       .tagIndex = tagIndex,
                       .tag = tag,
                       .taggedNonOverriddenStylePointer_ =
-                        !style.isOverrideStyle() ? reinterpret_cast<stu::UInt>(&style)
-                        : (reinterpret_cast<stu::UInt>(styleOverride->overriddenStyle()) | 1)
+                        !style.isOverrideStyle() ? reinterpret_cast<UInt>(&style)
+                        : (reinterpret_cast<UInt>(styleOverride->overriddenStyle()) | 1)
                     });
     });
   }
@@ -262,8 +262,8 @@ TaggedRangeLineSpans findAndSortTaggedRangeLineSpans(
                        Optional<TextStyleOverride&> styleOverride,
                        TextFlags tagStyleFlagMask,
                        SeparateParagraphs separateParagraphs,
-                       FunctionRef<stu::UInt(const TextStyle& style)> tagger,
-                       Optional<FunctionRef<bool(stu::UInt, stu::UInt)>> tagEquality)
+                       FunctionRef<UInt(const TextStyle& style)> tagger,
+                       Optional<FunctionRef<bool(UInt, UInt)>> tagEquality)
 {
   if (lines.isEmpty()) return TaggedRangeLineSpans{};
   const TextFrame& textFrame = lines[0].textFrame();

@@ -68,7 +68,7 @@ static NSDictionary<NSAttributedStringKey, id>*
                                                     id __unsafe_unretained value, BOOL*)
     {
       for (const Range<Int>& paraRange : paraRanges) {
-        const Range<stu::UInt> range{paraRange};
+        const Range<UInt> range{paraRange};
         NSRange otherRange;
         const id otherValue = [attributedString.attributedString attribute:key atIndex:range.start
                                                      longestEffectiveRange:&otherRange
@@ -234,7 +234,7 @@ void TextFrameLayouter::truncateLine(TextFrameLine& line,
   if (!truncationToken) {
     tokenLength = 1;
   } else {
-    const stu::UInt length = truncationToken.length;
+    const UInt length = truncationToken.length;
     if (0 < length && length < 4096) {
       tokenLength = narrow_cast<Int32>(length);
       if (length == 1) {

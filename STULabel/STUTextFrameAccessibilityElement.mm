@@ -51,7 +51,7 @@ namespace stu_label {
 - (instancetype)initWithParams:(const InitParams&)params
                    stringRange:(NSRange)stringRange
     mutableAttributedSubstring:(nullable NSMutableAttributedString*)mutableAttributedSubstring
-                     linkCount:(stu::UInt)linkCount
+                     linkCount:(UInt)linkCount
                  fullRangeLink:(nullable id)linkValue
            fullRangeAttachment:(nullable STUTextAttachment*)attachment
   NS_DESIGNATED_INITIALIZER;
@@ -234,7 +234,7 @@ static ActivationPoint findActivationPoint(const ArrayRef<const TextLineSpan> sp
                    stringRange:(NSRange)stringRange
     mutableAttributedSubstring:(nullable NSMutableAttributedString* __unsafe_unretained)
                                  mutableAttributedSubstring
-                     linkCount:(stu::UInt)linkCount
+                     linkCount:(UInt)linkCount
                  fullRangeLink:(nullable __unsafe_unretained id)fullRangeLinkValue
            fullRangeAttachment:(nullable STUTextAttachment* __unsafe_unretained)attachment
 {

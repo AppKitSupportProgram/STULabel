@@ -14,14 +14,12 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let labelLayer = STULabelLayer()
+        let label = STULabel()
         
-        labelLayer.text = "Hello, STULabel!"
-        labelLayer.textColor = .labelColor
-        view.wantsLayer = true
-        view.layer?.addSublayer(labelLayer)
-        labelLayer.frame = .init(x: 50, y: 50, width: 200, height: 40)
-        labelLayer.isGeometryFlipped = true
+        label.text = "Hello, STULabel!"
+        label.textColor = .labelColor
+        label.frame = .init(x: 50, y: 50, width: 200, height: 40)
+        view.addSubview(label)
     }
 
     override var representedObject: Any? {

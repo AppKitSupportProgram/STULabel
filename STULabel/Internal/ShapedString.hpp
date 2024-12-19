@@ -159,7 +159,7 @@ public:
 
   static ShapedString* __nullable create(NSAttributedString*, STUWritingDirection,
                                          const STUCancellationFlag*,
-                                         FunctionRef<void*(stu::UInt)> alloc);
+                                         FunctionRef<void*(UInt)> alloc);
 
   ~ShapedString();
 

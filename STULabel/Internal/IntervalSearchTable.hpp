@@ -10,10 +10,10 @@ class IntervalSearchTable {
   const Float32* values_;
   Int count_;
 public:
-  static constexpr stu::UInt arrayElementSize = 2*sizeof(Float32);
+  static constexpr UInt arrayElementSize = 2*sizeof(Float32);
 
   STU_CONSTEXPR
-  static stu::UInt sizeInBytesForCount(Int count) { return arrayElementSize*sign_cast(count); };
+  static UInt sizeInBytesForCount(Int count) { return arrayElementSize*sign_cast(count); };
 
   /// `increasingStartValues` and `increasingEndValues` must contain the (non-strictly)
   /// monotonically increasing start and end value of the intervals to search.

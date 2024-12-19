@@ -214,7 +214,7 @@ public:
   STU_INLINE
   const CachedFontInfo& operator[](CTFont* __nonnull font) {
     // TODO: Replace this with a simple LRU cache like in LocalGlyphBoundsCache::glyphBoundsCache.
-      stu::UInt index = (  (font == fonts_[0] ? 1 : 0)
+      UInt index = (  (font == fonts_[0] ? 1 : 0)
                   | (font == fonts_[1] ? 2 : 0))
                | (  (font == fonts_[2] ? 3 : 0)
                   | (font == fonts_[3] ? 4 : 0));
@@ -230,7 +230,7 @@ public:
 
 private:
   CTFont* fonts_[4] = {};
-    stu::UInt counter_{};
+    UInt counter_{};
   CachedFontInfo infos_[4] = {uninitialized, uninitialized, uninitialized, uninitialized};
 };
 
@@ -297,7 +297,7 @@ public:
       appleColorEmojiSize = isAppleColorEmoji ? fontSize : 0;
     }
 
-    HashCode<stu::UInt> hash();
+    HashCode<UInt> hash();
 
     friend bool operator==(const FontFace& lhs, const FontFace& rhs) {
       return lhs.cgFont == rhs.cgFont
@@ -450,7 +450,7 @@ private:
   struct Entry {
     CTFont* font;
     CGFloat fontSize;
-      stu::UInt cacheIndex;
+      UInt cacheIndex;
 
     explicit operator bool() const { return font != nullptr; }
   };

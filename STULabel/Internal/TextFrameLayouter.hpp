@@ -235,7 +235,7 @@ private:
     friend TextFrameLayouter;
     
     struct Data {
-        stu::UInt size;
+        UInt size;
       ArrayRef<TextFrameParagraph> paragraphs;
       ArrayRef<TextFrameLine> lines;
       ArrayRef<Byte> tokenStyleData;

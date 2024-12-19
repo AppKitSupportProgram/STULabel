@@ -82,7 +82,7 @@ void NSStringRef::copyUTF16Chars_slowPath(NSRange utf16IndexRange, Char16* out) 
   if (kind_ == BufferKind::ascii) {
     const unsigned char* const buffer = this->asciiBuffer() + utf16IndexRange.location;
     STU_DISABLE_LOOP_UNROLL
-    for (stu::UInt i = 0; i < utf16IndexRange.length; ++i) {
+    for (UInt i = 0; i < utf16IndexRange.length; ++i) {
       out[i] = buffer[i];
     }
     return;
@@ -475,7 +475,7 @@ constexpr CategoryPairCaseMatrix matrix = createCategoryPairCaseMatrix();
 
 constexpr CategoryPairCase categoryPairCase(Category a, Category b) {
   static_assert(isUnsigned<UnderlyingType<Category>>);
-  const stu::UInt index = static_cast<stu::UInt>(b)*categoryPairCaseMatrixColumnCount + static_cast<stu::UInt>(a);
+  const UInt index = static_cast<UInt>(b)*categoryPairCaseMatrixColumnCount + static_cast<UInt>(a);
   matrix.assumeValidIndex(index);
   return matrix[index];
 }
@@ -700,8 +700,8 @@ struct BreakFinder {
   }
 
   STU_NO_INLINE
-  static stu::UInt numberOfConsecutiveRegionalIndicatorsBefore(const NSStringRef& string, Int index) {
-      stu::UInt count = 0;
+  static UInt numberOfConsecutiveRegionalIndicatorsBefore(const NSStringRef& string, Int index) {
+      UInt count = 0;
     string.indexOfEndOfLastCodePointWhere(Range{0, index}, [&](Char32 cp) -> bool {
       const bool isRegionalIndicator = stu_label::isRegionalIndicator(cp);
       count += isRegionalIndicator;

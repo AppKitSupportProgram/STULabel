@@ -109,11 +109,11 @@ static STUTextLink* __nonnull STUTextLinkCopyWithTextFrameOriginOffset(
 }
 
 - (NSRange)rangeInOriginalString {
-  return Range<stu::UInt>{_rangeInOriginalString};
+  return Range<UInt>{_rangeInOriginalString};
 }
 
 - (NSRange)rangeInTruncatedString {
-  return Range<stu::UInt>{_rangeInTruncatedString};
+  return Range<UInt>{_rangeInTruncatedString};
 }
 
 @end
@@ -220,10 +220,10 @@ STUTextLinkArrayWithTextFrameOrigin* __nonnull
   const TaggedRangeLineSpans rls = findAndSortTaggedRangeLineSpans(
     textFrame.lines(), none,
     TextFlags::hasLink, SeparateParagraphs{false},
-    [](const TextStyle& style) -> stu::UInt {
-      return reinterpret_cast<stu::UInt>(style.linkInfo()->attribute);
+    [](const TextStyle& style) -> UInt {
+      return reinterpret_cast<UInt>(style.linkInfo()->attribute);
     },
-    [](stu::UInt tag1, stu::UInt tag2) -> bool {
+    [](UInt tag1, UInt tag2) -> bool {
        return [(__bridge id)reinterpret_cast<void*>(tag1)
                 isEqual:(__bridge id)reinterpret_cast<void*>(tag2)];
     });

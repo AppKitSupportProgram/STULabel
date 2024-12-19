@@ -11,7 +11,7 @@ constexpr UInt16 colorIndexOffsets[2] = {ColorIndex::fixedColorIndexRange.start,
 
 STU_NO_INLINE
 CGColor* DrawingContext::cgColor(ColorIndex colorIndex) {
-  const stu::UInt isTextFrameColor = colorIndex.value >= ColorIndex::fixedColorIndexRange.end;
+  const UInt isTextFrameColor = colorIndex.value >= ColorIndex::fixedColorIndexRange.end;
   UInt32 index = colorIndex.value;
   index -= colorIndexOffsets[isTextFrameColor]; // May wrap around.
   STU_ASSERT(index < colorCounts_[isTextFrameColor]);

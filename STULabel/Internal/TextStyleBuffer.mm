@@ -685,8 +685,8 @@ TextFlags TextStyleBuffer::encodeStringRangeStyle(
   }
   data_.removeLast(TextStyle::maxSize - size);
 
-  const stu::UInt offsetToNextDiv4 = sign_cast(size)/4;
-  const stu::UInt offsetFromPreviousDiv4 = lastStyleSize_/4;
+  const UInt offsetToNextDiv4 = sign_cast(size)/4;
+  const UInt offsetFromPreviousDiv4 = lastStyleSize_/4;
 
   style->bits = isBig
               | (static_cast<UInt64>(flags) << TextStyle::BitIndex::flags)
@@ -752,7 +752,7 @@ void TextStyleBuffer
         [attributedString addAttribute:runDelegateKey value:[attachment newCTRunDelegate]
                                  range:Range{stringRange.location, Count{1u}}];
       }
-      for (stu::UInt i = 1; i < stringRange.length; ++i) {
+      for (UInt i = 1; i < stringRange.length; ++i) {
         [attributedString addAttributes:@{runDelegateKey: [attachment newCTRunDelegate],
                                           fixForRDAR36622225AttributeName: @(i)}
                                   range:Range{stringRange.location + i, Count{1u}}];

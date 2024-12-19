@@ -515,9 +515,9 @@ private:
 
   static STU_NO_INLINE
   Unretained<NSParagraphStyle* __nonnull> defaultParagraphStyle(NSTextAlignment textAlignment) {
-    const stu::UInt n = 5;
+    const UInt n = 5;
     static std::atomic<CFTypeRef> styles[n];
-    const stu::UInt index = static_cast<stu::UInt>(textAlignment);
+    const UInt index = static_cast<UInt>(textAlignment);
     STU_CHECK(index < n);
     if (CFTypeRef const style = styles[index].load(std::memory_order_acquire)) {
       return (__bridge NSMutableParagraphStyle*)style;
@@ -1650,7 +1650,7 @@ private:
 
   static LabelLayer* lastLabelLayerThatHasImage;
 
-  static stu::UInt enteredBackground;
+  static UInt enteredBackground;
 
   void registerAsLabelLayerThatHasImage() {
     if (isRegisteredAsLayerThatMayHaveImage_) return;
@@ -1778,7 +1778,7 @@ private:
   }
 };
 
-stu::UInt LabelLayer::enteredBackground;
+UInt LabelLayer::enteredBackground;
 LabelLayer* LabelLayer::lastLabelLayerThatHasImage;
 
 void LabelRenderTask::copyLayoutInfoTo(LabelLayer& label) const {

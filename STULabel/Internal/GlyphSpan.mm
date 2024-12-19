@@ -184,13 +184,13 @@ static CTFont* slow_getFont(CTRun* run) {
                               objectForKey:(__bridge NSString*)kCTFontAttributeName];
 }
 
-static stu::UInt expectedCTRunMinMallocSize = 0x78 + sizeof(void*);
+static UInt expectedCTRunMinMallocSize = 0x78 + sizeof(void*);
 
-static stu::UInt ctRunFontFieldOffset;
+static UInt ctRunFontFieldOffset;
 static void initializeCTRunFontFieldOffset() {
-  if (@available(iOS 15, *)) {
+  if (@available(iOS 15, macOS 12, *)) {
     ctRunFontFieldOffset = 0x80;
-  } else if (@available(iOS 12, *)) {
+  } else if (@available(iOS 12, macOS 10.14, *)) {
     ctRunFontFieldOffset = 0x78;
   } else {
     ctRunFontFieldOffset = 0x68;

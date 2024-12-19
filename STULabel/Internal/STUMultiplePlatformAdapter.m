@@ -8,10 +8,12 @@
 
 #import "STUMultiplePlatformAdapter.h"
 
+#if TARGET_OS_OSX
 @interface NSGraphicsContext ()
 + (void)_pushGraphicsContext:(NSGraphicsContext *)context;
 + (void)_popGraphicsContext;
 @end
+#endif
 
 CGContextRef _Nullable STUGraphicsGetCurrentContext(void) {
 #if TARGET_OS_IPHONE
@@ -98,11 +100,23 @@ void STUGraphicsPopContext(void) {
 
 #endif
 @implementation NSCoder (STUMultiplePlatformAdapter)
-- (void)encodeSTUEdgeInsets:(NSEdgeInsets)edgeInsets forKey:(NSString *)key {
+- (void)encodeSTUEdgeInsets:(STUEdgeInsets)edgeInsets forKey:(NSString *)key {
+#if TARGET_OS_IPHONE
+    [self encodeUIEdgeInsets:edgeInsets forKey:key];
+#endif
+    
+#if TARGET_OS_OSX
     [self encodeObject:[NSValue valueWithEdgeInsets:edgeInsets] forKey:key];
+#endif
 }
 
-- (NSEdgeInsets)decodeSTUEdgeInsetsForKey:(NSString *)key {
+- (STUEdgeInsets)decodeSTUEdgeInsetsForKey:(NSString *)key {
+#if TARGET_OS_IPHONE
+    return [self decodeUIEdgeInsetsForKey:key];
+#endif
+    
+#if TARGET_OS_OSX
     return [[self decodeObjectOfClass:[NSValue class] forKey:key] edgeInsets];
+#endif
 }
 @end

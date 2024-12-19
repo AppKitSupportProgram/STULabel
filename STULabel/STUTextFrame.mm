@@ -26,12 +26,12 @@ using namespace stu_label;
 
 STU_EXPORT
 NSRange STUTextFrameRangeGetRangeInTruncatedString(STUTextFrameRange range) {
-  const stu::UInt start = range.start.indexInTruncatedString
+  const UInt start = range.start.indexInTruncatedString
                    + range.start.isIndexOfInsertedHyphen;
   if (range.end <= range.start) {
     return {.location = start, .length = 0};
   }
-  const stu::UInt end = range.end.indexInTruncatedString
+  const UInt end = range.end.indexInTruncatedString
                  + range.end.isIndexOfInsertedHyphen;
   return {.location = start, .length = end - start};
 }
@@ -162,7 +162,7 @@ STUTextFrame* __nullable
     if (layouter.isCancelled()) return nil;
   }
 
-  const stu::UInt instanceSize = roundUpToMultipleOf<alignof(TextFrame)>(class_getInstanceSize(cls));
+  const UInt instanceSize = roundUpToMultipleOf<alignof(TextFrame)>(class_getInstanceSize(cls));
   const auto oso = TextFrame::objectSizeAndThisOffset(layouter);
   Byte* const p = static_cast<Byte*>(malloc(instanceSize + oso.size));
   memset(p, 0, instanceSize);
@@ -184,7 +184,7 @@ STUTextFrame* __nullable
 }
 
 - (NSRange)rangeInOriginalString {
-  return Range<stu::UInt>{data->rangeInOriginalString};
+  return Range<UInt>{data->rangeInOriginalString};
 }
 
 - (STUTextFrameLayoutInfo)layoutInfoForFrameOrigin:(CGPoint)frameOrigin {

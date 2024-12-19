@@ -438,7 +438,7 @@ struct HashTableBase {
 
   using KeyHashCode = Conditional<storesHashCodes,
                                   HashCode<stu::UInt_<8*min(sizeof(Key), sizeof(Int))>>,
-                                  HashCode<stu::UInt>>;
+                                  HashCode<UInt>>;
   using StoredHashCodeValue = Conditional<storesHashCodes, typename KeyHashCode::Value, NoType>;
 
   using Bucket = Conditional<hasValue,
@@ -453,9 +453,9 @@ struct HashTableBase {
 
   class Prober {
     Bucket* buckets_;
-      stu::UInt mask_;
-      stu::UInt index_;
-      stu::UInt counter_;
+      UInt mask_;
+      UInt index_;
+      UInt counter_;
   public:
     STU_INLINE
     explicit Prober(ArrayRef<Bucket> buckets)

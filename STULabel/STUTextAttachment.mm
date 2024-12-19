@@ -91,10 +91,10 @@ static void initCommon(STUTextAttachment* __unsafe_unretained self) {
   f(stringRepresentation)
 
 - (void)encodeWithCoder:(NSCoder*)coder {
-#if TARGET_OS_IPHONE
 #define ENCODE(name) encode(coder, @STU_STRINGIZE(name), _ ## name);
   FOR_ALL_FIELD_NAMES(ENCODE)
 #undef ENCODE
+#if TARGET_OS_IPHONE
   const bool isAccessible = self.isAccessibilityElement;
   encode(coder, @"isAccessibilityElement", isAccessible);
   if (isAccessible) {
@@ -124,18 +124,15 @@ static void initCommon(STUTextAttachment* __unsafe_unretained self) {
     }
   }
 #endif
-    
-#if TARGET_OS_OSX
-#endif
 }
 
 + (BOOL)supportsSecureCoding { return true; }
 
 - (instancetype)initWithCoder:(NSCoder*)coder {
-#if TARGET_OS_IPHONE
 #define DECODE(name) decode(coder, @STU_STRINGIZE(name), Out{_ ## name});
   FOR_ALL_FIELD_NAMES(DECODE)
 #undef DECODE
+#if TARGET_OS_IPHONE
   bool isAccessible;
   decode(coder, @"isAccessibilityElement", Out{isAccessible});
   if (isAccessible) {
@@ -179,9 +176,6 @@ static void initCommon(STUTextAttachment* __unsafe_unretained self) {
     }
   #undef DECODE
   }
-#endif
-    
-#if TARGET_OS_OSX
 #endif
   initCommon(self);
   return self;
@@ -375,9 +369,6 @@ static STUTextAttachmentColorInfo attachmentColorInfoForColorSpace(CGColorSpaceR
       }
     }
 #endif
-    
-#if TARGET_OS_OSX
-#endif
   return self;
 }
 
@@ -435,7 +426,7 @@ namespace stu_label {
   struct AttachmentRange : NSRange {
     STUTextAttachment* __unsafe_unretained attachment;
 
-    stu::UInt end() const { return location + length; }
+    UInt end() const { return location + length; }
   };
 
   template <int n>
@@ -463,7 +454,7 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
       newAttributedString = [attributedString mutableCopy];
     }
   };
-  const stu::UInt length = attributedString.length;
+  const UInt length = attributedString.length;
   for (const AttachmentRange& range : ranges) {
     NSRange effectiveRange;
     if (![attributedString attribute:(__bridge NSAttributedStringKey)kCTRunDelegateAttributeName
@@ -483,7 +474,7 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
       [newAttributedString removeAttribute:fixForRDAR36622225AttributeName
                                      range:NSRange{range.location, 1}];
     }
-    for (stu::UInt i = 1; i < range.length; ++i) {
+    for (UInt i = 1; i < range.length; ++i) {
       id value = [attributedString attribute:fixForRDAR36622225AttributeName
                                      atIndex:range.location + i
                        longestEffectiveRange:&effectiveRange
@@ -533,7 +524,7 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
                                          (__bridge NSAttributedStringKey)kCTRunDelegateAttributeName:
                                           [imageAttachment newCTRunDelegate]}
                                  range:range];
-    for (stu::UInt i = 1; i < range.length; ++i) {
+    for (UInt i = 1; i < range.length; ++i) {
       [newAttributedString addAttribute:fixForRDAR36622225AttributeName
                                   value:@(i) range:NSRange{range.location + i, 1}];
     }
@@ -592,10 +583,10 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
 
 - (NSAttributedString*)stu_attributedStringByReplacingSTUAttachmentsWithStringRepresentations {
   const Class stuTextAttachmentClass = stu_label::stuTextAttachmentClass();
-  const stu::UInt length = self.length;
+  const UInt length = self.length;
   __block NSMutableAttributedString* newAttributedString = nil;
   __block NSMutableString* newString = nil;
-  __block stu::UInt indexOffset = 0;
+  __block UInt indexOffset = 0;
   [self enumerateAttribute:STUAttachmentAttributeName inRange:NSRange{0, length}
                    options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                 usingBlock:^(id value, NSRange stringRange, BOOL*)
@@ -609,10 +600,10 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
     }
     // We replace each char in the range individually. We don't bother checking whether each char
     // actually equals 0xFFFC.
-    for (const stu::UInt indexWithoutOffset : Range{stringRange}.iter()) {
-      const stu::UInt index = indexWithoutOffset + indexOffset;
+    for (const UInt indexWithoutOffset : Range{stringRange}.iter()) {
+      const UInt index = indexWithoutOffset + indexOffset;
       NSString* stringRepresention = attachment.stringRepresentation;
-        stu::UInt n;
+        UInt n;
       if (stringRepresention != nil) {
         n = stringRepresention.length;
       } else {
@@ -635,7 +626,7 @@ void addRunDelegatesIfNecessary(NSAttributedString* __unsafe_unretained attribut
         if (STU_LIKELY(index != 0)) {
           attributes = [newAttributedString attributesAtIndex:index - 1 effectiveRange:nil];
         } else {
-          __block stu::UInt indexAfterAttachments = 0;
+          __block UInt indexAfterAttachments = 0;
           [newAttributedString
              enumerateAttribute:STUAttachmentAttributeName
                         inRange:Range{stringRange.length, length}

@@ -268,8 +268,8 @@ STULabelDrawingBlockColorOptions
 
 STU_INLINE
 Range<Int32> clampToInt32IndexRange(NSRange range) {
-  const stu::UInt maxValue = INT32_MAX;
-    stu::UInt end = 0;
+  const UInt maxValue = INT32_MAX;
+    UInt end = 0;
   if (STU_UNLIKELY(__builtin_add_overflow(range.location, range.length, &end))) {
     end = maxValue;
   }

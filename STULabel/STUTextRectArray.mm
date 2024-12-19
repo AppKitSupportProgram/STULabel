@@ -24,13 +24,13 @@ struct STUTextRectArrayData {
   // The textLineVerticalPositions are stored after the spanArray.
   static_assert(alignof(TextLineSpan) == alignof(TextLineVerticalPosition));
 
-  static stu::UInt sizeInBytes(Int rectCount, Int lineCount) {
+  static UInt sizeInBytes(Int rectCount, Int lineCount) {
     return sizeof(STUTextRectArrayData)
          + sign_cast(rectCount)*sizeof(TextLineSpan)
          + sign_cast(lineCount)*sizeof(TextLineVerticalPosition);
   }
 
-    stu::UInt sizeInBytes() const {
+    UInt sizeInBytes() const {
     return STUTextRectArrayData::sizeInBytes(rectCount, lineCount);
   }
 
@@ -82,7 +82,7 @@ struct STUTextRectArrayData {
 
 
 @implementation STUTextRectArray {
-    stu::UInt taggedPointer_; // TODO: debug viewer
+    UInt taggedPointer_; // TODO: debug viewer
 }
 
 struct DataOrOtherArray {
@@ -91,14 +91,14 @@ struct DataOrOtherArray {
 
   explicit STU_INLINE
   DataOrOtherArray(const STUTextRectArray* __unsafe_unretained array) {
-    const stu::UInt p = array->taggedPointer_;
+    const UInt p = array->taggedPointer_;
     if (!(p & 1)) {
       data = reinterpret_cast<const STUTextRectArrayData*>(p);
       otherArray = nil;
       STU_ASSUME(data != nullptr);
     } else {
       data = nullptr;
-      otherArray = (__bridge const STUTextRectArray*)reinterpret_cast<const void*>(p & ~stu::UInt{1});
+      otherArray = (__bridge const STUTextRectArray*)reinterpret_cast<const void*>(p & ~UInt{1});
       STU_ASSUME(otherArray != nil);
     }
   }
@@ -111,7 +111,7 @@ struct DataOrOtherArray {
   if (!textRectArray) {
     textRectArray = STUTextRectArray.emptyArray;
   }
-  const stu::UInt p = reinterpret_cast<stu::UInt>((__bridge_retained void*)textRectArray);
+  const UInt p = reinterpret_cast<UInt>((__bridge_retained void*)textRectArray);
   STU_ASSERT(!(p & 1));
   taggedPointer_ = p | 1;
   return self;
@@ -158,11 +158,11 @@ STUTextRectArray* __nonnull STUTextRectArrayCreate(__nullable Class cls,
   const Int32 lineCount = spans.isEmpty() ? 0
                         : spans[$ - 1].lineIndex - spans[0].lineIndex + 1;
 
-  const stu::UInt dataSize = STUTextRectArrayData::sizeInBytes(spans.count(), lineCount);
+  const UInt dataSize = STUTextRectArrayData::sizeInBytes(spans.count(), lineCount);
   STUTextRectArray* const instance = stu_createClassInstance(cls, dataSize);
   STU_DEBUG_ASSERT([instance isKindOfClass:stuTextRectArrayClass()]);
   STUTextRectArrayData& data = *down_cast<STUTextRectArrayData*>(stu_getObjectIndexedIvars(instance));
-  instance->taggedPointer_ = reinterpret_cast<stu::UInt>(&data);
+  instance->taggedPointer_ = reinterpret_cast<UInt>(&data);
 
   data.rectCount = narrow_cast<Int32>(spans.count());
   data.lineCount = lineCount;
@@ -205,11 +205,11 @@ STUTextRectArray* __nonnull STUTextRectArrayCopyWithOffset(
   const DataOrOtherArray d{array};
   STU_ASSERT(d.data && "The array must have been created with STUTextRectArrayCreate.");
   const STUTextRectArrayData& data = *d.data;
-  const stu::UInt dataSize = data.sizeInBytes();
+  const UInt dataSize = data.sizeInBytes();
   STUTextRectArray* const instance = stu_createClassInstance(cls, dataSize);
   STU_DEBUG_ASSERT([instance isKindOfClass:stuTextRectArrayClass()]);
   STUTextRectArrayData& newData = *down_cast<STUTextRectArrayData*>(stu_getObjectIndexedIvars(instance));
-  instance->taggedPointer_ = reinterpret_cast<stu::UInt>(&newData);
+  instance->taggedPointer_ = reinterpret_cast<UInt>(&newData);
   memcpy(&newData, &data, dataSize);
   if (offset.x != 0) {
     newData.bounds.x += offset.x;
@@ -291,7 +291,7 @@ stu_label::Rect<CGFloat> STUTextRectArrayGetBounds(STUTextRectArray* __unsafe_un
 }
 
 #define CHECK_RECT_INDEX(data, index) \
-  STU_CHECK_MSG(static_cast<stu::UInt>(index) < sign_cast((data).rectCount), \
+  STU_CHECK_MSG(static_cast<UInt>(index) < sign_cast((data).rectCount), \
                 "The rect index is out of bounds.")
 
 STU_INLINE stu_label::Rect<Float64> rectAtIndex(const STUTextRectArrayData& data, Int index) {

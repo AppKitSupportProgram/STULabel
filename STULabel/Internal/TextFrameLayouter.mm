@@ -233,7 +233,7 @@ void TextFrameLayouter::saveLayoutTo(SavedLayout& layout) {
   using Data = SavedLayout::Data;
   static_assert(alignof(Data) >= alignof(TextFrameParagraph));
   static_assert(alignof(TextFrameParagraph) >= alignof(TextFrameLine));
-  const stu::UInt size = sizeof(Data) + paras_.arraySizeInBytes()
+  const UInt size = sizeof(Data) + paras_.arraySizeInBytes()
                                  + lines_.arraySizeInBytes()
                                  + tokenStyleBuffer_.data().arraySizeInBytes();
   auto* const data = reinterpret_cast<Data*>(ThreadLocalAllocatorRef{}.get().allocate(size));
