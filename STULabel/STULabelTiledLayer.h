@@ -10,6 +10,7 @@ typedef void (^ STULabelTileDrawingBlock)(CGContextRef context, CGRect rect,
                                           const STUCancellationFlag *cancellationFlag);
 
 /// Displays synchronously, prerenders asynchronously and uses larger tile sizes than CATiledLayer.
+STU_EXPORT
 @interface STULabelTiledLayer : STULayerWithNullDefaultActions
 
 @property (nonatomic, nullable) STULabelTileDrawingBlock drawingBlock;
