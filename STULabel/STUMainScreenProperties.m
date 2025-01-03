@@ -28,7 +28,6 @@ static STU_ATOMIC_IF_NOT_CONSTANT(CGFloat) mainScreenScale;
 static STU_ATOMIC_IF_NOT_CONSTANT(STUDisplayGamut) mainScreenDisplayGamut;
 
 static void updateMainScreenProperties(void) {
-  STU_DEBUG_ASSERT(pthread_main_np());
   CGSize portraitSize;
   CGFloat scale;
   STUDisplayGamut displayGamut;
@@ -36,6 +35,7 @@ static void updateMainScreenProperties(void) {
   STU_ASSERT(mainScreen || !STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT);
   if (mainScreen) {
 #if TARGET_OS_IPHONE
+      STU_DEBUG_ASSERT(pthread_main_np());
       portraitSize = mainScreen.fixedCoordinateSpace.bounds.size;
       scale = mainScreen.scale;
       if (@available(iOS 10, tvOS 10, *)) {
