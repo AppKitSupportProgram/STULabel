@@ -28,6 +28,7 @@ static STU_ATOMIC_IF_NOT_CONSTANT(CGFloat) mainScreenScale;
 static STU_ATOMIC_IF_NOT_CONSTANT(STUDisplayGamut) mainScreenDisplayGamut;
 
 static void updateMainScreenProperties(void) {
+  STU_DEBUG_ASSERT(pthread_main_np() && ![NSProcessInfo.processInfo.environment[@"XCODE_RUNNING_FOR_PREVIEWS"] isEqualToString:@"1"]);
   CGSize portraitSize;
   CGFloat scale;
   STUDisplayGamut displayGamut;
@@ -35,16 +36,14 @@ static void updateMainScreenProperties(void) {
   STU_ASSERT(mainScreen || !STU_MAIN_SCREEN_PROPERTIES_ARE_CONSTANT);
   if (mainScreen) {
 #if TARGET_OS_IPHONE
-      STU_DEBUG_ASSERT(pthread_main_np());
       portraitSize = mainScreen.fixedCoordinateSpace.bounds.size;
       scale = mainScreen.scale;
       if (@available(iOS 10, tvOS 10, *)) {
-      displayGamut = (STUDisplayGamut)mainScreen.traitCollection.displayGamut;
+          displayGamut = (STUDisplayGamut)mainScreen.traitCollection.displayGamut;
       } else { // We don't try to support wide colors on an old iPad Pro running iOS 9.
-      displayGamut = STUDisplayGamutSRGB;
+          displayGamut = STUDisplayGamutSRGB;
       }
 #endif
-      
 #if TARGET_OS_OSX
       portraitSize = mainScreen.frame.size;
       scale = mainScreen.backingScaleFactor;
