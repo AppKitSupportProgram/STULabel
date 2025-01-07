@@ -28,7 +28,7 @@ static STU_ATOMIC_IF_NOT_CONSTANT(CGFloat) mainScreenScale;
 static STU_ATOMIC_IF_NOT_CONSTANT(STUDisplayGamut) mainScreenDisplayGamut;
 
 static void updateMainScreenProperties(void) {
-  STU_DEBUG_ASSERT(pthread_main_np() && ![NSProcessInfo.processInfo.environment[@"XCODE_RUNNING_FOR_PREVIEWS"] isEqualToString:@"1"]);
+  STU_DEBUG_ASSERT(pthread_main_np() || [NSProcessInfo.processInfo.environment[@"XCODE_RUNNING_FOR_PREVIEWS"] isEqualToString:@"1"]);
   CGSize portraitSize;
   CGFloat scale;
   STUDisplayGamut displayGamut;
