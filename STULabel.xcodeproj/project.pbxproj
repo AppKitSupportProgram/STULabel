@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -562,7 +562,6 @@
 		D4E76BF8201BBA2200249594 /* HashTable.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E76BF7201BBA2200249594 /* HashTable.mm */; };
 		D4E76BF9201BBA2200249594 /* HashTable.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E76BF7201BBA2200249594 /* HashTable.mm */; };
 		D4E8DBEA20DA6FE0009F4735 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4E8DBEC20DA6FE0009F4735 /* Localizable.strings */; };
-		D4E8DC4320DA86ED009F4735 /* STULabelResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D4E8DBE220DA6F29009F4735 /* STULabelResources.bundle */; };
 		D4E8DC6820DA9D40009F4735 /* Localized.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E8DC6620DA9D40009F4735 /* Localized.mm */; };
 		D4E8DC6920DA9D40009F4735 /* Localized.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E8DC6620DA9D40009F4735 /* Localized.mm */; };
 		D4E8DC6A20DA9D40009F4735 /* Localized.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D4E8DC6720DA9D40009F4735 /* Localized.hpp */; };
@@ -604,6 +603,7 @@
 		E9096B6F2D105AC50031A5E5 /* STULabel+AppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E9096B6C2D105AC50031A5E5 /* STULabel+AppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E9096B702D105AC50031A5E5 /* STULabel+AppKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9096B6D2D105AC50031A5E5 /* STULabel+AppKit.mm */; };
 		E9096B712D105AC50031A5E5 /* STULabel+AppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E9096B6C2D105AC50031A5E5 /* STULabel+AppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E9602D352D6CB91D004F36D5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4E8DBEC20DA6FE0009F4735 /* Localizable.strings */; };
 		E9E217532D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E9E217512D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h */; };
 		E9E217542D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E217522D1016E400B2B0F2 /* STUMultiplePlatformAdapter.m */; };
 		E9E217552D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E9E217512D1016E400B2B0F2 /* STUMultiplePlatformAdapter.h */; };
@@ -2252,9 +2252,10 @@
 		D4B0AEB31F9259E600B5B2B9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				DefaultBuildSystemTypeForWorkspace = Latest;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = STULabel;
 				TargetAttributes = {
 					D41C92A62083CBC3002AFFF3 = {
@@ -2416,8 +2417,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9602D352D6CB91D004F36D5 /* Localizable.strings in Resources */,
 				D4107B3B20486CCD008CA7E9 /* README.md in Resources */,
-				D4E8DC4320DA86ED009F4735 /* STULabelResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2935,6 +2936,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41C92A52083CB56002AFFF3 /* STULabelSwift static.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = D5Q73692VW;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -2942,6 +2952,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41C92A52083CB56002AFFF3 /* STULabelSwift static.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = D5Q73692VW;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -2949,9 +2968,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310D21F94237400F39C3A /* STULabelSwift.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = D5Q73692VW;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				REGISTER_APP_GROUPS = NO;
+				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2962,9 +2985,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310D21F94237400F39C3A /* STULabelSwift.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = D5Q73692VW;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				REGISTER_APP_GROUPS = NO;
+				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2975,6 +3002,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310D11F94236200F39C3A /* STULabel static.xcconfig */;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = D5Q73692VW;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
 			};
 			name = Debug;
 		};
@@ -2982,6 +3018,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310D11F94236200F39C3A /* STULabel static.xcconfig */;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = D5Q73692VW;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
 			};
 			name = Release;
 		};
@@ -2989,6 +3034,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D43E67111FD4A64C00BABD1C /* Tests.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Debug;
 		};
@@ -2996,6 +3042,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D43E67111FD4A64C00BABD1C /* Tests.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Release;
 		};
@@ -3003,6 +3050,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D43E67241FD4AE1200BABD1C /* AllTests.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Debug;
 		};
@@ -3010,6 +3058,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D43E67241FD4AE1200BABD1C /* AllTests.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Release;
 		};
@@ -3018,6 +3067,7 @@
 			baseConfigurationReference = D407F00920E52B6700922204 /* Demo.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Debug;
 		};
@@ -3026,6 +3076,7 @@
 			baseConfigurationReference = D407F00920E52B6700922204 /* Demo.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Release;
 		};
@@ -3033,7 +3084,36 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310901F94168400F39C3A /* Debug.xcconfig */;
 			buildSettings = {
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Debug;
 		};
@@ -3041,7 +3121,35 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310911F94169200F39C3A /* Release.xcconfig */;
 			buildSettings = {
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Release;
 		};
@@ -3049,9 +3157,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310921F9416A500F39C3A /* STULabel.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = D5Q73692VW;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				REGISTER_APP_GROUPS = NO;
+				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3062,9 +3174,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D41310921F9416A500F39C3A /* STULabel.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = D5Q73692VW;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				REGISTER_APP_GROUPS = NO;
+				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3075,8 +3191,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D4E8DC1920DA8364009F4735 /* STULabelResources.xcconfig */;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5Q73692VW;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
 			};
 			name = Debug;
 		};
@@ -3084,8 +3207,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D4E8DC1920DA8364009F4735 /* STULabelResources.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = ZF2GY8W6BW;
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = D5Q73692VW;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
 			};
 			name = Release;
 		};
@@ -3129,6 +3259,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3151,9 +3282,12 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 STULabel. All rights reserved.";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -3208,6 +3342,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3224,9 +3359,12 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 STULabel. All rights reserved.";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
