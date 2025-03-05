@@ -205,7 +205,6 @@ STU_EXPORT
 
 @end
 
-STU_ASSUME_NONNULL_AND_STRONG_END
 
 @protocol STULabelDelegate <NSObject>
 @optional
@@ -241,5 +240,7 @@ STU_ASSUME_NONNULL_AND_STRONG_END
 - (void)labelTextLayoutWasInvalidated:(STULabel *)label;
 
 @end
+
+STU_ASSUME_NONNULL_AND_STRONG_END
 
 #endif
