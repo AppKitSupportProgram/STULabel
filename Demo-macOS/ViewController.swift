@@ -18,8 +18,12 @@ class ViewController: NSViewController {
         
         label.text = "Hello, STULabel!"
         label.textColor = .labelColor
-        label.frame = .init(x: 50, y: 50, width: 200, height: 40)
         view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     override var representedObject: Any? {

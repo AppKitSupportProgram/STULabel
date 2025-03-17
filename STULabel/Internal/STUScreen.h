@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_END
 #endif
 
 @interface UIWindow (STUScreen)
-@property(nonatomic,readonly, nullable) STUScreen *stu_screen;
+@property(nonatomic, readonly, nullable) STUScreen *stu_screen;
 @end
 #endif
 
